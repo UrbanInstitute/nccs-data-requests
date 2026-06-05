@@ -23,3 +23,5 @@ requests/**/data/
 
 # OS
 .DS_Store
+
+**/*.quarto_ipynb

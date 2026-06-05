@@ -1,0 +1,4 @@
+"timestamp","dataset","vintage","source","n_rows","note"
+"2026-06-05T15:20:55-0400","bmf-master-geocoded","rolling@2026-06-05","nccsdata::nccs_read (rolling geocoded master)",73687,"WI universe, all vintages 1989-2026"
+"2026-06-05T15:20:56-0400","crosswalk-county-fips","tiger-2023","s3://nccsdata/crosswalks/county-fips/county_fips_crosswalk.parquet",3635,""
+"2026-06-05T15:20:57-0400","crosswalk-cbsa","tiger-2023","s3://nccsdata/crosswalks/cbsa/cbsa_crosswalk.parquet",3228,""
