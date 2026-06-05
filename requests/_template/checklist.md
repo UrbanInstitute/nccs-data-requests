@@ -1,11 +1,9 @@
 # Request checklist — <YYYY-MM-slug>
 
-## Request record (private — stays in this repo, never in the promoted `.qmd`)
-
-- **Requester:** <name / team>
-- **Asked:** <date>
-- **The ask (verbatim):** <…>
-- **Delivered:** <date> — <what was sent, and how>
+> ⚠️ **This repo is PUBLIC.** Nothing committed here is private. Put the
+> requester's identity and the verbatim ask in `_private.md` (gitignored) —
+> never in this file, the `.qmd`, or `_pins.csv`. This checklist records only
+> non-confidential gate decisions.
 
 ## Public-safe gate (required for *every* request)
 

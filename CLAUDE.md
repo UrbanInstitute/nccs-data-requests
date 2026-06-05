@@ -12,6 +12,10 @@ the website with the `_stories/` collection).
 
 ## House rules (from ADR 0024 / 0025)
 
+0. **This repo is PUBLIC.** Never commit confidential requester specifics
+   (name, verbatim ask, any non-public data). They go in a gitignored
+   per-request `_private.md`. The `.qmd`, `checklist.md`, and `_pins.csv` are
+   all world-readable — keep them about the analysis, not the requester.
 1. **Read canonical artifacts; never re-derive.** Use `nccsdata`
    (`nccs_read` for the rolling geocoded BMF master, `nccs_vintage_url` to
    pin a dated BMF snapshot, `nccs_read_core` for core). Geography is a
