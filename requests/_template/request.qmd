@@ -1,0 +1,76 @@
+---
+# --- Story front-matter (mirrors nccs/_stories so promotion is a clean move).
+# Keep `draft: true` until the request clears the three gates in checklist.md.
+title: "TITLE — what the request reveals, not who asked"
+date: 2026-06-05
+description: "One or two sentences a non-specialist would read."
+draft: true
+format: gfm
+type: analysis          # analysis | methods
+categories:
+  - geography
+author:
+  - id: thiya
+# Required before promotion: cite the pinned vintages this analysis read.
+# Fill from _pins.csv (the `vintage` column) once your reads have run.
+citation:
+  container-title: National Center for Charitable Statistics
+  volume: 1
+  issue: 1
+---
+
+```{r setup, include=FALSE}
+library(dplyr)
+source(here::here("R", "request_read.R"))
+
+# This request's folder (used to write _pins.csv). Update the slug.
+req <- here::here("requests", "2026-06-template")
+```
+
+## The ask
+
+> Restate the request in one or two lines — the *question*, not the requester.
+> (Requester identity / any confidential specifics stay out of the `.qmd` —
+> see `checklist.md`.)
+
+## Data
+
+Read canonical artifacts through the helpers — every read is pinned to
+`_pins.csv`. Compose geography by **joining the published crosswalks**; do not
+re-derive county / CBSA identity here.
+
+```{r read}
+# BMF (rolling geocoded master) — or read_bmf_vintage(req, "2023_07") to pin a snapshot
+bmf <- read_bmf_master(req, state = "CT")
+
+# Geography: label join for most states; coordinate join for Connecticut.
+xwalk_county <- read_crosswalk(req, "county-fips")
+# xwalk_cbsa   <- read_crosswalk(req, "cbsa")
+# xwalk_ct     <- read_crosswalk(req, "ct-planning-region")   # CT only, by lat/lon
+
+# core / efile as the request needs:
+# core <- read_core(req, tier = "merged")
+```
+
+```{r compose}
+# Join geography onto the raw labels / coordinates. Example (label grain):
+# resolved <- bmf |>
+#   left_join(xwalk_county, by = c("geo_state_abbr", "geo_county"))
+#
+# Connecticut: round (geo_lat, geo_lon) to 0.01 deg and join xwalk_ct
+# (its retired county labels are deferred in county-fips — see ADR 0023).
+```
+
+## Findings
+
+Write the analysis. Tables and figures render to SVG (per `_quarto.yml`).
+
+## Takeaways
+
+- Lead with the substantive finding.
+- Note any coverage caveats (e.g. ambiguous/unresolved geo labels).
+
+---
+
+*Reproducibility: this story reads the vintages pinned in `_pins.csv`; rerun
+from those pins to reproduce. See ADR 0024 / 0025 in `nccs-contracts`.*

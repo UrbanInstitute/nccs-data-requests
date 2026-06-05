@@ -1,0 +1,21 @@
+# Local data pulls — provenance lives in each request's _pins.csv, not the
+# bulk data. Keeps potentially large / non-public data out of the repo.
+requests/**/data/
+*.parquet
+
+# Quarto / knitr render artifacts (regenerated on render, incl. on the website)
+/.quarto/
+*_cache/
+*_files/
+*.html
+!404.html
+
+# R
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+.Renviron
+
+# OS
+.DS_Store

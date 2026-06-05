@@ -1,0 +1,15 @@
+Package: nccs.data.requests
+Title: Ad-hoc NCCS Data Requests (Thin Consumer)
+Version: 0.0.0.9000
+Description: Not an R package — this DESCRIPTION exists only to declare the
+    read dependencies so renv/pak can install them reproducibly. This repo
+    fulfils ad-hoc data requests combining bmf/core/efile data for specific
+    geographies, reading canonical S3 artifacts via nccsdata and joining the
+    published geography crosswalks. See ADR 0024 / 0025 in nccs-contracts.
+Imports:
+    nccsdata,
+    arrow,
+    dplyr
+Remotes:
+    github::UrbanInstitute/nccsdata
+Encoding: UTF-8

@@ -1,0 +1,18 @@
+# Mirrors nccs/_stories so a promoted request.qmd renders identically when
+# moved into the website's _stories/ collection.
+project:
+  type: default
+  render:
+    - "requests/"
+
+format:
+  gfm:
+    variant: gfm+yaml_metadata_block+definition_lists
+    highlight-style: tango
+    html-math-method: webtex
+    preview-mode: raw
+    fig-format: svg
+
+execute:
+  warning: false
+  message: false
