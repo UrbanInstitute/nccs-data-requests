@@ -25,3 +25,7 @@ requests/**/data/
 .DS_Store
 
 **/*.quarto_ipynb
+
+# GitHub Pages site (published HTML guides)
+!docs/**/*.html
+!docs/*.html

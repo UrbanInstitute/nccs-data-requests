@@ -1,0 +1,175 @@
+---
+title: "Nonprofits in the Milwaukee Metro Area"
+subtitle: "A guide to the attached data — counts, focus areas, and revenue, 1989–2023"
+date: 2026-06-05
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-title: "On this page"
+    embed-resources: true
+    fig-width: 8
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r setup}
+library(knitr)
+D <- function(f) read.csv(file.path("data", f), check.names = FALSE, stringsAsFactors = FALSE)
+comma <- function(x) formatC(x, format = "d", big.mark = ",")
+dollarsM <- function(x) paste0("$", formatC(x, format = "d", big.mark = ","), "M")
+```
+
+## What this is
+
+This package answers five questions about nonprofit organizations in the
+**Milwaukee metro area** — both today and back to 1989:
+
+1. How many nonprofits there are, overall and by county
+2. How many there are by **focus area** (what they do)
+3. Their total **revenue by focus area**
+4. Their total **revenue by source** (where the money comes from)
+5. Revenue broken down by focus area **and** source together
+
+**The metro area** is the four-county Milwaukee–Waukesha Metropolitan Statistical
+Area as defined by the U.S. Office of Management and Budget: **Milwaukee,
+Waukesha, Ozaukee, and Washington** counties.
+
+**The data** comes entirely from public IRS records, organized by the National
+Center for Charitable Statistics (NCCS): the IRS Business Master File (the list
+of all registered nonprofits) for the counts, and nonprofits' annual Form 990
+filings for the revenue figures. Nothing here is confidential.
+
+## The headline numbers
+
+```{r headline}
+yr  <- D("nonprofits_by_year_1989-2026.csv")
+cty <- D("nonprofits_by_county_2026.csv")
+n_now <- yr$n_nonprofits[yr$year == 2026]
+n_89  <- yr$n_nonprofits[yr$year == 1989]
+```
+
+- **About `r comma(n_now)` registered nonprofits** operate in the metro today —
+  roughly **six times** the `r comma(n_89)` on record in 1989.
+- **Health care organizations dominate the sector's revenue.** In 2023, hospitals
+  and health systems alone reported about **$10 billion** of the roughly **$27
+  billion** in total public-charity revenue across the metro.
+- **Most revenue is earned, not donated.** Program service revenue (fees for
+  services — hospital care, tuition, and the like) is about **80%** of the total;
+  contributions and grants are the next-largest source.
+- **Private foundations** in the metro add roughly **$1.2 billion** more in
+  annual revenue (2023), reported separately because they file a different tax
+  form.
+
+## How many nonprofits, and where
+
+### By county (current)
+
+```{r county}
+k <- cty; k$n_nonprofits <- comma(k$n_nonprofits)
+kable(k, col.names = c("County", "Nonprofits"), align = c("l","r"))
+```
+
+### Over time (registered nonprofits in the metro)
+
+```{r year}
+sel <- yr[yr$year %in% c(1989,1995,2000,2005,2010,2015,2020,2023,2026), ]
+sel$n_nonprofits <- comma(sel$n_nonprofits)
+kable(sel, col.names = c("Year", "Nonprofits"), align = c("l","r"))
+```
+
+*See `nonprofits_by_year_1989-2026.csv` for every year. Counts for the 1990s and
+2000s undercount somewhat — see "How to read these numbers" below.*
+
+## What they do — focus areas
+
+```{r focus}
+fa <- D("nonprofits_by_focus_area_2026.csv")
+fa <- fa[order(-fa$n_nonprofits), ]; fa$n_nonprofits <- comma(fa$n_nonprofits)
+kable(fa, col.names = c("Focus area", "Nonprofits"), align = c("l","r"))
+```
+
+## Revenue by focus area (2023)
+
+```{r revfocus}
+rf <- D("revenue_by_focus_area_2023.csv")
+rf$total_revenue_usd_millions <- dollarsM(rf$total_revenue_usd_millions)
+rf$n_filers <- comma(rf$n_filers)
+kable(rf, col.names = c("Focus area", "Filers", "Total revenue"), align = c("l","r","r"))
+```
+
+## Revenue by source, over time
+
+```{r revsource}
+rs <- D("revenue_by_source_by_year_1989-2023.csv")
+sel <- rs[rs$year %in% c(1989,2000,2010,2019,2023), ]
+for (c in setdiff(names(sel),"year")) sel[[c]] <- dollarsM(sel[[c]])
+kable(sel, col.names = c("Year","Contributions & grants","Program services",
+      "Fundraising events (net)","Investment","Other","Total"), align = "r")
+```
+
+*Dollar figures in millions. "Program services" = fees earned for an
+organization's mission work (e.g. hospital and clinic charges, tuition). Full
+year-by-year detail is in `revenue_by_source_by_year_1989-2023.csv`.*
+
+## How to read these numbers
+
+- **Two different groups are being counted.** The *counts* cover every registered
+  nonprofit (all types). The *revenue* figures cover only organizations that file
+  a financial tax return — **Form 990 or 990-EZ** for public charities, and
+  **Form 990-PF** for private foundations (reported separately). The smallest
+  nonprofits file a postcard return with no financials, so they appear in the
+  counts but not the revenue totals.
+- **Older years undercount, especially by county.** Placing an organization in a
+  county requires a usable address on file. Coverage is essentially complete for
+  recent years but lower for the distant past (about 40% in 1989, rising to ~100%
+  today). Read the 1990s/2000s figures as **trends and minimums**, not exact
+  totals. The file `data_coverage_by_year.csv` documents this.
+- **Dollars are shown two ways.** "Nominal" is dollars as reported each year;
+  "real 2024" adjusts for inflation so years can be compared on equal footing.
+- **An "Unknown, Unclassified" focus area** appears because the IRS classification
+  is missing for some organizations (including a few very large ones). It is shown
+  as its own line rather than hidden.
+
+## Files included
+
+```{r files}
+files <- data.frame(
+  File = c(
+    "nonprofits_by_year_1989-2026.csv",
+    "nonprofits_by_county_2026.csv",
+    "nonprofits_by_focus_area_2026.csv",
+    "revenue_by_focus_area_2023.csv",
+    "revenue_by_source_by_year_1989-2023.csv",
+    "revenue_by_focus_and_source_2023.csv",
+    "total_revenue_public_charities_by_year_1989-2023.csv",
+    "total_revenue_private_foundations_by_year_1989-2023.csv",
+    "data_coverage_by_year.csv"),
+  Contents = c(
+    "Number of registered nonprofits in the metro, each year 1989–2026.",
+    "Number of registered nonprofits today, by county.",
+    "Number of registered nonprofits today, by focus area.",
+    "2023 revenue by focus area (Form 990/990-EZ public charities).",
+    "Revenue split by source, every year 1989–2023 (public charities).",
+    "2023 revenue by focus area AND source together (public charities).",
+    "Total public-charity (990/990-EZ) revenue by year, nominal and inflation-adjusted.",
+    "Total private-foundation (990-PF) revenue by year, nominal and inflation-adjusted.",
+    "Diagnostic: share of nonprofits with a usable county address, by year (the coverage caveat above)."),
+  stringsAsFactors = FALSE)
+kable(files, align = c("l","l"))
+```
+
+**Common columns:** `focus_area` uses the NCCS NTEEv2 subsector names (Health,
+Education, Human Services, Arts, etc.); `n_nonprofits` / `n_filers` are counts;
+columns named for a revenue source or ending in `usd_millions` are dollar amounts
+**in millions**.
+
+---
+
+*Prepared by the National Center for Charitable Statistics. Source: IRS Business
+Master File and Form 990 series via the `nccsdata` package; geography via the NCCS
+county and metro-area crosswalks (2023 vintage). Reproducible from the pinned data
+versions recorded with the analysis.*
+</content>
