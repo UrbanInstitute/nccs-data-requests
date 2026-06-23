@@ -4,7 +4,10 @@ requests/**/_private.md
 
 # Local data pulls — provenance lives in each request's _pins.csv, not the
 # bulk data. Keeps potentially large / non-public data out of the repo.
-requests/**/data/
+# Exception: the reproducible computation script IS tracked (public-safe code);
+# ignore the directory *contents* (not the dir itself) so the negation works.
+requests/**/data/*
+!requests/**/data/_compute.R
 *.parquet
 
 # Quarto / knitr render artifacts (regenerated on render, incl. on the website)

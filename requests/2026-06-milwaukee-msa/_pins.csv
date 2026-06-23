@@ -2,3 +2,6 @@
 "2026-06-05T15:20:55-0400","bmf-master-geocoded","rolling@2026-06-05","nccsdata::nccs_read (rolling geocoded master)",73687,"WI universe, all vintages 1989-2026"
 "2026-06-05T15:20:56-0400","crosswalk-county-fips","tiger-2023","s3://nccsdata/crosswalks/county-fips/county_fips_crosswalk.parquet",3635,""
 "2026-06-05T15:20:57-0400","crosswalk-cbsa","tiger-2023","s3://nccsdata/crosswalks/cbsa/cbsa_crosswalk.parquet",3228,""
+"2026-06-23T09:17:39-0400","bmf-master-geocoded","rolling@2026-06-23","s3://nccsdata/geocoding/bmf-master/merged/bmf_master_geocoded.parquet",73847,"WI universe re-read (adds org_name_display for roster)"
+"2026-06-23T09:18:49-0400","core-990combined","merged@1989-2023","s3://nccsdata/processed_merged/core/{year}/990combined/",68301,"Public-charity 990/990-EZ filings, MSA EINs, 1989-2023"
+"2026-06-23T09:19:47-0400","core-990pf","merged@1989-2023","s3://nccsdata/processed_merged/core/{year}/990pf/",28719,"Private-foundation 990-PF filings, MSA EINs, 1989-2023 (2016-2018 sparse upstream)"
