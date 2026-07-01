@@ -5,7 +5,6 @@ description: >-
   How many nonprofits operate in the four-county Milwaukee metro, what they do,
   and where their revenue comes from — a snapshot and a multi-decade trend from
   canonical IRS/NCCS data.
-draft: true
 format: gfm
 type: analysis
 categories:
@@ -16,6 +15,10 @@ citation:
   container-title: National Center for Charitable Statistics
   volume: 1
   issue: 1
+  note: >-
+    BMF master (geocoded, rolling@2026-06-23); crosswalks county-fips and cbsa
+    (tiger-2023); CORE 990combined (merged@1989-2023) and 990pf
+    (merged@1989-2023). Full provenance in _pins.csv.
 ---
 
 
@@ -129,6 +132,8 @@ Current (2026) by county: **Milwaukee 6,918 · Waukesha 2,717 · Ozaukee
 695 · Washington 694** (total 11,024). *Early-year figures undercount —
 caveat 2.*
 
+![](request_files/figure-commonmark/q1-chart-1.svg)
+
 ### Q2 — By focus area (current, 2026)
 
 | Focus area (NTEEv2)                                       | Orgs       |
@@ -142,6 +147,8 @@ caveat 2.*
 | Environment                                               | 282        |
 | Mutual/Membership, International, Hospitals, Universities | \<100 each |
 | *Unclassified (UNU)*                                      | *3,949*    |
+
+![](request_files/figure-commonmark/q2-chart-1.svg)
 
 ### Q3 — Revenue by focus area (2023, Form 990/990-EZ, \$M)
 
@@ -172,7 +179,9 @@ Total 990/990-EZ revenue: nominal **\$1.5B (1989) → \$27.2B (2023)**; in
 real 2024 dollars **\$3.8B → \$28.0B** (~7×), with a 2021 dip to \$19.2B
 nominal. **Program service revenue is ~80%** of the total — the
 hospital/health footprint. (Full 35-row series in
-`data/q4_pc_revenue_by_source_by_year.csv`.)
+`data/revenue_by_source_by_year_1989-2023.csv`.)
+
+![](request_files/figure-commonmark/q4-chart-1.svg)
 
 ### Q5 — Revenue by focus area × source (2023, Form 990/990-EZ, \$M)
 

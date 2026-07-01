@@ -21,13 +21,16 @@ Candidate for promotion once revenue (Q3–Q5) is complete and rendered.
 
 ## Before opening the `_stories/` PR
 
-- [ ] Front-matter `citation:` cites pinned vintages (from `_pins.csv`).
-- [ ] `draft: true` removed from the `.qmd`.
+- [x] Front-matter `citation:` cites pinned vintages (from `_pins.csv`): BMF
+      master `rolling@2026-06-23`, crosswalks `tiger-2023`, CORE
+      990combined/990pf `merged@1989-2023`.
+- [x] `draft: true` removed from the `.qmd`.
 - [x] `quarto render` clean (gfm → `request.md`); live helper reads ran and wrote
-      `_pins.csv`. (No figures yet — tables only; add charts before promotion.)
+      `_pins.csv`. Charts added (Q1 trend, Q2 focus-area bar, Q4 revenue-by-source
+      area) before promotion.
 - [x] Revenue (Q3–Q5) completed for **1989–2023** (Form 990/990-EZ + 990-PF,
       nominal + real). Pre-2012 directional (legacy completeness — see qmd).
-- [ ] Move `request.qmd` (+ `*_files/`) into `../nccs/_stories/` and open the PR.
+- [x] Move `request.qmd` (+ `*_files/`) into `../nccs/_stories/` and open the PR.
 
 ## Graduation notes (the other two paths — ADR 0024)
 
