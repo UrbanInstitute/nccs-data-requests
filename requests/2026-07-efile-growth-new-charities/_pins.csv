@@ -1,0 +1,3 @@
+"timestamp","dataset","vintage","source","n_rows","note"
+"2026-07-24T19:30:23-0400","efile-v2_1-f9-header","efile_v2_1@2009-2024","https://nccs-efile.s3.amazonaws.com/public/efile_v2_1/F9-P00-T00-HEADER-{year}.CSV",5675704,"990/990-EZ headers, all published tax years"
+"2026-07-24T19:30:42-0400","bmf-master-geocoded","rolling@2026-07-24","nccsdata::nccs_read (rolling geocoded master)",2464928,"public charities (canonical org_type cut), full registry"
