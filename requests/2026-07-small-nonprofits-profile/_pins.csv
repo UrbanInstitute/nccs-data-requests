@@ -1,0 +1,5 @@
+"timestamp","dataset","vintage","source","n_rows","note"
+"2026-07-29T09:32:35-0400","core-merged","merged","core:merged",515769,"990 + 990-EZ filers, TY2023 expenses"
+"2026-07-29T09:32:39-0400","core-merged","merged","core:merged",114199,"990-PF filers, TY2023 expenses per books"
+"2026-07-29T09:32:50-0400","core-soi","soi","core:soi",329583,"full-990 filers, W-3 employee count"
+"2026-07-29T09:33:59-0400","bmf-master-geocoded","rolling@2026-07-29","nccsdata::nccs_read (rolling geocoded master)",3687435,"registered universe + income (gross receipts) code basis"

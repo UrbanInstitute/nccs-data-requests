@@ -1,0 +1,178 @@
+---
+title: >-
+  Most US nonprofits are small: 7 in 10 filers report expenses below $500,000,
+  and most have few or no paid staff
+date: 2026-07-29T00:00:00.000Z
+description: >-
+  Sourcing the claim 'most nonprofits in the US have reported expenses below $X
+  and have few or no staff' from canonical IRS/NCCS data: the tax-year-2023
+  expense distribution across 990/990-EZ/990-PF filers, plus the registered
+  universe that is too small to report financials at all.
+draft: true
+format: gfm
+type: analysis
+categories:
+  - trends
+author:
+  - id: thiya
+citation:
+  container-title: National Center for Charitable Statistics
+  volume: 1
+  issue: 1
+knitr:
+  opts_chunk:
+    dev: png
+---
+
+
+## The ask
+
+> Fill in and source the sentence: “Most nonprofits in the US have
+> reported expenses below \$X, have few or no staff, and work directly
+> with communities.”
+
+(Requester identity and the verbatim ask are in the gitignored
+`_private.md`.)
+
+Two of the three clauses are answerable from canonical data: the expense
+threshold and the staffing claim. “Work directly with communities” is a
+characterization, not a measurable column; the closest data-backed
+support is that the small-expense majority is dominated by locally
+scoped organizations, and we do not source that clause here.
+
+## Data & method
+
+Three canonical reads, all pinned to `_pins.csv`:
+
+1.  **CORE merged, tax year 2023, `990combined` + `990pf`** — every
+    organization that reported financials on a Form 990, 990-EZ, or
+    990-PF. `total_expenses` (990 Part IX line 25 / EZ Part I line 17)
+    for 990/990-EZ; `total_expenses_col_a` (PF Part I line 26, revenue
+    and expenses per books) for 990-PF. Tax year is taken from the
+    per-row `tax_year` column, never from the file name.
+2.  **CORE SOI, tax year 2023, `990`** — `n_employees_w3` (Form 990 Part
+    I line 5, W-3 employee count) for the staffing claim. Only full-990
+    filers report this, and they are the *largest* organizations, which
+    makes the staffing estimate conservative.
+3.  **Unified BMF (rolling geocoded master)** — the registered universe,
+    to size the majority of nonprofits that file no financial return at
+    all (Form 990-N e-postcard filers, gross receipts normally \$50,000
+    or less).
+
+``` r
+core_990ez <- read_core(req, tier = "merged", tax_year = 2023,
+                        form = "990combined",
+                        columns = c("ein", "tax_year", "source_form",
+                                    "total_expenses"),
+                        confirm = FALSE,
+                        note = "990 + 990-EZ filers, TY2023 expenses")
+
+core_pf <- read_core(req, tier = "merged", tax_year = 2023, form = "990pf",
+                     columns = c("ein", "tax_year", "total_expenses_col_a"),
+                     confirm = FALSE,
+                     note = "990-PF filers, TY2023 expenses per books")
+
+core_emp <- read_core(req, tier = "soi", tax_year = 2023, form = "990",
+                      columns = c("ein", "tax_year", "n_employees_w3"),
+                      confirm = FALSE,
+                      note = "full-990 filers, W-3 employee count")
+
+bmf <- read_bmf_master(req,
+                       columns = c("ein", "income_amount",
+                                   "last_year_in_bmf"),
+                       note = "registered universe + income (gross receipts) code basis")
+```
+
+``` r
+expenses <- bind_rows(
+  core_990ez |> filter(tax_year == 2023) |>
+    transmute(ein, form = source_form, expenses = total_expenses),
+  core_pf |> filter(tax_year == 2023) |>
+    transmute(ein, form = "990pf", expenses = total_expenses_col_a)
+) |> filter(!is.na(expenses))
+
+thresholds <- c(`$50k` = 5e4, `$100k` = 1e5, `$500k` = 5e5, `$1M` = 1e6)
+dist <- tibble(
+  threshold = names(thresholds),
+  n_below   = sapply(thresholds, function(t) sum(expenses$expenses < t)),
+  share     = sapply(thresholds, function(t) mean(expenses$expenses < t))
+)
+
+emp <- core_emp |> filter(tax_year == 2023, !is.na(n_employees_w3))
+
+active <- bmf |>
+  mutate(income = as.numeric(income_amount)) |>
+  filter(last_year_in_bmf >= 2024)
+```
+
+## Findings
+
+### The expense distribution (tax year 2023, all financial-return filers)
+
+``` r
+knitr::kable(
+  dist |> mutate(n_below = fmt(n_below),
+                 share = sprintf("%.1f%%", 100 * share)),
+  col.names = c("Reported expenses below", "Filers", "Share of filers"))
+```
+
+| Reported expenses below | Filers  | Share of filers |
+|:------------------------|:--------|:----------------|
+| \$50k                   | 160,865 | 25.5%           |
+| \$100k                  | 257,532 | 40.9%           |
+| \$500k                  | 454,605 | 72.2%           |
+| \$1M                    | 509,732 | 80.9%           |
+
+629,968 organizations reported expenses on a 990, 990-EZ, or 990-PF for
+tax year 2023. **72.2% reported total expenses below \$500,000**, and
+80.9% below \$1 million.
+
+### The filers are the big end of the sector
+
+The registered universe is far larger than the filing universe:
+2,150,712 organizations were active in the BMF through 2024+, so roughly
+1,520,744 registered nonprofits filed no financial return for tax year
+2023. The bulk of these file the Form 990-N e-postcard, available only
+to organizations with gross receipts normally **\$50,000 or less**,
+which carries no financial fields at all: 1,060,047 active organizations
+show BMF gross receipts under \$50,000 (a further 507,973 report none).
+Counting those organizations as below any of the thresholds above pushes
+the below-\$500k share of the whole sector to roughly nine in ten.
+
+### Staffing (full-990 filers, tax year 2023)
+
+Among the 329,583 full-990 filers reporting a W-3 employee count, the
+**median is 2 employees**; 42.2% report **zero** employees and 69.3%
+report ten or fewer. Full-990 filers are the largest organizations in
+the sector (990-EZ, 990-PF, and 990-N organizations are smaller and
+mostly volunteer-run), so these figures overstate sector-wide staffing.
+
+## Takeaways
+
+Recommended fill-in, with the defensible number:
+
+> **Most nonprofits in the US have reported expenses below \$500,000**
+> and have few or no paid staff.
+
+- Conservative version (filers only): 72% of the ~630,000 organizations
+  reporting financials for tax year 2023 had expenses below \$500,000.
+- Whole-sector version: including the ~1.5 million registered
+  organizations too small to file financial returns (990-N, gross
+  receipts ≤ \$50,000), roughly nine in ten US nonprofits operate below
+  \$500,000.
+- Staffing: the median full-990 filer reports 2 employees; 42% report
+  zero. Smaller filers report less still.
+- Suggested source line: “Author’s calculations from IRS Business Master
+  File and Form 990/990-EZ/990-PF returns, tax year 2023, via the Urban
+  Institute National Center for Charitable Statistics CORE and Unified
+  BMF files” (pinned vintages in `_pins.csv`).
+- Caveats: expenses are as reported (no inflation adjustment); churches
+  and religious congregations are not required to register or file, so
+  the universe understates the sector; “work directly with communities”
+  is not sourceable from IRS data.
+
+------------------------------------------------------------------------
+
+*Reproducibility: this story reads the vintages pinned in `_pins.csv`;
+rerun from those pins to reproduce. See ADR 0024 / 0025 in
+`nccs-contracts`.*
