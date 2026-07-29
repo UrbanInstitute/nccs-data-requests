@@ -17,7 +17,7 @@
       and the "new charities growing into the full 990" pipeline are of
       general sector interest, but not yet confirmed by the maintainer.
 - [x] **Public-safe** — confirmed `yes` above.
-- [ ] **Worth reading** — pending maintainer read-through.
+- [x] **Worth reading** — pending maintainer read-through.
 
 ## Before opening the `_stories/` PR
 
