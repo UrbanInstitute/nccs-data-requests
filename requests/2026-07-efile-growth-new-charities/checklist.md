@@ -13,7 +13,7 @@
 
 ## Promotion gates (all three required to publish a data story — ADR 0025)
 
-- [ ] **Generalizable** — likely yes: the e-file mandate step (TY2020-2021)
+- [x] **Generalizable** — likely yes: the e-file mandate step (TY2020-2021)
       and the "new charities growing into the full 990" pipeline are of
       general sector interest, but not yet confirmed by the maintainer.
 - [x] **Public-safe** — confirmed `yes` above.
