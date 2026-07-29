@@ -18,8 +18,8 @@ A `no` here means the request stays a private deliverable. Stop.
 ## Promotion gates (all three required to publish a data story — ADR 0025)
 
 - [ ] **Generalizable** — says something beyond this one requester's narrow ask.
-- [ ] **Public-safe** — confirmed `yes` above.
-- [ ] **Worth reading** — a non-specialist would get something from it.
+- [x] **Public-safe** — confirmed `yes` above.
+- [x] **Worth reading** — a non-specialist would get something from it.
 
 ## Before opening the `_stories/` PR
 
