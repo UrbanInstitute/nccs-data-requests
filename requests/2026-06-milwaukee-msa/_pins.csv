@@ -2,3 +2,8 @@
 "2026-06-05T15:20:55-0400","bmf-master-geocoded","rolling@2026-06-05","nccsdata::nccs_read (rolling geocoded master)",73687,"WI universe, all vintages 1989-2026"
 "2026-06-05T15:20:56-0400","crosswalk-county-fips","tiger-2023","s3://nccsdata/crosswalks/county-fips/county_fips_crosswalk.parquet",3635,""
 "2026-06-05T15:20:57-0400","crosswalk-cbsa","tiger-2023","s3://nccsdata/crosswalks/cbsa/cbsa_crosswalk.parquet",3228,""
+"2026-08-03T16:59:10-0400","bmf-master-geocoded","rolling@2026-08-03","nccsdata::nccs_read (rolling geocoded master)",3687435,""
+"2026-08-03T16:59:10-0400","crosswalk-county-fips","tiger-2023","s3://nccsdata/crosswalks/county-fips/county_fips_crosswalk.parquet",3635,""
+"2026-08-03T16:59:12-0400","crosswalk-cbsa","tiger-2023","s3://nccsdata/crosswalks/cbsa/cbsa_crosswalk.parquet",3228,""
+"2026-08-03T16:59:50-0400","efile-v2_1-p01-summary","release files 2011-2023","s3://nccs-efile/public/efile_v2_1/",3332267,"employee counts, full 990 only"
+"2026-08-03T16:59:52-0400","efile-v2_1-p09-expenses","release files 2011-2023","s3://nccs-efile/public/efile_v2_1/",3454310,"functional expense split, full 990 only"
