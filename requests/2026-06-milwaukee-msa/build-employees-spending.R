@@ -1,5 +1,5 @@
 # Follow-up build: employee counts + spending by category (functional
-# split), Milwaukee County + 4-county MSA, TY2011-2023.
+# split), Milwaukee County + 4-county MSA, TY2012-2023.
 #
 # Requester follow-up to the 2026-06 Milwaukee MSA request (details in
 # _private.md). Fields exist only on the full Form 990: 990-EZ and
@@ -21,8 +21,9 @@
 # TAX_YEAR; then one return per EIN2 x TAX_YEAR. TAX_YEAR and
 # RETURN_TYPE taken per row, never from the file-name year (house rule).
 #
-# Coverage: TY2021-2023 complete (e-file mandate); TY2011-2020 flagged
-# (v2.1 carries no TY2010 returns; series necessarily starts TY2011).
+# Coverage: TY2021-2023 complete (e-file mandate); TY2012-2020 flagged.
+# Series starts TY2012 per standing rule: TY2011 is the first year of
+# the IRS publication series and does not capture the full tax year.
 # coverage = "partial (pre-mandate e-filers only)" in every output row.
 #
 # Outputs (data/followup-2026-08/, gitignored; dollars in ACTUAL dollars):
@@ -104,7 +105,7 @@ dedup_sql <- function(glob, value_cols, types) sprintf("
                     types = {'EIN2':'VARCHAR','ORG_EIN':'VARCHAR',
                              'TAX_YEAR':'INTEGER','RETURN_TIME_STAMP':'VARCHAR',
                              'RETURN_AMENDED_X':'BOOLEAN','RETURN_GROUP_X':'BOOLEAN',%s})
-      WHERE RETURN_TYPE = '990' AND TAX_YEAR BETWEEN 2011 AND 2023
+      WHERE RETURN_TYPE = '990' AND TAX_YEAR BETWEEN 2012 AND 2023
     ) WHERE rn = 1)
   SELECT * EXCLUDE rn FROM (
     SELECT *, row_number() OVER (PARTITION BY EIN2, TAX_YEAR
@@ -172,5 +173,5 @@ record_pin(req, "efile-v2_1-p09-expenses", "release files 2011-2023",
            dbGetQuery(con, "SELECT count(*) n FROM spend")$n,
            "functional expense split, full 990 only")
 
-print(by_year, n = 30)
+print(by_year, row.names = FALSE)
 dbDisconnect(con, shutdown = TRUE)
