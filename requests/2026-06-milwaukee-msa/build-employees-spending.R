@@ -10,12 +10,13 @@
 #    county-fips + cbsa crosswalks; CBSA 33340 = Milwaukee-Waukesha MSA.
 #    Geography = Milwaukee County (55079) vs full 4-county MSA.
 #    Focus area = nteev2_subsector (same grouping as the June files).
-#  - Employees: e-file v2.1 Part I, F9_01_ACT_GVRN_EMPL_TOT (IRS
-#    headcount line, not FTE). Local CSVs reused from
-#    ../nccs-govt-grants-analysis/data/efile-v2_1/ if present.
-#  - Spending split: e-file v2.1 Part IX line 25 columns (total /
-#    program / management-general / fundraising), synced from
-#    s3://nccs-efile/public/efile_v2_1/ F9-P09-T00-EXPENSES-*.CSV.
+#  - Employees: e-file v2.1 Part I table (F9-P01-T00-SUMMARY),
+#    F9_01_ACT_GVRN_EMPL_TOT (IRS headcount line, not FTE). A local copy in
+#    ../nccs-govt-grants-analysis/data/efile-v2_1/ is reused if present.
+#  - Spending split: e-file v2.1 Part IX table (F9-P09-T00-EXPENSES),
+#    line 25 columns (total / program / management-general / fundraising).
+#    Both tables sync from s3://nccs-efile/public/efile_v2_1/ through one
+#    file-name pattern (section 0) that fails loudly on a catalog rename.
 #
 # Dedup: group/amended returns keep latest RETURN_TIME_STAMP per EIN2 x
 # TAX_YEAR; then one return per EIN2 x TAX_YEAR. TAX_YEAR and
@@ -39,27 +40,80 @@ library(dplyr)
 req      <- here::here("requests", "2026-06-milwaukee-msa")
 source(here::here("R", "request_read.R"))
 
-raw_grants <- path.expand("~/code/nccs/nccs-govt-grants-analysis/data/efile-v2_1")
-p09_dir    <- file.path(req, "data", "efile-v2_1-p09")
-out_dir    <- file.path(req, "data", "followup-2026-08")
+out_dir  <- file.path(req, "data", "followup-2026-08")
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 
-# --- 0. Sync Part IX CSVs (and Part I if the grants-repo cache is gone) ---
-if (!dir.exists(p09_dir) || length(list.files(p09_dir, "\\.CSV$")) < 14) {
-  dir.create(p09_dir, recursive = TRUE, showWarnings = FALSE)
-  stopifnot(system(paste(
-    "aws s3 sync s3://nccs-efile/public/efile_v2_1/", p09_dir,
-    "--profile thiya --exclude '*' --include 'F9-P09-T00-EXPENSES-*.CSV'")) == 0)
+# --- 0. E-file v2.1 release tables ------------------------------------------
+# The release catalog names each table as F9-P{part}-T00-{TABLE}-{year}.CSV.
+# That pattern is defined once here; every table below is addressed through
+# it, and sync_efile_table() fails loudly if the catalog stops matching, so
+# a rename upstream surfaces as a clear error rather than an empty result.
+efile_release_prefix <- "s3://nccs-efile/public/efile_v2_1/"
+efile_release_years  <- 2012:2023
+
+efile_table_file_pattern <- function(table_name, year = "*") {
+
+  sprintf("%s-%s.CSV", table_name, year)
+
 }
-summary_glob <- file.path(raw_grants, "F9-P01-T00-SUMMARY-*.CSV")
-if (length(Sys.glob(summary_glob)) == 0) {
-  p01_dir <- file.path(req, "data", "efile-v2_1-p01")
-  dir.create(p01_dir, recursive = TRUE, showWarnings = FALSE)
-  stopifnot(system(paste(
-    "aws s3 sync s3://nccs-efile/public/efile_v2_1/", p01_dir,
-    "--profile thiya --exclude '*' --include 'F9-P01-T00-SUMMARY-*.CSV'")) == 0)
-  summary_glob <- file.path(p01_dir, "F9-P01-T00-SUMMARY-*.CSV")
+
+# Sync one release table into `local_dir` (only missing files download) and
+# return the glob that DuckDB reads. Reuses `reuse_dir` first when another
+# request already holds a copy, so the ~1 GB summary table is not duplicated.
+sync_efile_table <- function(table_name, local_dir, reuse_dir = NULL) {
+
+  file_glob <- efile_table_file_pattern(table_name)
+
+  files_present <- function(dir) {
+
+    if (is.null(dir)) return(character(0))
+
+    Sys.glob(file.path(dir, file_glob))
+
+  }
+
+  reused_files <- files_present(reuse_dir)
+
+  if (length(reused_files) >= length(efile_release_years)) {
+
+    return(file.path(reuse_dir, file_glob))
+
+  }
+
+  dir.create(local_dir, recursive = TRUE, showWarnings = FALSE)
+
+  sync_status <- system(paste(
+    "aws s3 sync", efile_release_prefix, local_dir,
+    "--profile thiya --exclude '*' --include", shQuote(file_glob)))
+
+  synced_files <- files_present(local_dir)
+
+  # Every release year must be present: a partial catalog silently truncates
+  # the series, which is worse than stopping.
+  years_found   <- as.integer(regmatches(synced_files,
+                                         regexpr("\\d{4}(?=\\.CSV$)", synced_files, perl = TRUE)))
+  years_missing <- setdiff(efile_release_years, years_found)
+
+  if (sync_status != 0 || length(years_missing) > 0) {
+
+    stop(sprintf(
+      "e-file table %s: sync exit %d, missing years %s. Check the release catalog at %s",
+      table_name, sync_status, paste(years_missing, collapse = ", "), efile_release_prefix))
+
+  }
+
+  file.path(local_dir, file_glob)
+
 }
+
+summary_glob  <- sync_efile_table(
+  "F9-P01-T00-SUMMARY",
+  local_dir = file.path(req, "data", "efile-v2_1-p01"),
+  reuse_dir = path.expand("~/code/nccs/nccs-govt-grants-analysis/data/efile-v2_1"))
+
+expenses_glob <- sync_efile_table(
+  "F9-P09-T00-EXPENSES",
+  local_dir = file.path(req, "data", "efile-v2_1-p09"))
 
 # --- 1. Milwaukee universe: EIN -> county + focus area (as in request.qmd) ---
 bmf <- read_bmf_master(
@@ -84,13 +138,17 @@ duckdb::duckdb_register(con, "universe", universe)
 
 # --- 2. One deduped full-990 return per EIN2 x TAX_YEAR, with both fields ---
 # Part IX column names are verified against the file header at runtime.
-p09_cols <- names(read.csv(list.files(p09_dir, "2023", full.names = TRUE), nrows = 0))
+expenses_columns <- names(utils::read.csv(Sys.glob(expenses_glob)[1], nrows = 0))
 split_cols <- c(total = "F9_09_EXP_TOT_TOT", program = "F9_09_EXP_TOT_PROG",
                 mgmt  = "F9_09_EXP_TOT_MGMT", fundraising = "F9_09_EXP_TOT_FUNDR")
-missing <- setdiff(split_cols, p09_cols)
-if (length(missing) > 0)
+split_columns_missing <- setdiff(split_cols, expenses_columns)
+
+if (length(split_columns_missing) > 0) {
+
   stop("Part IX columns not found (check dictionary): ",
-       paste(missing, collapse = ", "))
+       paste(split_columns_missing, collapse = ", "))
+
+}
 
 dedup_sql <- function(glob, value_cols, types) sprintf("
   WITH flagged_dedup AS (
@@ -116,7 +174,7 @@ dbExecute(con, paste("CREATE VIEW emp AS", dedup_sql(
   summary_glob, "F9_01_ACT_GVRN_EMPL_TOT",
   "'F9_01_ACT_GVRN_EMPL_TOT':'DOUBLE'")))
 dbExecute(con, paste("CREATE VIEW spend AS", dedup_sql(
-  file.path(p09_dir, "F9-P09-T00-EXPENSES-*.CSV"),
+  expenses_glob,
   paste(split_cols, collapse = ", "),
   paste(sprintf("'%s':'DOUBLE'", split_cols), collapse = ","))))
 
