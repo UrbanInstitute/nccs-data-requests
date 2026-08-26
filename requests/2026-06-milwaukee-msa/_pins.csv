@@ -238,3 +238,8 @@
 "2026-08-26T13:04:56-0400","core-merged","merged","core:merged",113804,"Requester follow-up, 990pf 2021"
 "2026-08-26T13:04:56-0400","core-merged","merged","core:merged",116138,"Requester follow-up, 990pf 2022"
 "2026-08-26T13:04:56-0400","core-merged","merged","core:merged",114199,"Requester follow-up, 990pf 2023"
+"2026-08-26T13:12:41-0400","bmf-master-geocoded","rolling@2026-08-26","nccsdata::nccs_read (rolling geocoded master)",3698124,""
+"2026-08-26T13:12:42-0400","crosswalk-county-fips","tiger-2023","s3://nccsdata/crosswalks/county-fips/county_fips_crosswalk.parquet",3635,""
+"2026-08-26T13:12:42-0400","crosswalk-cbsa","tiger-2023","s3://nccsdata/crosswalks/cbsa/cbsa_crosswalk.parquet",3228,""
+"2026-08-26T13:13:14-0400","efile-v2_1-p01-summary","efile_v2_1 TY2012-2023, 12 files (sha256 in _efile_inputs.csv)","s3://nccs-efile/public/efile_v2_1/F9-P01-T00-SUMMARY-2012.CSV .. F9-P01-T00-SUMMARY-2023.CSV",3174130,"employee counts, full 990 only, deduped EIN2 x TAX_YEAR"
+"2026-08-26T13:13:15-0400","efile-v2_1-p09-expenses","efile_v2_1 TY2012-2023, 12 files (sha256 in _efile_inputs.csv)","s3://nccs-efile/public/efile_v2_1/F9-P09-T00-EXPENSES-2012.CSV .. F9-P09-T00-EXPENSES-2023.CSV",3174130,"functional expense split, full 990 only, deduped EIN2 x TAX_YEAR"
