@@ -1,4 +1,4 @@
-# build-ntee-filer-files.R — 2026-08 follow-up (WPF): add legacy 3-char NTEE
+# build-ntee-filer-files.R — 2026-08 follow-up (requester): add legacy 3-char NTEE
 # codes to the EIN-level filer files so the requester can apply their own
 # 9-group scheme and adjusted-sample exclusions (defined on NTEE letters).
 #
@@ -24,7 +24,7 @@ bmf <- read_bmf_master(
   columns = c("ein", "org_name_display", "geo_state_abbr", "geo_county",
               "ntee_code_clean", "nteev2_subsector",
               "first_year_in_bmf", "last_year_in_bmf"),
-  cache = FALSE, note = "WPF follow-up: WI universe with legacy NTEE code"
+  cache = FALSE, note = "Requester follow-up: WI universe with legacy NTEE code"
 )
 xwalk_county <- read_crosswalk(req, "county-fips")
 xwalk_cbsa   <- read_crosswalk(req, "cbsa")
@@ -46,12 +46,13 @@ record_pin(req, "crosswalk-ntee-resolved", "current", ntee_uri,
 msa <- msa |>
   left_join(ntee_res, by = "ein") |>
   mutate(
-    # Placeholder values ("UNDEFINED", "UNKNOWN", bare letters, "Z…") are not
-    # real codes — a valid legacy NTEE code is letter + 2 digits (+ optional
-    # specialty suffix). Anything else is treated as missing.
-    ntee_code = ifelse(grepl("^[A-Z][0-9]{2}", trimws(coalesce(ntee_code_clean, ""))),
+    # Placeholder values ("UNDEFINED", "UNKNOWN", bare letters, and the Z
+    # "unknown" major group, e.g. Z99) are not real codes: a valid legacy
+    # NTEE code is a letter A-Y + 2 digits (+ optional specialty suffix).
+    # Anything else is treated as missing.
+    ntee_code = ifelse(grepl("^[A-Y][0-9]{2}", trimws(coalesce(ntee_code_clean, ""))),
                        trimws(ntee_code_clean), NA_character_),
-    ntee_most_recent_valid = ifelse(grepl("^[A-Z][0-9]{2}", trimws(coalesce(ntee_most_recent, ""))),
+    ntee_most_recent_valid = ifelse(grepl("^[A-Y][0-9]{2}", trimws(coalesce(ntee_most_recent, ""))),
                                     trimws(ntee_most_recent), NA_character_),
     ntee_code_resolved = coalesce(ntee_code, ntee_most_recent_valid),
     ntee_source = case_when(
@@ -78,7 +79,7 @@ pull_form <- function(form) {
   bind_rows(lapply(1989:2023, function(y) {
     df <- tryCatch(
       read_core(req, tier = "merged", tax_year = y, form = form,
-                note = sprintf("WPF follow-up, %s %d", form, y)),
+                note = sprintf("Requester follow-up, %s %d", form, y)),
       error = function(e) { message(sprintf("skip %s %d: %s", form, y, conditionMessage(e))); NULL })
     if (is.null(df) || nrow(df) == 0) return(NULL)
     keep <- intersect(c("ein", "tax_year", rev_cols), names(df))
