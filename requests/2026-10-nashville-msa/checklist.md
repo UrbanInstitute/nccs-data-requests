@@ -16,7 +16,7 @@
       "government vs private funding mix" metro profile is reusable, but
       this is an exploration, not yet a story.
 - [x] Public-safe: yes.
-- [ ] Worth reading: findings 1, 2 and 4 are candidates; finding 4 needs the
+- [ ] Worth reading: findings 1, 2 and 4 are candidates; finding 5 needs the
       exit cohort checked (closure vs 990-EZ switch) before it is cited.
 
 ## Status

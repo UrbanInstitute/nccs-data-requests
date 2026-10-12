@@ -1,7 +1,7 @@
 ---
-title: "Nashville metro nonprofits: where they are, who pays for them, and what the workforce looks like, 2012-2023"
+title: "Nashville nonprofits in the IRS data: location, funding, workforce, and volunteers"
 date: 2026-10-12
-description: "An exploratory read of IRS Form 990 data for the 14-county Nashville metro: nonprofit density by county against population growth, government versus private funding, pay and staffing against 20 peer metros."
+description: "An exploratory read of IRS data for Metro Nashville (Davidson County) and the 14-county metro: where organizations are, how they are funded, what the paid workforce and volunteer base look like, benchmarked against 19 peer metros."
 draft: true
 format: gfm
 type: analysis
@@ -18,70 +18,112 @@ citation:
 
 ## The ask
 
-Do the 990 data show any patterns in nonprofit locations and finances in the
-Nashville metro, in connection with recent survey work on the Tennessee
-nonprofit workforce? Exploratory only, five hours, no committed product.
-(Requester specifics are in the gitignored `_private.md`.)
+Do the IRS data show any patterns in nonprofit locations and finances for
+Nashville, alongside recent survey work on the Tennessee nonprofit workforce
+(see `docs/`)? Exploratory only, five hours, no committed product.
+Requester specifics are in the gitignored `_private.md`.
 
 ## Geography
 
-"Nashville metro" is OMB CBSA 34980, Nashville-Davidson--Murfreesboro--Franklin,
-TN: 14 counties (Davidson, Williamson, Rutherford, Sumner, Wilson, Maury,
-Robertson, Dickson, Cheatham, Hickman, Macon, Smith, Cannon, Trousdale), 2023
-delineation, held fixed across years. Geography is composed by joining the
-published `county-fips` and `cbsa` crosswalks onto the geocoded Unified BMF.
-"Davidson" is Metro Nashville; "collar" means the other 13 counties.
+Two units are reported throughout.
 
-## Data and method
+- **Davidson County** is Metro Nashville. Nashville has a consolidated
+  city-county government, so the county is the city. Six small satellite
+  cities inside the county (Goodlettsville, Belle Meade, Berry Hill, Forest
+  Hills, Oak Hill, Ridgetop) are included; they hold a few percent of the
+  county's organizations.
+- **The metro** is OMB CBSA 34980, Nashville-Davidson--Murfreesboro--Franklin,
+  TN: Davidson plus 13 collar counties (Williamson, Rutherford, Sumner,
+  Wilson, Maury, Robertson, Dickson, Cheatham, Hickman, Macon, Smith, Cannon,
+  Trousdale), 2023 delineation, held fixed across years.
 
-- **Registered universe:** geocoded Unified BMF (rolling, read 2026-10-12),
-  one row per EIN with `first_year_in_bmf` / `last_year_in_bmf`. County
-  resolution is 100% for Tennessee organizations active in 2026.
-- **Finances and workforce:** e-file v2.1 Form 990 Part I and Part IX tables,
-  TY2012-2023, one return per EIN x tax year (amended and group returns keep
-  the latest timestamp). Tax year and return type are taken per row. Full
-  Form 990 only: 990-EZ and 990-PF carry no employee or compensation lines.
-  Employees = Part I line 5 (a headcount, including part-time). Pay per
-  employee = Part IX lines 5-10 (all compensation, benefits, payroll tax)
-  divided by employees, kept when between $5,000 and $400,000.
-- **Government grants:** NCCS e-file Phase 0 `government_grants` (Form 990
-  Part VIII line 1e), vintage v2026.06, TY2020-2023. A blank line is treated
-  as zero everywhere.
-- **Main population:** 501(c)(3) public charities excluding hospitals and
-  universities (NTEE v2 subsectors HOS and UNI), so a handful of health
-  systems, electric cooperatives and employee benefit trusts do not drive
-  the totals. The all-organizations view is in the exploration scripts.
-- **Benchmarks:** 19 peer metros (Memphis, Knoxville, Austin, Charlotte,
-  Raleigh, Indianapolis, Louisville, Columbus, Kansas City, Jacksonville,
-  Oklahoma City, Atlanta, Denver, St. Louis, Cincinnati, Richmond,
-  Birmingham, San Antonio, Phoenix), the rest of Tennessee, and the rest of
-  the US. Dollars are CPI-U adjusted to 2023. Population from Census county
-  estimates (vintages 2019 and 2023); private-sector pay from BLS QCEW.
+Geography is composed by joining the published `county-fips` and `cbsa`
+crosswalks onto the geocoded Unified BMF. Location means the organization's
+filing address. Organizations headquartered in Davidson (Second Harvest,
+United Way, the community action agencies) serve the region, so any
+per-resident figure by county overstates how concentrated services are.
 
-### Caveats to read before citing
+Benchmarks are 19 peer metros (Memphis, Knoxville, Austin, Charlotte,
+Raleigh, Indianapolis, Louisville, Columbus, Kansas City, Jacksonville,
+Oklahoma City, Atlanta, Denver, St. Louis, Cincinnati, Richmond,
+Birmingham, San Antonio, Phoenix). Davidson is compared with each peer's
+principal county (the county with the most registered organizations, for
+example Travis for Austin, Mecklenburg for Charlotte); the metro is compared
+with whole peer metros. "Rest of US" means every organization outside the
+20 metros.
 
-1. TY2023 is about 5% short of complete in this e-file release (filer counts
-   dip from 2022 to 2023 everywhere). 2019 to 2022 comparisons are given
-   where they change the picture.
-2. Location is the filing address. Organizations headquartered in Davidson
-   (Second Harvest, United Way, community action agencies) serve the region,
-   so per-resident spending by county overstates how concentrated services are.
-3. Leaving the full-990 panel can mean closure, merger, falling under the
-   $200,000 gross-receipts threshold (switching to 990-EZ), or late filing.
-4. Employee counts on the 990 are headcounts with no hours, so pay per
-   employee tracks the wage bill per head, not a wage rate.
-5. Pre-2021 e-file years cover only organizations that e-filed voluntarily.
-   Series start at TY2012 by house rule.
+## Data
+
+| Source | What it gives | Years | Currency |
+|---|---|---|---|
+| Geocoded Unified BMF (rolling, read 2026-10-12) | Every registered organization: location, subsection, foundation status, NTEE, ruling date, first and last year observed, latest reported revenue and assets | 1989-2026 | Monthly; current |
+| E-file v2.1 Form 990 Part I and Part IX | Employees, volunteers, revenue, expenses, net assets, compensation lines | TY2012-2023 | Lags two to three years |
+| NCCS e-file Phase 0 `government_grants` (v2026.06) | Form 990 Part VIII line 1e | TY2020-2023 | Lags two to three years |
+| Census county population estimates (vintages 2019, 2023) | Denominators | 2010-2023 | |
+| BLS QCEW annual county files | Private-sector average annual pay, Davidson, Williamson, Rutherford | 2019, 2023 | |
+
+**Main population for the financial and workforce tables:** 501(c)(3)
+public charities filing the full Form 990, excluding hospitals and
+universities (NTEE v2 subsectors HOS and UNI), so a handful of health
+systems do not drive the totals. The all-organizations view is in
+`output/explore-2-finance.txt`.
+
+**Definitions.**
+
+- *Employees* is Form 990 Part I line 5, a calendar-year headcount with no
+  hours. *Volunteers* is Part I line 6, the filer's own estimate.
+- *Pay per employee* is Part IX lines 5-10 (officer and key-employee
+  compensation, other salaries and wages, pension contributions, other
+  benefits, payroll taxes) divided by employees, kept when between $5,000
+  and $400,000. It is total people cost per head, not a wage rate. An
+  organization with many part-time staff reads as low-paid on this measure.
+- *Government grants share* is line 1e over total revenue. A blank line 1e
+  is treated as zero everywhere.
+- *Deficit* is expenses greater than revenue in the year. *Months of
+  reserves* is year-end net assets divided by expenses, times twelve.
+- Dollars are CPI-U adjusted to 2023.
+
+### Limitations and caveats
+
+1. **Filing lag.** The financial and workforce series end at tax year 2023,
+   filed during 2024 and 2025. They describe the sector as it stood going
+   into 2024 and say nothing about conditions after that. The survey work
+   in `docs/` covers late 2024 and 2025 and is the right source for anything
+   current. Only the BMF-based tables (density, formation, attrition,
+   foundations, zip codes) are current.
+2. **TY2023 is about 5% short of complete** in this e-file release: filer
+   counts dip from 2022 to 2023 in every geography. 2019 to 2022 figures are
+   given where they change the picture (`output/explore-6-national.txt`).
+3. **Full Form 990 only.** The 990-EZ (gross receipts under $200,000 and
+   assets under $500,000) has no employee count, no compensation breakdown,
+   and no government grants line, and the 990-N has no financials. The
+   financial tables therefore cover a minority of organizations but most of
+   the money. Seven to eight in ten registered organizations in every metro
+   county report under $50,000 in revenue.
+4. **Leaving the full-990 panel** can mean closure, merger, falling under
+   the 990-EZ threshold, or late filing. The exit cohort has not been
+   traced into the 990-EZ data. Until it is, the pay finding (section 4)
+   should not be cited.
+5. **Pre-2021 e-file years** cover only organizations that e-filed
+   voluntarily. Series start at TY2012 by house rule.
+6. **BMF asset sums by zip code** come from each organization's latest
+   return as carried in the BMF, are missing for 990-N filers, and are
+   dominated by whichever large institutions have a mailing address in the
+   zip. They locate large balance sheets; they do not measure neighborhood
+   resources or need.
+7. **Volunteer counts** are self-reported estimates, blank for about four in
+   ten filers, and swing with a few large organizations (Second Harvest
+   alone reports 25,000).
 
 ## Findings
 
-### 1. Population moved to the collar counties; nonprofit infrastructure did not
+### 1. Population moved to the collar counties; nonprofit capacity did not
 
-Davidson's share of the metro's registered nonprofits has fallen steadily
-(47% in 2000, 42% in 2026) as the collar grew, but the money and the jobs
-remain in Davidson and, to a lesser degree, Williamson.
+Davidson's share of the metro's registered nonprofits has fallen from 47% in
+2000 to 42% in 2026 as the collar grew, but spending and jobs remain in
+Davidson and, to a lesser degree, Williamson.
 
-Registered 501(c)(3) organizations per 10,000 residents:
+Registered 501(c)(3) organizations per 10,000 residents (BMF, current):
 
 | County | Pop. 2023 | Pop. growth 2010-23 | Orgs/10k 2010 | Orgs/10k 2023 |
 |---|---|---|---|---|
@@ -92,10 +134,9 @@ Registered 501(c)(3) organizations per 10,000 residents:
 | Wilson | 163,674 | 43% | 28.6 | 34.6 |
 | Maury | 110,760 | 36% | 33.0 | 38.4 |
 
-Full-990 charity spending and jobs per resident (excluding hospitals and
-universities), 2023:
+Full-990 charity spending and jobs per resident, 2023 (caveats 1 and 3):
 
-| County | Charity filers | Expenses per resident | Charity employees per 1,000 residents | Human services expenses per resident | Human services employees per 1,000 |
+| County | Charity filers | Expenses per resident | Charity employees per 1,000 | Human services expenses per resident | Human services employees per 1,000 |
 |---|---|---|---|---|---|
 | Davidson | 883 | $6,546 | 67.1 | $1,564 | 21.0 |
 | Williamson | 331 | $2,994 | 25.7 | $992 | 9.1 |
@@ -104,115 +145,134 @@ universities), 2023:
 | Sumner | 115 | $441 | 5.1 | $195 | 2.2 |
 | Maury | 57 | $1,070 | 12.5 | $176 | 2.9 |
 
-Rutherford is the second most populous county in the metro and has grown
-39% since 2010, yet it hosts 37 human-services charities filing a full 990
-with 2.6 employees per 1,000 residents, against 21 in Davidson. Williamson,
-the wealthiest county, is the exception: it is as dense in organizations as
-Davidson. Every county's organization density rose between 2010 and 2023, so
-the collar is catching up in counts, but not in capacity.
+Rutherford is the metro's second most populous county and has grown 39%
+since 2010, yet hosts 37 human-services charities filing a full 990 with
+2.6 employees per 1,000 residents, against 21 in Davidson. Williamson is
+the exception. Every county's organization density rose between 2010 and
+2023, so the collar is catching up in counts, not in capacity. Whether the
+gap is a service gap depends on how far Davidson organizations reach, which
+the data do not show.
 
-### 2. Nashville's charities run on private money, not government money
+### 2. Inside Davidson, new organizations form away from the large institutions
 
-Government grants (Form 990 line 1e) as a share of total revenue, 2023,
-charities excluding hospitals and universities:
+Among charities active in 2026 (BMF, current), the zip codes with the most
+organizations formed since 2020 are 37013 (Antioch: 130 of 273 charities)
+and 37211 (South Nashville: 115 of 282), followed by 37209 and 37207 (North
+Nashville: 75 of 177, 65 of them human services). Zips 37203 and 37212
+(Midtown, the Vanderbilt area) each hold about $2 billion in reported
+assets; 37013 holds $75 million and 37207 $52 million. New nonprofit
+formation is concentrated in zip codes with few large nonprofit institutions
+headquartered in them (caveat 6). Table in `output/explore-8-bmf.txt`.
 
-| | Share reporting any government grants | Government grants / revenue (aggregate) | Share of charities 25%+ government funded |
+### 3. Formation, attrition, and foundations (BMF, current)
+
+- Nashville's stock of 501(c)(3)s grew 29% from 2019 to 2026, sixth of 20
+  metros (Austin 37%, Atlanta and Raleigh 33%). Attrition is ordinary: 21%
+  of organizations active in 2019 were gone by 2026, the peer median.
+- Among charities ruled since 2020, religion is 16% of Nashville's new
+  organizations against 13% in peers, arts 8.6% against 7.3%, and human
+  services 35% against 38%.
+- Private foundations are growing fastest in the collar. Williamson has 7.3
+  per 10,000 residents against Davidson's 5.7, and its count grew 48% since
+  2015 against Davidson's 23%. The largest foundations remain in Davidson
+  (Dettwiller, Scarlett, Frist, HCA Healthcare, Living Legacy, $150-250
+  million each).
+
+### 4. Funding: human services charities draw less from government than elsewhere
+
+Government grants (line 1e) as a share of revenue, 2023, charities excluding
+hospitals and universities (caveat 1):
+
+| | Reporting any government grants | Government grants / revenue | Human services: government / revenue |
 |---|---|---|---|
-| Nashville metro | 30% | 12.7% | 16% |
-| Rest of Tennessee | 39% | 18.2% | 23% |
-| Rest of US | 33% | 15.3% | 18% |
-| Nashville human services | 34% | 13.2% | 19% |
-| US human services | 38% | 23.5% | 23% |
+| Davidson | 34% | 14.8% | 15.7% (14th of 20 central counties) |
+| Nashville metro | 30% | 12.7% | 13.2% |
+| Rest of Tennessee | 39% | 18.2% | |
+| Rest of US | 33% | 14.8% | 23.8% |
 
-Nashville ranks 10th of 20 peer metros on aggregate government share, but
-the gap is widest in human services, where the metro's charities draw 13
-cents of revenue from government against 24 cents nationally. Within the
-metro the split is sharp: Davidson charities get 14.8% of revenue from
-government, Williamson 3.6%, Rutherford 4.9%. Among human-services
-charities, Davidson is at 15.7% and the collar at 7.8%.
+Davidson's overall government share matches the rest of the US. The
+difference is specific to human services, where Davidson's charities draw
+16 cents of revenue from government against 24 cents nationally, and it is
+the collar that pulls the metro figure down (Williamson 3.6%, Rutherford
+4.9%). Davidson's government share has fallen each year since 2020 (17.0%
+to 14.8%). The median Davidson charity gets 77% of revenue from contributions
+and grants of all kinds (US 69%). The largest government recipients are
+charter school networks (KIPP, LEAD, Valor, RePublic, STEM Prep, each 84 to
+96% government funded), the Tennessee Performing Arts Center, the
+Mid-Cumberland community action and human resource agencies, and Second
+Harvest.
 
-The flip side shows in the revenue mix. The median Nashville charity gets
-79% of revenue from contributions and grants of all kinds (US: 69%), and
-that share jumped in 2020 (72% to 82%) and has not come back down. The
-largest government recipients are charter school networks (KIPP, LEAD,
-Valor, RePublic, STEM Prep, each 84 to 96% government funded), the
-Tennessee Performing Arts Center, the Mid-Cumberland community action and
-human resource agencies, and Second Harvest.
+### 5. Workforce: more organizations, more spending, no more jobs, higher pay per head
 
-### 3. More organizations, more spending, no more jobs
-
-Charities excluding hospitals and universities, 2019 to 2023 (real 2023 $):
+Charities excluding hospitals and universities, 2019 to 2023, real 2023
+dollars (caveats 1-4):
 
 | | Full-990 filers | Employees | Real expenses | Median real pay per employee |
 |---|---|---|---|---|
-| Nashville metro | +26% | -4% | +7% | +9.9% |
+| Davidson | +16% | -6% | +5% | +6.9% (1st of 20 central counties) |
+| Nashville metro | +26% | -4% | +7% | +9.9% (1st of 20 metros) |
 | Rest of Tennessee | +23% | -13% | -26% | -0.8% |
-| Rest of US | +16% | +1% | +2% | +0.7% |
+| Rest of US | +16% | -2% | +2% | +0.5% |
 
-Nashville added full-990 charities faster than any peer metro except
-Jacksonville and Indianapolis, and its real spending grew while the rest of
-Tennessee's shrank. Headcount did not follow: 65,500 employees in 2023
-against 68,600 in 2019 (2022: 68,500, so the 2023 dip is partly caveat 1).
-Human services went from 386 to 514 filers while employees slipped from
-21,900 to 20,000.
+Davidson's median pay per employee in 2023 was $46,848, fifth highest among
+peer central counties (Atlanta $54,453, Denver $53,436, Austin $52,809).
+Human services pay in the metro rose from $36,400 to $41,700. BLS private
+social-assistance pay in Davidson (NAICS 624) rose from $31,000 to $41,500
+over the same years, and all private pay rose 6% in real terms, so
+nonprofit human-services pay per head kept pace with the local private
+market for the same work.
 
-### 4. Pay rose faster than anywhere in the peer set, mostly because low-paying organizations dropped out
+Part of the rise is composition. Among organizations present in both 2019
+and 2023, the metro's median within-organization real pay change was +4.1%
+(US +3.5%). Organizations that stopped filing a full 990 by 2023 had paid
+less per head in 2019 than those that stayed: $31,600 against $41,600 in
+the metro, $39,800 against $44,400 in Davidson. Elsewhere in the country
+leavers and stayers paid the same. Caveat 4 applies: the leavers have not
+been traced.
 
-The median Nashville charity's real pay per employee rose from $39,800 to
-$43,700 (+9.9%), the largest gain among the 20 metros. Human services rose
-from $36,400 to $41,700 (+15%). For comparison, BLS private-sector average
-pay in Davidson rose 6% in real terms over the same years, and private
-social-assistance pay (NAICS 624) rose 12%, from $31,000 to $41,500. So
-nonprofit human-services pay kept pace with the local private market for
-the same work, which is not what most peers managed.
+Human services charities present in both years went from 34% to 43% in
+deficit (US 40% to 44%) while median reserves held near 11 months. Across
+all Davidson charities, 40% ran a deficit in 2023 and 20% held under three
+months of reserves, both at the national level.
 
-But the gain is largely compositional. Among organizations present in both
-2019 and 2023, Nashville's median within-organization real pay change was
-+4.1%, barely above the US figure of +3.5%. The difference is who left:
+### 6. Volunteers: a larger volunteer base per paid employee, and it is shrinking
 
-| Nashville charities with staff in 2019 | n | Median real pay per employee, 2019 |
-|---|---|---|
-| Still filing a full 990 in 2023 | 753 | $41,560 |
-| No longer filing a full 990 in 2023 | 128 | $31,629 |
+Volunteers per paid employee, 2023, charities reporting both:
 
-Elsewhere in the country the leavers paid the same as the stayers ($37,800
-vs $37,700). In Nashville the organizations that closed, merged, or shrank
-below the 990 threshold paid a quarter less than those that survived. That
-is consistent with the survey finding that Tennessee nonprofits were more
-optimistic about hiring: the ones still standing are the ones that could
-pay.
+| | Share reporting volunteers | Median volunteers | Median volunteers per employee | Human services: volunteers per employee |
+|---|---|---|---|---|
+| Davidson | 66% | 40 | 4.0 (11th of 20 central counties) | 5.1 |
+| Nashville collar | 55% | 30 | 5.0 | |
+| Rest of US | 59% | 25 | 2.6 | 2.5 |
 
-### 5. Human services: holding staff, losing margin
-
-Among human-services charities present in both 2019 and 2023, the share
-ending the year in deficit rose from 34% to 43% (US: 40% to 44%), while the
-median organization's reserves stayed near 11 months of spending. Nashville
-started from a better position and ended at the national level. Across all
-Nashville charities, deficits are at 37% (US 41%) and 19% hold under three
-months of net assets (US 21%): not a sector in distress, but one that spent
-its 2020-2021 cushion. Volunteers reported by Nashville charities fell from
-300,000 in 2019 to 275,000 in 2023 and the median organization's volunteer
-count dropped from 50 to 34.
+Davidson's human services charities report twice the volunteers per paid
+employee of their national counterparts, and its environment, arts, and
+public-benefit organizations are also above the norm. Reported volunteers
+in Davidson fell from 227,000 in 2019 to 174,000 in 2023 (-23%) while
+employees fell 6%. Among organizations reporting in both years, 46% reported
+fewer volunteers in 2023 and 37% more; in human services 52% reported fewer,
+with a median decline of 7%. Nationally 43% reported fewer. The largest
+volunteer counts are Second Harvest (25,000), Hands On Nashville (9,000),
+and Nashville Rescue Mission (7,800). Caveat 7 applies.
 
 ## What this could become
 
-- A county-level "capacity map" for Metro and the Community Foundation:
-  Finding 1 as a map with human-services capacity per resident, which is
-  where their service-area questions live. Needs the service-area caveat
-  made explicit, ideally by checking a few regional organizations' Schedule
-  O descriptions.
-- A funding-mix brief: Finding 2 is new relative to the survey work and
-  speaks directly to a community foundation and a city government deciding
-  who fills what gaps. TY2024 Phase 0 data (partial) could extend it.
-- The pay and exit pattern in Finding 4 deserves a closer look before it is
-  cited: which 128 organizations left, and whether they closed or just
-  switched to the 990-EZ.
+- A county capacity map for Metro and the Community Foundation (finding 1,
+  with the service-area caveat made explicit), and a zip-level view of new
+  formation (finding 2). Both are current.
+- A funding-mix note on human services (finding 4), which is new relative
+  to the survey work. The TY2024 Phase 0 file (partial, early filers) could
+  extend it by a year.
+- The pay and exit pattern (finding 5) needs the exit cohort traced into
+  the 990-EZ before it is cited anywhere.
 
 ## Reproducibility
 
-Scripts in this folder run in order: `build-panel.R`, `build-peers.R`,
-`explore-1-universe.R` through `explore-7-govgrants.R`. All reads are
-pinned in `_pins.csv`. The national e-file tables are the TY2012-2023 files
-synced for `requests/2026-06-milwaukee-msa` (sha256 in that folder's
-`_efile_inputs.csv`). Population and QCEW inputs are fetched from Census
-and BLS public URLs (see `explore-5-charities.R` and `_private.md`).
+Scripts run in order: `build-panel.R`, `build-peers.R`, then
+`explore-1-universe.R` through `explore-10-volunteers.R`. Console output of
+each is in `output/`. All reads are pinned in `_pins.csv`. The national
+e-file tables are the TY2012-2023 files synced for
+`requests/2026-06-milwaukee-msa` (sha256 in that folder's
+`_efile_inputs.csv`). Census and BLS inputs are in `data/external/`
+(gitignored) with sources in `INPUTS.md`; the extracted benchmark rows are
+in `output/`.

@@ -1,0 +1,169 @@
+foundation_code values:
+    15     16      0     10      4     11     17      3 
+157974 103349  70885  40956  28545   4879   3654   1722 
+== Formation and attrition by metro, 501(c)(3) ==
+           metro active_2026 new_share_2020plus active_2019 gone_by_2026
+1         Austin       12564                 41        9139           22
+2        Atlanta       37644                 43       28366           25
+3        Raleigh        7809                 39        5876           20
+4      Charlotte       13545                 40       10286           23
+5        Phoenix       18352                 41       14023           25
+6      Nashville       10291                 38        7979           21
+7   Jacksonville        8099                 38        6343           23
+8       Richmond        7448                 37        5807           20
+9    San Antonio        9511                 36        7590           21
+10    Birmingham        6323                 34        5107           20
+11  Indianapolis       12008                 34        9695           19
+12      Columbus       11740                 31        9680           19
+13    Louisville        6331                 32        5211           19
+14 Oklahoma City        6703                 32        5534           20
+15        Denver       14819                 34       12387           22
+16   Kansas City       11330                 31        9527           20
+17     Knoxville        3610                 33        3031           21
+18    Cincinnati       11078                 30        9460           19
+19     St. Louis       17393                 26       15251           17
+20       Memphis       11236                 22       10087           14
+   growth_2019_2026 pf_share_2026 pf_growth_2015_2026
+1                37           7.0                  54
+2                33           5.9                  51
+3                33           6.5                  61
+4                32           5.2                  40
+5                31           7.7                  54
+6                29           7.5                  37
+7                28           8.3                  45
+8                28           6.6                  34
+9                25           7.6                  46
+10               24          11.1                  14
+11               24           5.5                  35
+12               21           6.9                  26
+13               21           8.2                  39
+14               21           7.6                  34
+15               20           9.1                  23
+16               19           7.9                  30
+17               19           6.4                  66
+18               17          10.6                  24
+19               14          19.1                  14
+20               11           2.6                  34
+== Subsector mix of organizations ruled 2020+ and active 2026: Nashville vs all peers, charities ==
+   focus Nashville Peers diff
+1    REL      16.2  12.6  3.6
+2    ART       8.6   7.3  1.3
+3    IFA       1.0   0.9  0.1
+4    HOS       0.1   0.1  0.0
+5    MMB       0.2   0.2  0.0
+6    UNI       0.1   0.1  0.0
+7    HEL       8.0   8.1 -0.1
+8    ENV       4.3   4.4 -0.1
+9    PSB      12.0  12.2 -0.2
+10   UNU       1.9   2.3 -0.4
+11   EDU      12.7  13.5 -0.8
+12   HMS      34.9  38.3 -3.4
+== Same for the stock active 2026 (all ruling years) ==
+   focus Nashville Peers diff
+1    REL      16.2  14.0  2.2
+2    ART       7.3   6.2  1.1
+3    HEL       6.5   5.9  0.6
+4    IFA       1.8   1.3  0.5
+5    PSB       9.0   8.5  0.5
+6    EDU      12.1  11.7  0.4
+7    MMB       0.2   0.2  0.0
+8    UNI       0.2   0.2  0.0
+9    HOS       0.2   0.3 -0.1
+10   HMS      26.5  26.6 -0.1
+11   ENV       3.7   3.9 -0.2
+12   UNU      16.3  21.3 -5.0
+== Nashville by county: formation, attrition, private foundations, size (charities + PF) ==
+       county active_2026 new_2020plus gone_by_2026 pf_2026 pf_growth_15_26
+1    Davidson        4472           36           21     405              23
+2  Williamson        1841           38           21     193              48
+3  Rutherford        1177           40           23      45              55
+4      Sumner         778           37           19      36             140
+5      Wilson         621           40           23      34              42
+6       Maury         491           43           21      20              43
+7   Robertson         253           34           16      12             140
+8     Dickson         198           43           22       9              50
+9    Cheatham         155           43           21       6              50
+10    Hickman          86           40           17       5             150
+11      Smith          81           41           16       7              40
+12      Macon          59           39           13       1               0
+13     Cannon          49           35           29       1               0
+14  Trousdale          30           30           13       0            -100
+   med_revenue_k share_rev_under_50k assets_m pop2023 pf_per_10k assets_per_cap
+1            386                  72    38924  712334        5.7          54643
+2            198                  70     2634  264460        7.3           9960
+3            151                  80      876  367101        1.2           2386
+4            180                  77      263  207994        1.7           1264
+5            163                  77      298  163674        2.1           1821
+6            153                  78      326  110760        1.8           2943
+7            118                  78       50   76776        1.6            651
+8            123                  81      138   56729        1.6           2433
+9            199                  85      325   42254        1.4           7692
+10            69                  86        6   25826        1.9            232
+11           136                  84       14   20538        3.4            682
+12           128                  86       22   26793        0.4            821
+13           110                  73       15   15063        0.7            996
+14           103                  83        1   12271        0.0             81
+== Nashville private foundations: assets by county, and top 10 ==
+             org_name_display     county assets_m ruling_year
+1       Dettwiller Foundation   Davidson      251        2015
+2  Scarlett Family Foundation   Davidson      249        2006
+3        The Frist Foundation   Davidson      196        1983
+4   Hca Healthcare Foundation   Davidson      193        2002
+5    Living Legacy Foundation   Davidson      165        2018
+6      Joe C Davis Foundation   Davidson      152        1978
+7            Speer Foundation Williamson      141        2017
+8                 The Healing   Davidson      133        2002
+9  Christy-Houston Foundation Rutherford       97        1987
+10         Jackson Foundation    Dickson       82        1969
+== Private foundation formation by year, Nashville vs peers (share of each metro's PF stock) ==
+          g  period    n pct
+1 Nashville 2010-14   58  14
+2 Nashville 2015-19  100  24
+3 Nashville 2020-22   82  20
+4 Nashville 2023-26  174  42
+5     Peers 2010-14 1347  14
+6     Peers 2015-19 2160  22
+7     Peers 2020-22 2147  22
+8     Peers 2023-26 4179  42
+== Davidson zip codes: charities active 2026 and ruled 2020+ (top/bottom) ==
+     zip   n new_2020plus hms assets_m
+1  37203 337          102  79     2028
+2  37211 282          115  64      578
+3  37013 273          130  70       75
+4  37209 244           86  64      495
+5  37215 233           81  47     1349
+6  37214 189           69  37      122
+7  37207 177           75  65       52
+8  37212 168           39  29     2142
+9  37204 161           60  37      730
+10 37221 156           60  44      418
+11 37205 155           44  29      725
+12 37206 147           50  43      305
+13 37076 128           58  37       31
+14 37217 122           53  27      463
+15 37210 117           36  25      474
+16 37027 116           31  20      172
+17 37208 115           45  38     1125
+18 37115 106           36  36       74
+19 37218  95           34  35       19
+20 37228  91           28  32      989
+21 37216  88           33  26        9
+22 37138  67           30  14        8
+23 37072  65           37  19      102
+24 37219  64           32  24      132
+25 37220  60           21  13      176
+26 37202  57           13  19       82
+== Attrition by subsector, Nashville vs peers: of charities active 2019, share gone by 2026 ==
+   focus n_Nashville n_Peers gone_Nashville gone_Peers
+1    ART         526   10288             26         25
+2    EDU         877   18901             21         25
+3    ENV         274    6293             26         23
+4    HEL         445    8996             27         31
+5    HMS        1855   41052             31         32
+6    HOS          21     722             29         15
+7    IFA         158    2542             15         22
+8    MMB          17     243             35         32
+9    PSB         602   13160             27         33
+10   REL        1106   22385             15         13
+11   UNI          23     422             13         23
+12   UNU        1471   43208              9          7

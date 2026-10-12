@@ -1,0 +1,188 @@
+== Subsection of panel rows lacking BMF match (Nashville) ==
+# A tibble: 1 × 2
+  `is.na(subsection_code)`     n
+  <lgl>                    <int>
+1 FALSE                     1686
+== Registered 501(c)(3) orgs per 10k residents by county, 2010/2019/2023 ==
+              county pop2023 orgs2023 per10k_2010 per10k_2019 per10k_2023
+1    Davidson County  712334     4146        49.4        52.2        58.2
+2  Rutherford County  367101     1073        24.1        26.9        29.2
+3  Williamson County  264460     1656        56.5        58.3        62.6
+4      Sumner County  207994      717        26.9        30.8        34.5
+5      Wilson County  163674      566        28.6        32.1        34.6
+6       Maury County  110760      425        33.0        36.3        38.4
+7   Robertson County   76776      225        22.5        26.5        29.3
+8     Dickson County   56729      185        23.5        26.7        32.6
+9    Cheatham County   42254      137        19.4        27.8        32.4
+10      Macon County   26793       50        13.9        15.9        18.7
+11    Hickman County   25826       77        21.5        23.8        29.8
+12      Smith County   20538       70        21.4        28.3        34.1
+13     Cannon County   15063       45        24.6        28.6        29.9
+14  Trousdale County   12271       29        17.8        20.4        23.6
+   pop_growth_10_23 org_growth_10_23
+1                13               34
+2                39               69
+3                44               59
+4                29               65
+5                43               73
+6                36               59
+7                16               51
+8                14               58
+9                 8               80
+10               20               61
+11                5               45
+12                7               71
+13                9               32
+14               56              107
+== 501(c)(3) full-990 filers (excl HOS/UNI): expenses per resident by county, 2019 vs 2023 (2023 $) ==
+              county filers_2019 filers_2023 exp_per_cap_2019 exp_per_cap_2023
+1    Davidson County         759         883             6387             6546
+2  Williamson County         236         331             2651             2994
+3       Maury County          42          57             1590             1070
+4  Rutherford County         110         145             1123             1008
+5      Wilson County          48          74              760              840
+6     Dickson County          15          21              233              492
+7      Sumner County          79         115              339              441
+8      Cannon County           6           6               89              305
+9    Cheatham County          10          14              141              271
+10    Hickman County           9           8              174              245
+11  Robertson County          22          24              149              115
+12      Macon County           3           4               39               40
+13      Smith County           2           3               23               27
+14  Trousdale County           1           1                5               18
+   emp_per_1k_2019 emp_per_1k_2023
+1             73.2            67.1
+2             28.9            25.7
+3             17.4            12.5
+4             18.2            17.1
+5             10.3             7.6
+6              4.7             9.0
+7              5.5             5.1
+8              0.5             4.9
+9              0.6             2.7
+10             3.2             5.7
+11             2.8             1.4
+12             1.3             1.2
+13             1.0             1.0
+14             0.1             0.0
+== Human services 501(c)(3): expenses per resident and employees by county, 2023 ==
+              county pop2023 filers exp_per_cap emp_per_1k
+1    Davidson County  712334    249        1564       21.0
+2  Williamson County  264460    106         992        9.1
+3     Dickson County   56729      8         314        7.0
+4  Rutherford County  367101     37         272        2.6
+5      Cannon County   15063      3         262        4.1
+6     Hickman County   25826      5         235        5.7
+7      Sumner County  207994     37         195        2.2
+8       Maury County  110760     20         176        2.9
+9    Cheatham County   42254      6         157        0.6
+10     Wilson County  163674     29         104        1.3
+11  Robertson County   76776     10          52        0.9
+12      Smith County   20538      2          21        1.0
+13      Macon County   26793      2          17        0.5
+== Metro-year table, 501(c)(3) charities excl HOS/UNI: Nashville vs Rest of US ==
+       metro tax_year filers employees exp_real_m med_pay_real
+1  Nashville     2012    798     58938       4303        34111
+2  Nashville     2013    846     60099       4247        36536
+3  Nashville     2014   1018     63098       4709        38513
+4  Nashville     2015   1078     66025       5021        38811
+5  Nashville     2016   1114     66371       5234        38693
+6  Nashville     2017   1178     76052       5444        40727
+7  Nashville     2018   1215     74262       5676        40764
+8  Nashville     2019   1342     68581       5803        39758
+9  Nashville     2020   1475     72530       6029        43461
+10 Nashville     2021   1617     64685       6377        42644
+11 Nashville     2022   1718     68518       6420        42560
+12 Nashville     2023   1686     65543       6234        43700
+   med_contrib_share deficit under3mo med_reserve
+1                 56      41       30         7.5
+2                 57      41       29         8.7
+3                 61      39       28         9.1
+4                 66      36       26         9.0
+5                 67      35       26         9.7
+6                 70      34       25         9.5
+7                 68      37       23         9.4
+8                 72      37       23         9.8
+9                 82      29       18        11.9
+10                78      27       17        12.0
+11                79      36       18        10.9
+12                79      37       19        10.2
+== Peer ranking 2019->2023, 501(c)(3) excl HOS/UNI ==
+           metro filers_23 filer_growth emp_growth real_exp_growth pay_growth
+1      Nashville      1686           26         -4               7        9.9
+2   Jacksonville       922           28          1              54        5.9
+3       Richmond       964           16        -73              -5        4.8
+4     Birmingham       907           22        -11               9        3.7
+5         Austin      1767           24          5              39        2.9
+6   Indianapolis      1785           27          8              48        2.6
+7     Cincinnati      1641           20        -21             -29        2.5
+8    Kansas City      1606           19        -11              15        2.3
+9  Oklahoma City       881           16        -11             -20        2.1
+10        Denver      2754           26        111              14        1.9
+11       Memphis       901           16        -17             -44        1.3
+12       Atlanta      3861           22         -4               0        0.3
+13   San Antonio      1311           18         12               5       -0.3
+14     St. Louis      1967           16        -23             -42       -0.3
+15       Phoenix      2277           18        -15              -9       -0.4
+16     Charlotte      1639           19        370              11       -1.6
+17     Knoxville       576           21         -4               2       -2.3
+18      Columbus      1922           16         -1               7       -2.4
+19       Raleigh       931           14          1              -1       -3.8
+20    Louisville       975           23          0             -27       -5.7
+   med_pay_23 deficit_19 deficit_23 under3mo_23 contrib_23
+1       43700         37         37          19         79
+2       39339         36         35          28         72
+3       41606         39         37          20         68
+4       42311         40         40          20         79
+5       49043         38         40          21         82
+6       43590         40         38          19         70
+7       35987         41         40          18         62
+8       39406         41         43          20         70
+9       39795         44         40          22         76
+10      49962         39         43          24         73
+11      40369         44         44          28         75
+12      44803         39         40          28         82
+13      39161         39         40          20         70
+14      37099         43         41          21         65
+15      42915         41         40          26         80
+16      38133         38         37          22         80
+17      33073         38         42          19         79
+18      37509         42         43          30         60
+19      43088         39         37          21         77
+20      36714         46         43          16         68
+== Nashville 501(c)(3) excl HOS/UNI by subsector, 2019 vs 2023 ==
+   focus tax_year filers employees exp_real_m med_pay_real deficit under3mo
+1    ART     2019     94      3548        263        37547      44       17
+2    ART     2023    123      3645        298        32170      34       16
+3    EDU     2019    186      8026        695        36705      39       28
+4    EDU     2023    214      7836        756        41774      31       16
+5    ENV     2019     45       944         79        36818      29       22
+6    ENV     2023     58      1139         96        44992      28       14
+7    HEL     2019    147     19311       1957        47843      30       23
+8    HEL     2023    164     20087       1836        50349      32       21
+9    HMS     2019    386     21882       1402        36368      35       22
+10   HMS     2023    514     19985       1593        41722      39       24
+11   IFA     2019     47       236         66        69350      45       15
+12   IFA     2023     60       246         90        64101      57       10
+13   MMB     2019      1         0          0           NA       0        0
+14   MMB     2023      3         0          1           NA       0        0
+15   PSB     2019    118      1001        289        47372      36       19
+16   PSB     2023    164      1351        426        47273      38       14
+17   REL     2019    120      1536        134        44008      36       35
+18   REL     2023    156      1114        155        52011      42       26
+19   UNU     2019    198     12097        917        38527      41       16
+20   UNU     2023    230     10140        983        38958      36       16
+== Within-org (balanced 2019-2023) Nashville 501(c)(3): human services deficit transitions ==
+  focus   n deficit_19 deficit_23 both med_reserve_19 med_reserve_23
+1   ART  81         42         38   17           18.8           19.3
+2   EDU 136         35         31    8            8.4            9.8
+3   ENV  40         28         32   12           12.7           20.2
+4   HEL 120         27         34   13           11.8           12.9
+5   HMS 322         34         43   20            9.6           10.8
+6   IFA  43         47         63   28            8.3           11.2
+7   PSB 102         34         34   12           12.6           13.8
+8   REL  97         37         46   22            6.8            7.7
+9   UNU 171         39         39   20           11.8           14.4
+[1] focus          n              deficit_19     deficit_23     med_reserve_19
+[6] med_reserve_23
+<0 rows> (or 0-length row.names)

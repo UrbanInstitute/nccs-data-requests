@@ -1,0 +1,178 @@
+match rate of panel rows to phase0: 100 
+rows with govt_grants NA (not reported): 58 %
+== By group and year ==
+          grp tax_year filers share_with_gg   gg_m agg_gg_share_rev
+1   Nashville     2020   1475            44    827             14.4
+2   Nashville     2021   1617            40    865             13.8
+3   Nashville     2022   1718            30    861             13.2
+4   Nashville     2023   1686            30    872             12.7
+5  Rest of TN     2020   2818            50   1813             14.3
+6  Rest of TN     2021   2992            47   1884             13.5
+7  Rest of TN     2022   3128            40   1918             13.8
+8  Rest of TN     2023   3028            39   1728             18.2
+9  Rest of US     2020 228671            43 238102             16.7
+10 Rest of US     2021 241407            42 265597             16.5
+11 Rest of US     2022 250923            35 266032             16.6
+12 Rest of US     2023 238304            33 227321             15.3
+   med_share_among_recipients reliant_25pct reliant_50pct
+1                          14            17            11
+2                          21            18            10
+3                          28            16            10
+4                          26            16             9
+5                          26            26            16
+6                          29            25            15
+7                          34            24            15
+8                          34            23            14
+9                          21            20            13
+10                         21            20            13
+11                         28            19            13
+12                         29            18            12
+== 2023 by subsector: Nashville vs Rest of US ==
+          grp focus filers share_with_gg  gg_m agg_gg_share_rev
+1   Nashville   ART    123            46   108             26.2
+2  Rest of US   ART  19411            43  6799             16.0
+3   Nashville   EDU    214            26   232             26.4
+4  Rest of US   EDU  28391            28 31226             22.2
+5   Nashville   ENV     58            40    26             20.9
+6  Rest of US   ENV  12314            29  4279             13.8
+7   Nashville   HEL    164            39   118              6.2
+8  Rest of US   HEL  20684            33 31056              6.9
+9   Nashville   HMS    514            34   217             13.2
+10 Rest of US   HMS  73672            38 64601             23.5
+11  Nashville   IFA     60             7     1              0.9
+12 Rest of US   IFA   5610            14 13904             26.8
+13 Rest of US   MMB    280            16    31              0.8
+14  Nashville   PSB    164            29    62             10.0
+15 Rest of US   PSB  24607            26 31257             16.7
+16  Nashville   REL    156             8     3              2.0
+17 Rest of US   REL  12465             7   618              3.2
+18  Nashville   UNU    230            33   104             10.0
+19 Rest of US   UNU  40870            35 43551             15.1
+   med_share_among_recipients reliant_25pct reliant_50pct
+1                          20            19             7
+2                          13            14             7
+3                          25            12             7
+4                          28            15            11
+5                          15            10             5
+6                          20            13             8
+7                          54            25            20
+8                          28            18            12
+9                          29            19            11
+10                         39            23            16
+11                         41             5             2
+12                         25             7             5
+13                         36            10             8
+14                         25            15            10
+15                         37            16            11
+16                         29             5             2
+17                         21             3             2
+18                         25            16            10
+19                         29            19            13
+== 2023 Nashville by county ==
+   geo_county_fips filers share_with_gg gg_m agg_gg_share_rev
+1            47037    883            34  767             14.8
+2            47187    331            14   31              3.6
+3            47149    145            34   19              4.9
+4            47165    115            33   33             30.3
+5            47189     74            41    5              3.6
+6            47119     57            28    5              3.8
+7            47147     24            46    3             26.4
+8            47043     21            29    5             16.1
+9            47021     14            43    2             15.0
+10           47081      8            62    1             21.0
+11           47015      6            17    0              4.6
+12           47111      4            50    0              3.0
+13           47159      3             0    0              0.0
+14           47169      1             0    0              0.0
+   med_share_among_recipients reliant_25pct reliant_50pct
+1                          28            19            11
+2                          21             6             4
+3                          23            15            10
+4                          30            19            11
+5                          10            14             8
+6                          31            14            11
+7                          29            25            12
+8                          28            14            10
+9                          33            21             7
+10                         74            62            50
+11                         42            17             0
+12                          9             0             0
+13                         NA             0             0
+14                         NA             0             0
+== 2023 Nashville human services: Davidson vs collar ==
+     where filers share_with_gg gg_m agg_gg_share_rev
+1   Collar    265            32   40              7.8
+2 Davidson    249            36  177             15.7
+  med_share_among_recipients reliant_25pct reliant_50pct
+1                         26            16             8
+2                         36            22            13
+== Peer metros 2023 ==
+           metro filers share_with_gg   gg_m agg_gg_share_rev
+1       Columbus   1922            42  13505             56.4
+2    San Antonio   1311            24   2827             34.8
+3         Austin   1767            26   2489             29.1
+4     Birmingham    907            31   1185             24.2
+5        Raleigh    931            32   1441             19.4
+6      Knoxville    576            35    290             18.0
+7        Memphis    901            36    697             18.0
+8  Oklahoma City    881            26    504             16.7
+9     Rest of US 211745            33 193807             14.8
+10     Nashville   1686            30    872             12.7
+11    Cincinnati   1641            28    827             12.3
+12  Jacksonville    922            29    798             12.3
+13       Phoenix   2277            27   2434             11.5
+14      Richmond    964            29    428             11.1
+15    Louisville    975            27    551             11.0
+16   Kansas City   1606            27    807             10.0
+17       Atlanta   3861            22   2124              9.9
+18     Charlotte   1639            29    790              9.7
+19  Indianapolis   1785            28    972              8.5
+20     St. Louis   1967            29   1055              8.3
+21        Denver   2754            34   1517              6.3
+   med_share_among_recipients reliant_25pct reliant_50pct
+1                          48            29            20
+2                          36            14             9
+3                          26            14             8
+4                          43            21            13
+5                          32            18            13
+6                          34            21            12
+7                          35            21            14
+8                          43            16            11
+9                          29            18            12
+10                         26            16             9
+11                         21            13             8
+12                         28            16            10
+13                         23            13            10
+14                         29            16             9
+15                         20            11             7
+16                         29            14            10
+17                         29            12             9
+18                         39            18            13
+19                         24            14            10
+20                         28            15            10
+21                         29            19            11
+== Nashville 2023: top 15 government grant recipients ==
+                                  org_name focus county gg_m share
+1  TENNESSEE PERFORMING ARTS CENTER (TPAC)   ART  47037 74.2    62
+2                           KIPP NASHVILLE   EDU  47037 59.3    84
+3                  LEAD PUBLIC SCHOOLS INC   EDU  47037 50.0    89
+4               VALOR COLLEGIATE ACADEMIES   EDU  47037 33.3    91
+5   MID-CUMBERLAND COMMUNITY ACTION AGENCY   HMS  47165 22.1    96
+6       UNITED WAY OF MIDDLE TENNESSEE INC   PSB  47037 21.8    49
+7    SECOND HARVEST FOOD BANK OF MIDDLE TN   HMS  47037 21.2    14
+8               REPUBLIC SCHOOLS NASHVILLE   EDU  47037 21.1    96
+9      CATHOLIC CHARITIES OF TENNESSEE INC   UNU  47037 20.9    78
+10                STEM PREPARATORY ACADEMY   EDU  47037 19.0    96
+11             FAMILY & CHILDREN'S SERVICE   HMS  47037 16.5    74
+12           TENNESSEE VOICES FOR CHILDREN   HEL  47037 15.8    85
+13    MID-CUMBERLAND HUMAN RESOURCE AGENCY   HMS  47037 15.4    79
+14                       NASHVILLE ZOO INC   ENV  47037 15.2    32
+15           MENTAL HEALTH COOPERATIVE INC   HEL  47037 15.0    16
+== Nashville: deficit and reserves, government-reliant (>=25%) vs not, 2023 ==
+         grp reliant      n deficit under3mo med_res
+1  Nashville   FALSE   1405      38       19    10.7
+2  Nashville    TRUE    263      32       22     8.0
+3  Nashville      NA     18      67       36    57.0
+4 Rest of US   FALSE 193468      41       19    13.8
+5 Rest of US    TRUE  41266      40       25     8.4
+6 Rest of US      NA   3570      58       34    38.2

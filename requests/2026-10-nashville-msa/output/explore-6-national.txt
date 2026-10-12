@@ -1,0 +1,136 @@
+== US (all, incl peer metros) vs Nashville vs Tennessee-outside-Nashville, 501(c)(3) excl HOS/UNI ==
+          grp tax_year filers employees exp_real_m med_pay_real med_contrib
+1   Nashville     2017   1178     76052       5444        40727          70
+2   Nashville     2018   1215     74262       5676        40764          68
+3   Nashville     2019   1342     68581       5803        39758          72
+4   Nashville     2020   1475     72530       6029        43461          82
+5   Nashville     2021   1617     64685       6377        42644          78
+6   Nashville     2022   1718     68518       6420        42560          79
+7   Nashville     2023   1686     65543       6234        43700          79
+8  Rest of TN     2017   2157    108119      10578        33949          65
+9  Rest of TN     2018   2270    113682      11682        33268          68
+10 Rest of TN     2019   2469    121379      11926        33236          70
+11 Rest of TN     2020   2818    120946      12601        34685          77
+12 Rest of TN     2021   2992    166964      12999        33706          77
+13 Rest of TN     2022   3128    124790      13372        32414          77
+14 Rest of TN     2023   3028    105974       8879        32958          77
+15 Rest of US     2017 183372  10249752    1244183        37425          58
+16 Rest of US     2018 191966  10939625    1316671        37433          59
+17 Rest of US     2019 204703  11489998    1368823        37791          62
+18 Rest of US     2020 228671  12425252    1490944        39445          71
+19 Rest of US     2021 241407  11277810    1571112        38961          69
+20 Rest of US     2022 250923  12540445    1584424        37916          71
+21 Rest of US     2023 238304  11568574    1392920        38051          69
+   deficit under3mo
+1       34       25
+2       37       23
+3       37       23
+4       29       18
+5       27       17
+6       36       18
+7       37       19
+8       42       26
+9       44       25
+10      43       23
+11      34       20
+12      33       20
+13      40       21
+14      41       22
+15      39       24
+16      40       24
+17      40       23
+18      33       19
+19      30       19
+20      40       20
+21      41       21
+== Growth 2019->2023 and 2019->2022 ==
+         grp      span filer_g emp_g exp_g pay_g
+1  Nashville 2019 2023      26    -4     7   9.9
+2 Rest of TN 2019 2023      23   -13   -26  -0.8
+3 Rest of US 2019 2023      16     1     2   0.7
+4  Nashville 2019 2022      28     0    11   7.0
+5 Rest of TN 2019 2022      27     3    12  -2.5
+6 Rest of US 2019 2022      23     9    16   0.3
+== Human services only: same ==
+          grp tax_year filers employees exp_real_m med_pay_real deficit
+1   Nashville     2015    311     22090       1178        29125      31
+2   Nashville     2019    386     21882       1402        36368      35
+3   Nashville     2021    497     20109       1446        38602      32
+4   Nashville     2022    522     19992       1540        40643      36
+5   Nashville     2023    514     19985       1593        41722      39
+6  Rest of TN     2015    679     35110       1936        24736      49
+7  Rest of TN     2019    810     38416       2146        28584      47
+8  Rest of TN     2021    981     40034       2349        28843      37
+9  Rest of TN     2022   1023     36372       2301        27664      40
+10 Rest of TN     2023   1010     36016       2344        28231      44
+11 Rest of US     2015  51418   4587090     220663        31726      43
+12 Rest of US     2019  62419   3692014     255907        32917      41
+13 Rest of US     2021  73607   3820687     287619        34335      32
+14 Rest of US     2022  76709   3685539     293018        33712      41
+15 Rest of US     2023  73672   4007797     261295        33825      41
+   under3mo
+1        31
+2        22
+3        21
+4        21
+5        24
+6        33
+7        28
+8        24
+9        25
+10       25
+11       30
+12       27
+13       22
+14       23
+15       24
+== Nashville HMS: largest employers 2019 vs 2023 ==
+                                                       org_name           ein2
+1  YOUNG MEN'S CHRISTIAN ASSOCIATION OF MIDDLE TENNESSEE (6273) EIN-62-0476243
+2  Young Men's Christian Association of Middle Tennessee (6273) EIN-62-0476243
+3                          Goodwill Industries of Middle TN Inc EIN-62-0599413
+4                          GOODWILL INDUSTRIES OF MIDDLE TN INC EIN-62-0599413
+5                                    MIDWEST CHRISTIAN VILLAGES EIN-26-0275009
+6                          MID-CUMBERLAND HUMAN RESOURCE AGENCY EIN-62-0923487
+7                                    OPEN ARMS CARE CORPORATION EIN-58-1839449
+8                                           CHRISTIAN HOMES INC EIN-37-0841562
+9                                             ALIVE HOSPICE INC EIN-62-0983550
+10                                           RICHLAND PLACE INC EIN-58-1818877
+11                                                 PROGRESS INC EIN-62-0869547
+12                                             MUR-CI HOMES INC EIN-62-0649797
+   employees_2019 employees_2023 exp_total_2019 exp_total_2023
+1            4787             NA       88680906             NA
+2              NA           3744             NA       86459748
+3              NA           2484             NA      152824498
+4            2401             NA       60600955             NA
+5             499           2139       31941256       28692089
+6            1431            336       32692000       17076997
+7            1296           1195       55096203       62677209
+8            1094              0       32017844       13804427
+9             417            441       33603551       42214328
+10            340            401       24427818       25376983
+11            374            301        9227846       12526930
+12            347            333       12542284       13971867
+== Nashville HMS employees change excluding top 5 employers of 2019 ==
+  tax_year   top   n employees
+1     2019 FALSE 383     14195
+2     2019  TRUE   3      7687
+3     2023 FALSE 511     11618
+4     2023  TRUE   3      8367
+== Balanced 2019-2023 within-org: Nashville vs Rest of US, by focus (charities) ==
+         grp      n med_emp_chg cut_staff med_exp_chg med_pay_chg pay_up
+1  Nashville   1113           0        38         9.9         4.1     56
+2 Rest of TN   2050           0        41         3.9         0.8     51
+3 Rest of US 165144           0        40         5.9         3.5     55
+  deficit_19 deficit_23 med_res_19 med_res_23
+1         35         39       10.5       12.1
+2         43         43       11.5       13.8
+3         39         43       12.2       13.9
+         grp     n med_emp_chg cut_staff med_exp_chg med_pay_chg pay_up
+1  Nashville   322           0        40        10.1         3.7     54
+2 Rest of TN   686           0        48         3.4         7.1     57
+3 Rest of US 50507           0        42         6.3         5.6     58
+  deficit_19 deficit_23 med_res_19 med_res_23
+1         34         43        9.6       10.8
+2         47         48       10.2       12.1
+3         40         44        9.8       11.4

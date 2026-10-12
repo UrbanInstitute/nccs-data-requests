@@ -6,3 +6,4 @@
 "2026-10-12T09:57:21-0400","bmf-master-geocoded","rolling@2026-10-12","nccsdata::nccs_read (rolling geocoded master)",1764877,"peer-metro states for CBSA benchmarking"
 "2026-10-12T10:02:19-0400","bmf-master-geocoded","rolling@2026-10-12","nccsdata::nccs_read (rolling geocoded master)",3698197,"national slim read for 501(c)(3) benchmark"
 "2026-10-12T10:03:46-0400","efile-phase0-government_grants","v2026.06 (latest)","https://nccsdata.s3.amazonaws.com/processed/efile/phase0/latest/government_grants.parquet",1313116,"Form 990 only, TY2020-2023, one row per EIN x tax year"
+"2026-10-12T10:28:31-0400","efile-phase0-government_grants","v2026.06 (latest)","https://nccsdata.s3.amazonaws.com/processed/efile/phase0/latest/government_grants.parquet",1313116,"Form 990 only, TY2020-2023, one row per EIN x tax year"

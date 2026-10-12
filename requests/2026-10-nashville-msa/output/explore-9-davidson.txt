@@ -1,0 +1,118 @@
+== Principal counties ==
+           metro        county_name
+1        Atlanta      Fulton County
+2         Austin      Travis County
+3     Birmingham   Jefferson County
+4      Charlotte Mecklenburg County
+5     Cincinnati    Hamilton County
+6       Columbus    Franklin County
+7         Denver      Denver County
+8   Indianapolis      Marion County
+9   Jacksonville       Duval County
+10   Kansas City     Jackson County
+11     Knoxville        Knox County
+12    Louisville   Jefferson County
+13       Memphis      Shelby County
+14     Nashville    Davidson County
+15 Oklahoma City    Oklahoma County
+16       Phoenix    Maricopa County
+17       Raleigh        Wake County
+18      Richmond     Henrico County
+19   San Antonio       Bexar County
+20     St. Louis   St. Louis County
+== Satellite cities inside Davidson (geocoded city), active 2026 501(c)(3) ==
+        geo_city    n
+1      Nashville 3535
+2        Antioch  307
+3        Madison  142
+4      Hermitage  134
+5      Brentwood  127
+6 Goodlettsville   98
+7    Old Hickory   72
+8        Joelton   22
+== Central counties, 501(c)(3) excl HOS/UNI: 2019 -> 2023 and 2023 levels ==
+           metro filers_23 filer_g emp_g exp_g pay_g med_pay_23 deficit_23
+1      Nashville       883      16    -6     5   6.9      46848         40
+2     Birmingham       696      20    -5    12   6.6      43933         41
+3         Denver      1269      23   188    12   6.1      53436         47
+4         Austin      1293      21     8    46   5.8      52809         43
+5       Richmond       291      16    -7     6   5.3      45105         38
+6    San Antonio       975      16    12     4   3.7      44285         41
+7   Jacksonville       623      29     3    57   3.5      40028         37
+8    Kansas City       744      10   -14    13   2.9      41555         42
+9        Memphis       810      15   -17   -44   2.2      42754         45
+10    Cincinnati       972      20   -32   -35   1.9      39236         42
+11 Oklahoma City       658      15   -10   -17   1.1      42122         41
+12    Rest of US    211745      16    -2     2   0.5      37429         41
+13     St. Louis       867       8   -28   -51  -0.3      38970         42
+14       Phoenix      2209      18   -15    -9  -1.0      43031         40
+15  Indianapolis      1057      21     7    50  -1.1      47636         39
+16      Columbus      1447      13     1     8  -1.6      42435         45
+17     Charlotte       828      19   513     9  -1.7      46135         38
+18       Atlanta      1431      22    -6    -1  -2.1      54453         43
+19       Raleigh       856      14     2    -1  -3.3      45420         38
+20    Louisville       720      17     2   -29  -6.1      39200         45
+21     Knoxville       382      19    -3     2  -8.5      36052         43
+   under3mo_23 gov_share_23 any_gov_23 contrib_23
+1           20         14.8         34         77
+2           21         24.8         31         78
+3           22         18.5         42         74
+4           22         29.1         28         83
+5           19         16.9         26         63
+6           22         36.0         25         68
+7           30         11.6         28         72
+8           19         12.8         33         70
+9           28         17.1         36         75
+10          19         12.1         27         63
+11          20         16.3         27         75
+12          20         14.8         33         69
+13          23          3.2         25         59
+14          26         11.3         27         80
+15          20          8.2         31         74
+16          33         57.8         45         62
+17          23          6.4         28         81
+18          25          9.6         25         84
+19          21         19.1         29         77
+20          17         10.5         26         65
+21          21         19.3         35         75
+== Central counties, human services only, 2023 ==
+           metro filers employees med_pay deficit gov_share any_gov
+1         Austin    342     32353   48594      43      49.1      30
+2    San Antonio    288     22120   39402      43      47.0      26
+3     Birmingham    209      5563   36700      44      42.6      38
+4     Cincinnati    259     13553   37427      44      31.1      31
+5         Denver    423     80944   48521      50      26.5      54
+6       Columbus    434     24315   35147      47      26.1      51
+7   Jacksonville    177      6958   39140      40      25.2      35
+8     Rest of US  65468   3553740   33299      41      23.8      39
+9      Knoxville    119      6819   27462      44      22.5      41
+10 Oklahoma City    210      9009   38931      37      21.3      36
+11       Atlanta    431     18733   52293      39      20.9      25
+12       Raleigh    239     14042   36959      38      20.1      32
+13   Kansas City    239     15772   40785      42      18.2      36
+14     Nashville    249     14930   45657      45      15.7      36
+15    Louisville    227     18318   31985      50      14.2      28
+16       Memphis    262     14708   33021      47      13.6      40
+17       Phoenix    646     26072   39518      39      11.9      27
+18  Indianapolis    314     25364   43869      43       7.5      32
+19     St. Louis    263     17477   35305      42       7.5      30
+20     Charlotte    272     16534   39212      42       6.0      35
+21      Richmond     94      6520   39545      43       3.5      32
+== Davidson by year (charities excl HOS/UNI) ==
+   tax_year filers employees exp_real_m med_pay deficit under3mo gov_share
+1      2012    457     43777       3208   38319      40       27        NA
+2      2013    475     44245       3193   41656      40       26        NA
+3      2014    592     47278       3593   40970      38       25        NA
+4      2015    629     49683       3895   42075      38       24        NA
+5      2016    646     50452       4066   41818      38       25        NA
+6      2017    681     51048       4234   43816      35       22        NA
+7      2018    691     49491       4387   42895      37       21        NA
+8      2019    759     50785       4434   43827      37       21        NA
+9      2020    812     46157       4569   48396      30       17      17.0
+10     2021    873     46913       4839   45377      29       18      16.2
+11     2022    913     50283       4793   45280      38       17      15.6
+12     2023    883     47774       4663   46848      40       20      14.8
+== Davidson exit cohort pay vs stayers (2019 staffed charities) ==
+  exited   n med_pay_2019
+1  FALSE 435        44411
+2   TRUE  81        39786

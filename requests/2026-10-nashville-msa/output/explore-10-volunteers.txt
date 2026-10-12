@@ -1,0 +1,188 @@
+== By group, selected years ==
+                grp tax_year filers share_reporting_volunteers volunteers_total
+1          Davidson     2015    629                         68           350740
+2          Davidson     2019    759                         66           226840
+3          Davidson     2021    873                         65           183287
+4          Davidson     2023    883                         66           173719
+5  Nashville collar     2015    449                         52            62716
+6  Nashville collar     2019    583                         48            73199
+7  Nashville collar     2021    744                         52            74347
+8  Nashville collar     2023    803                         55           100845
+9       Peer metros     2015  19524                         64         13583272
+10      Peer metros     2019  24581                         63         13557179
+11      Peer metros     2021  29716                         62         14148454
+12      Peer metros     2023  29587                         62         10416694
+13       Rest of US     2015 149825                         60        167027104
+14       Rest of US     2019 182591                         60         91521010
+15       Rest of US     2021 214683                         59         88156240
+16       Rest of US     2023 211745                         59         82949314
+   employees_total vol_per_emp_agg med_vol med_vol_per_emp share_volunteer_only
+1            49683            9.29    75.0             3.8                   16
+2            50785            5.22    70.0             4.3                   17
+3            46913            4.91    50.0             3.3                   19
+4            47774            4.29    40.0             4.0                   18
+5            16342            8.03    45.5             5.0                   14
+6            17796            9.59    30.0             4.0                   16
+7            17772            9.13    26.5             5.0                   19
+8            17769           10.25    30.0             5.0                   21
+9          2054200            7.23    50.0             4.8                   21
+10         1450485           10.90    40.0             4.1                   21
+11         1435363           11.87    30.0             3.7                   23
+12         1709530            6.79    30.0             4.1                   24
+13         9524563           10.95    40.0             2.8                   18
+14        10160892           10.58    30.0             2.7                   19
+15        10009411            9.39    25.0             2.5                   21
+16         9965018            9.69    25.0             2.6                   21
+   share_vol_heavy
+1               18
+2               18
+3               14
+4               15
+5               14
+6               12
+7               12
+8               13
+9               16
+10              15
+11              13
+12              13
+13              12
+14              11
+15              10
+16              10
+== Davidson and metro by year ==
+   tax_year filers share_reporting_volunteers volunteers_total employees_total
+1      2012    798                         57           464978           58938
+2      2013    846                         56           141515           60099
+3      2014   1018                         58           211038           63098
+4      2015   1078                         61           413456           66025
+5      2016   1114                         62           393481           66371
+6      2017   1178                         61           385574           76052
+7      2018   1215                         60           300489           74262
+8      2019   1342                         58           300039           68581
+9      2020   1475                         60           232992           72530
+10     2021   1617                         59           257634           64685
+11     2022   1718                         59           261661           68518
+12     2023   1686                         61           274564           65543
+   vol_per_emp_agg med_vol med_vol_per_emp share_volunteer_only share_vol_heavy
+1            12.32      50             3.7                   15              15
+2             3.35      50             3.6                   15              14
+3             4.60      57             4.0                   16              15
+4             9.09      60             4.9                   15              17
+5             7.91      60             4.7                   17              18
+6             7.69      60             4.9                   16              17
+7             5.13      60             4.9                   16              16
+8             5.86      50             4.1                   16              15
+9             5.29      35             3.4                   17              14
+10            5.66      36             3.5                   19              13
+11            4.93      37             3.7                   20              13
+12            5.41      34             4.5                   20              14
+== 2023 by subsector: Davidson vs Rest of US ==
+          grp focus filers share_reporting_volunteers med_vol med_vol_per_emp
+1    Davidson   ART     78                         76    50.0             4.1
+2  Rest of US   ART  17591                         63    30.0             3.6
+3    Davidson   EDU    111                         61    20.0             1.1
+4  Rest of US   EDU  24698                         57    20.0             1.1
+5    Davidson   ENV     30                         87   155.0            11.1
+6  Rest of US   ENV  11197                         66    41.0             5.2
+7    Davidson   HEL     94                         73    28.0             1.0
+8  Rest of US   HEL  18308                         60    18.0             1.3
+9    Davidson   HMS    249                         61    50.0             5.1
+10 Rest of US   HMS  65468                         59    26.0             2.5
+11   Davidson   IFA     33                         76    30.0            16.6
+12 Rest of US   IFA   5012                         60    15.0             4.5
+13 Rest of US   MMB    248                         49    13.0             3.0
+14   Davidson   PSB    114                         64    29.0             5.2
+15 Rest of US   PSB  21717                         58    20.0             5.0
+16   Davidson   REL     49                         53     9.0             3.7
+17 Rest of US   REL  10804                         48    15.0             4.6
+18   Davidson   UNU    123                         68    73.5             4.1
+19 Rest of US   UNU  36702                         61    30.0             2.5
+   share_volunteer_only share_vol_heavy
+1                    22              19
+2                    19              13
+3                     8               8
+4                    22               5
+5                    20              37
+6                    21              16
+7                    27               9
+8                    18               8
+9                    14              16
+10                   21              10
+11                    9              45
+12                   24              12
+13                   31               5
+14                   29              11
+15                   26              12
+16                    8              14
+17                   20               9
+18                   25              13
+19                   21              11
+== Peer central counties 2023 (principal county of each metro) ==
+           metro filers share_reporting_volunteers med_vol med_vol_per_emp
+1      Charlotte    828                         73    40.0             5.9
+2        Raleigh    856                         67    40.0             5.4
+3         Austin   1293                         71    32.0             5.0
+4     Birmingham    696                         52    25.0             5.0
+5     Cincinnati    972                         66    30.0             5.0
+6  Oklahoma City    658                         58    35.0             5.0
+7        Atlanta   1431                         60    30.0             4.9
+8       Columbus   1447                         67    15.0             4.5
+9      Knoxville    382                         60    50.0             4.3
+10   Kansas City    744                         69    40.0             4.0
+11     Nashville    883                         66    40.0             4.0
+12   San Antonio    975                         63    40.0             4.0
+13       Phoenix   2209                         64    30.0             3.7
+14    Louisville    720                         67    27.0             3.5
+15  Jacksonville    623                         49    37.0             3.3
+16      Richmond    291                         63    32.0             3.3
+17        Denver   1269                         62    25.0             3.0
+18       Memphis    810                         55    21.5             3.0
+19  Indianapolis   1057                         74    30.0             2.8
+20     St. Louis    867                         68    34.0             2.8
+   share_volunteer_only share_vol_heavy
+1                    25              18
+2                    26              16
+3                    24              17
+4                    20              12
+5                    25              14
+6                    21              15
+7                    21              15
+8                    36              11
+9                    19              15
+10                   22              17
+11                   18              15
+12                   23              14
+13                   28              12
+14                   23              12
+15                   16              11
+16                   22              14
+17                   17              13
+18                   20              10
+19                   25              14
+20                   26              14
+== Balanced 2019-2023 (Davidson): within-org change in volunteers ==
+               grp     n med_chg share_down share_up
+1         Davidson   377       0         46       37
+2 Nashville collar   202       0         38       34
+3      Peer metros 11098       0         44       33
+4       Rest of US 78750       0         43       31
+  focus  n med_chg share_down
+1   ART 36     0.0         47
+2   EDU 44    10.0         25
+3   HEL 50     0.0         44
+4   HMS 90    -6.9         52
+5   PSB 45     0.0         40
+6   UNU 64    -6.6         55
+== Davidson 2023: largest volunteer counts ==
+                                org_name focus volunteers employees
+1  SECOND HARVEST FOOD BANK OF MIDDLE TN   HMS      25048       166
+2                 HANDS ON NASHVILLE INC   PSB       8954        74
+3               NASHVILLE RESCUE MISSION   HMS       7793       166
+4        TENNESSEE ENVIRONMENTAL COUNCIL   ENV       6797        12
+5                      PENCIL FOUNDATION   EDU       5856        99
+6        HABITAT FOR HUMANITY OF GREATER   UNU       5482        88
+7                        SOLES4SOULS INC   HMS       5000        85
+8            THE BRANCH OF NASHVILLE INC   UNU       4750        20
+9              BOY SCOUTS OF AMERICA 560   HMS       4231       231
+10   GIRL SCOUTS OF MIDDLE TENNESSEE INC   HMS       4148       193
