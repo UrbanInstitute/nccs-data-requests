@@ -31,7 +31,7 @@ metro_year <- function(df) df |>
             rev_real_m = sum(rev_total * deflator, na.rm = TRUE) / 1e6,
             pay_per_emp_real = sum(comp_total * deflator, na.rm = TRUE) /
                                sum(employees[!is.na(comp_total)], na.rm = TRUE),
-            deficit_share = mean(deficit, na.rm = TRUE),
+            exp_gt_rev_share = mean(deficit, na.rm = TRUE),
             med_months_reserve = median(months_reserve, na.rm = TRUE),
             under_3mo = mean(months_reserve < 3, na.rm = TRUE),
             contrib_share_agg = sum(rev_contributions, na.rm = TRUE) / sum(rev_total, na.rm = TRUE),
@@ -53,8 +53,8 @@ cmp <- my |> filter(tax_year %in% c(2019, 2023)) |>
             real_pay_per_emp_growth = 100 * (pay_per_emp_real[tax_year == 2023] / pay_per_emp_real[tax_year == 2019] - 1),
             pay_per_emp_23 = pay_per_emp_real[tax_year == 2023],
             real_exp_growth = 100 * (exp_real_m[tax_year == 2023] / exp_real_m[tax_year == 2019] - 1),
-            deficit_23 = 100 * deficit_share[tax_year == 2023],
-            deficit_19 = 100 * deficit_share[tax_year == 2019],
+            deficit_23 = 100 * exp_gt_rev_share[tax_year == 2023],
+            deficit_19 = 100 * exp_gt_rev_share[tax_year == 2019],
             under3mo_23 = 100 * under_3mo[tax_year == 2023],
             med_reserve_23 = med_months_reserve[tax_year == 2023],
             contrib_share_23 = 100 * contrib_share_agg[tax_year == 2023]) |>

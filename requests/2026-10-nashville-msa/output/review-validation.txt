@@ -1,0 +1,23 @@
+duckdb keeps downloaded extensions and secrets in a temporary directory:
+ℹ /var/folders/_7/t0p9337j65scb9jh1mgk6sc40000gn/T//RtmpiaD7x6/duckdb
+This is removed when the R session ends.
+• Extensions are re-downloaded each session.
+• Secrets are lost.
+ℹ Run duckdb(shared_home = TRUE) (or create ~/.duckdb) to keep them (suitable for most users).
+ℹ Run duckdb(shared_home = FALSE) to accept the temporary directory (and silence this message).
+ℹ See ?duckdb_storage for details and alternatives.
+  part tied_latest_keys
+1  p01            36611
+  part tied_latest_keys
+1  p09            36611
+   joined missing_part9 mixed_filings
+1 3174130             0          6257
+   n_rows unique_keys
+1 2350612     2350612
+  tax_year panel_rows unmatched matched_blank
+1     2020     232964         0        124180
+2     2021     246016         0        132715
+3     2022     255769         0        154898
+4     2023     243018         0        152533
+Error: Latest timestamps do not uniquely select shared filings. See REVIEW.md finding 1.
+Execution halted

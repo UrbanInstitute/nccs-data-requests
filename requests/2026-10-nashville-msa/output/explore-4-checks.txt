@@ -23,7 +23,7 @@
 8            5820
 9            5875
 10           6193
-11           6246
+11           6247
 12           6202
 == Top 12 collar-county orgs by 2023 expenses (excl eds/meds) ==
                                org_name county focus exp_m employees
@@ -94,7 +94,7 @@
 9        Phoenix    915  2.8       54
 10     Nashville    863  2.3       53
 11       Memphis    467  2.2       52
-12    Rest of US 108823  2.2       53
+12    Rest of US 108824  2.2       53
 13   San Antonio    596  2.2       53
 14  Jacksonville    419  1.8       54
 15    Cincinnati    751  1.7       53

@@ -92,7 +92,7 @@
 8  Nashville     2019   1342     68581       5803        39758
 9  Nashville     2020   1475     72530       6029        43461
 10 Nashville     2021   1617     64685       6377        42644
-11 Nashville     2022   1718     68518       6420        42560
+11 Nashville     2022   1718     68522       6421        42629
 12 Nashville     2023   1686     65543       6234        43700
    med_contrib_share deficit under3mo med_reserve
 1                 56      41       30         7.5

@@ -47,7 +47,8 @@ print(nash |> filter(as.integer(subsection_code) == 3) |> group_by(county) |>
             pf_2026 = sum(pf & last_year_in_bmf >= 2026),
             pf_growth_15_26 = round(100 * (pf_2026 / sum(pf & first_year_in_bmf <= 2015 & last_year_in_bmf >= 2015) - 1)),
             med_revenue_k = round(median(revenue_amount[last_year_in_bmf >= 2026 & revenue_amount > 0], na.rm = TRUE) / 1e3),
-            share_rev_under_50k = round(100 * mean(coalesce(revenue_amount[last_year_in_bmf >= 2026], 0) < 50000)),
+            share_rev_under_50k = round(100 * mean(revenue_amount[last_year_in_bmf >= 2026 & !is.na(revenue_amount)] < 50000)),
+            share_rev_missing = round(100 * mean(is.na(revenue_amount[last_year_in_bmf >= 2026]))),
             assets_m = round(sum(asset_amount[last_year_in_bmf >= 2026], na.rm = TRUE) / 1e6)) |>
   inner_join(pop |> transmute(county = sub(" County", "", county), pop2023), by = "county") |>
   mutate(pf_per_10k = round(1e4 * pf_2026 / pop2023, 1), assets_per_cap = round(1e6 * assets_m / pop2023)) |> arrange(-active_2026) |> as.data.frame())
@@ -59,9 +60,10 @@ cat("\n== Private foundation formation by year, Nashville vs peers (share of eac
 print(peers |> filter(pf, last_year_in_bmf >= 2026, ruling_year >= 2010) |> mutate(g = ifelse(metro == "Nashville", "Nashville", "Peers"), period = cut(ruling_year, c(2009, 2014, 2019, 2022, 2026), labels = c("2010-14", "2015-19", "2020-22", "2023-26"))) |>
   count(g, period) |> group_by(g) |> mutate(pct = round(100 * n / sum(n))) |> as.data.frame())
 
-cat("\n== Davidson zip codes: charities active 2026 and ruled 2020+ (top/bottom) ==\n")
+cat("\n== Davidson zip codes: charities active 2026, ranked by number ruled 2020+ (current address, not address at founding) ==\n")
 z <- nash |> filter(charity, geo_county_fips == "47037", last_year_in_bmf >= 2026) |> group_by(zip = org_addr_zip5) |>
-  summarise(n = n(), new_2020plus = sum(ruling_year >= 2020, na.rm = TRUE), hms = sum(focus == "HMS"), assets_m = round(sum(asset_amount, na.rm = TRUE) / 1e6)) |> filter(n >= 40) |> arrange(-n)
+  summarise(n = n(), ruled_2020plus = sum(ruling_year >= 2020, na.rm = TRUE), hms_all = sum(focus == "HMS"), hms_ruled_2020plus = sum(focus == "HMS" & ruling_year >= 2020, na.rm = TRUE),
+            orgs_assets_over_10m = sum(asset_amount >= 1e7, na.rm = TRUE), assets_m = round(sum(asset_amount, na.rm = TRUE) / 1e6)) |> filter(n >= 40) |> arrange(-ruled_2020plus)
 print(as.data.frame(z))
 
 cat("\n== Attrition by subsector, Nashville vs peers: of charities active 2019, share gone by 2026 ==\n")
