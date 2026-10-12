@@ -1,0 +1,55 @@
+== Full Form 990 filings per year: e-file v2.1 panel vs CORE (SOI), same EIN population ==
+           grp tax_year efile_full_990 core_full_990 in_both core_990ez
+1    Nashville     2019           1342          1479    1300       1078
+2    Nashville     2020           1475          1483    1440       1087
+3    Nashville     2021           1617          1561    1546       1036
+4    Nashville     2022           1718          1678    1645       1029
+5    Nashville     2023           1686          1708    1598       1023
+6  Peer metros     2019          24581         27937   23940      19241
+7  Peer metros     2020          28002         28026   27178      19069
+8  Peer metros     2021          29716         29136   28598      17973
+9  Peer metros     2022          31029         30426   29919      18099
+10 Peer metros     2023          29587         30322   27829      17584
+11  Rest of TN     2019           1270          1450    1240       1102
+12  Rest of TN     2020           1467          1456    1419       1131
+13  Rest of TN     2021           1579          1536    1512       1071
+14  Rest of TN     2022           1661          1633    1600       1041
+15  Rest of TN     2023           1620          1648    1546       1033
+16  Rest of US     2019         181321        202741  177012     140717
+17  Rest of US     2020         202020        202121  196200     139871
+18  Rest of US     2021         213104        209076  205488     131369
+19  Rest of US     2022         221361        217470  213843     130962
+20  Rest of US     2023         210125        217367  198662     126963
+   core_not_in_efile efile_not_in_core efile_share_of_core
+1                179                42                  91
+2                 43                35                  99
+3                 15                71                 104
+4                 33                73                 102
+5                110                88                  99
+6               3997               641                  88
+7                848               824                 100
+8                538              1118                 102
+9                507              1110                 102
+10              2493              1758                  98
+11               210                30                  88
+12                37                48                 101
+13                24                67                 103
+14                33                61                 102
+15               102                74                  98
+16             25729              4309                  89
+17              5921              5820                 100
+18              3588              7616                 102
+19              3627              7518                 102
+20             18705             11463                  97
+== Davidson only ==
+  tax_year efile_full_990 core_full_990 efile_share_of_core
+1     2019            759           818                  93
+2     2020            812           814                 100
+3     2021            873           841                 104
+4     2022            913           895                 102
+5     2023            883           904                  98
+== Bootstrap on the pay gap: exiters with no TY2023/TY2024 return vs stayers (metro) ==
+n_gone=42 n_stay=734 median gap=-17195  95% interval -22893 to -7826
+== Same for peer metros and rest of US, 'no TY2023 return in CORE' exiters vs stayers ==
+Peer metros  n_gone=  945 n_stay= 11614 median gap=-5225  95% interval -7709 to -2131
+Rest of US   n_gone= 6132 n_stay= 87063 median gap=-5108  95% interval -5886 to -4368

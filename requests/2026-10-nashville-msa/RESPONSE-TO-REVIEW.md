@@ -60,3 +60,14 @@ Not done, and why:
 | 5 | Validation script tests the old algorithm | Renamed `review-validation-original-defect.R` with a header saying it is a historical reproducer expected to fail. New `validate-build.R` (run last by `run-all.R`) asserts panel uniqueness by key and filing id, re-derives the selection from raw Part I and checks the filing-id sets match exactly (3,174,130 both ways, 0 differences), and checks every filing has a Part IX row with the same EIN and year. Passed. |
 
 Full chain rerun via `run-all.R` on 2026-10-12 (log in `output/run-all.log`).
+
+## Exit cohort traced (same day)
+
+The deferred item is done (`explore-11-exit-trace.R`, `explore-12-coverage.R`).
+Of the 128 metro leavers, 58 filed a full 990 for TY2023 that is in the SOI
+extract (CORE) but not in the e-file release, 17 filed a 990-EZ, and 53 have
+no TY2023 or TY2024 return. The pay gap for the 53 (42 with a valid value)
+is $17,200 (bootstrap -$22,900 to -$7,800) against $5,200 for the same
+construct in the peer metros. Caveat 2 is restated with the measured
+mismatch between the e-file release and CORE for TY2023 (6% of CORE
+filings absent from e-file, 5% the other way; net counts within 2%).

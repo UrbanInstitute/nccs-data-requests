@@ -24,8 +24,10 @@
 - [x] Second-analyst review received 2026-10-12 (`REVIEW.md`, 12 findings), all
       accepted; response in `RESPONSE-TO-REVIEW.md`; build and outputs
       regenerated.
-- [ ] Trace the exit cohort into the 990-EZ (CORE merged tier) before
-      finding 5 is cited.
+- [x] Exit cohort traced through CORE (full 990 + 990-EZ) and the BMF
+      (`explore-11-exit-trace.R`, 2026-10-12): 58 of 128 are an e-file
+      coverage artifact, 17 switched to 990-EZ, 53 have no TY2023/24 return.
+- [ ] Look at the 42 genuine leavers by name before finding 5 is cited.
 
 ## Status
 

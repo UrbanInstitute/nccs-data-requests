@@ -15,6 +15,7 @@ below and verifies the Phase 0 parquet against its manifest.
 | E-file v2.1 Form 990 Part I, TY2012-2023 | s3://nccs-efile/public/efile_v2_1/F9-P01-T00-SUMMARY-{year}.CSV, synced to `../2026-06-milwaukee-msa/data/efile-v2_1-p01/` (sha256 in that folder's `_efile_inputs.csv`) | build-panel.R |
 | E-file v2.1 Form 990 Part IX, TY2012-2023 | s3://nccs-efile/public/efile_v2_1/F9-P09-T00-EXPENSES-{year}.CSV, same folder `efile-v2_1-p09/` | build-panel.R |
 | E-file Phase 0 government grants (v2026.06, git 22b131b, sha256 verified against `_manifest.json`) | https://nccsdata.s3.amazonaws.com/processed/efile/phase0/latest/government_grants.parquet | build-external.R (download + verify); explore-7-govgrants.R, explore-9-davidson.R |
+| CORE merged tier, 990combined, TY2019-2024 | `nccsdata::nccs_read_core(tier = "merged", form = "990combined")` (https://nccsdata.s3.amazonaws.com/processed_merged/core/{year}/990combined/) | explore-11-exit-trace.R, explore-12-coverage.R |
 | CPI-U annual averages | `nccsdata::cpi_u` (FRED CPIAUCNS) | build-panel.R |
 
 ## External inputs (`data/external/`, gitignored; fetched by build-external.R, sha256 in `_pins.csv`)

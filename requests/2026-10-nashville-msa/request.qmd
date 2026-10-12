@@ -69,6 +69,7 @@ four groups partition every filer.
 | Geocoded Unified BMF (vintage 2026_09, sha256 in `_pins.csv`) | Every registered organization: current address and classification, ruling date, first and last vintage observed, latest reported revenue and assets | 1989-2026 | Monthly; current |
 | E-file v2.1 Form 990 Part I and Part IX (legacy NODC release, slated for supersession) | Employees, volunteers, revenue, expenses, net assets, compensation lines | TY2012-2023 | Lags two to three years |
 | NCCS e-file Phase 0 `government_grants` (v2026.06, sha256 verified) | Form 990 Part VIII line 1e | TY2020-2023 | Lags two to three years |
+| CORE merged tier, `990combined` (IRS SOI extracts plus legacy; full 990 and 990-EZ) | Filing presence and form type per EIN and year, for the exit trace and the coverage check | TY2019-2024 | Lags two to three years |
 | Census county population estimates (vintages 2019, 2023) | Denominators | 2010-2023 | |
 | BLS QCEW annual county files | Private-sector average annual pay per job, Davidson | 2019, 2023 | |
 
@@ -118,20 +119,25 @@ return. Uniqueness and identity are asserted at build time.
    2025. Only the BMF-based counts (density, formation, attrition,
    foundations, zip codes) are current to 2026; the spending and employee
    rows in finding 1 are TY2023.
-2. **TY2023 is incomplete in this release.** Filer counts fall from 2022 to
-   2023 everywhere (Davidson -3.3%, metro -1.9%, outside the 20 metros
-   -5.1%). That decline mixes missing returns with exits and switches, so it
-   is not a completeness rate. Every 2019-2023 ranking is shown with its
-   2019-2022 version; where they differ, both are stated.
+2. **TY2023 coverage differs between sources.** Compared with the IRS SOI
+   extract (CORE merged tier) for the same organizations, the e-file release
+   holds 99% as many full-990 filings for TY2023 in the Nashville metro, but
+   the two sets differ: 110 CORE filings (6% of the metro's) are absent from
+   the e-file release and 88 e-file filings are absent from CORE. For TY2020
+   to TY2022 the mismatch is 1-4%. Neither source is complete for TY2023,
+   so every 2019-2023 ranking is shown with its 2019-2022 version; where
+   they differ, both are stated. (`output/explore-12-coverage.txt`)
 3. **Full Form 990 only.** The 990-EZ (gross receipts under $200,000 and
    assets under $500,000) has no employee count, no compensation breakdown
    and no line 1e, and the 990-N has no financials. The financial tables
    cover a minority of organizations but most of the money. Pre-2021 years
    cover only organizations that e-filed voluntarily.
 4. **Leaving the full-990 panel** can mean closure, merger, falling under
-   the 990-EZ threshold, or late filing. The exit cohort has not been traced
-   into the 990-EZ data. The exit comparison in finding 5 is descriptive
-   evidence about retained full-990 records only.
+   the 990-EZ threshold, late filing, or absence from the e-file release
+   alone. The exit cohort was traced through CORE (full 990 and 990-EZ,
+   TY2021-2024) and the BMF; the result is in finding 5 and
+   `output/exit_cohort_trace.csv`. Whether the organizations with no return
+   closed or merged is still not known.
 5. **Current address and classification applied to history.** The BMF
    carries one address, subsection and NTEE code per organization. Movers
    and reclassifications are not recoverable. Ruling date is the date of
@@ -301,13 +307,34 @@ The cross-sectional rise exceeds the within-organization change: among
 organizations present in both 2019 and 2023, the metro's median real pay
 change was +4.1% (peer metros +3.2%, Rest of US +3.5%). Composition is one
 possible explanation. Organizations with staff in 2019
-that no longer filed a full 990 by 2023 had paid less per head in 2019
-than those that stayed. In the metro the median gap is $9,900 (113 leavers
-with a valid value against 734 stayers; bootstrap 95% interval -$15,600 to
--$4,800). In Davidson the gap is $4,600 (70 against 429; interval -$15,700
-to +$4,200, so not distinguishable from zero). In the peer metros and the
-rest of the US the gap is within a few hundred dollars of zero. Caveat 4
-applies: this says nothing about whether the leavers closed.
+that have no full 990 for 2023 in the e-file release had paid less per head
+in 2019 than those that stayed: a median gap of $9,900 in the metro (113
+leavers with a valid value against 734 stayers; bootstrap 95% interval
+-$15,600 to -$4,800) and $4,600 in Davidson (70 against 429; interval
+-$15,700 to +$4,200, not distinguishable from zero).
+
+Tracing the 128 metro leavers through CORE and the BMF
+(`explore-11-exit-trace.R`) shows what "leaving" meant:
+
+| Where the 128 went | n | Median 2019 pay per head |
+|---|---|---|
+| Filed a full 990 for TY2023; it is in the SOI extract but not the e-file release | 58 | $34,200 |
+| Filed a 990-EZ for TY2023 (fell below the full-990 threshold) | 17 | $17,600 |
+| Last return TY2022 | 20 | $23,500 |
+| Last return TY2021 | 15 | $29,400 |
+| No return since TY2020, dropped from the BMF | 13 | $18,000 |
+| No return since TY2020, still registered | 5 | $24,900 |
+
+Nearly half of the "exits" are an e-file coverage artifact (caveat 2).
+Among the 53 with no TY2023 or TY2024 return anywhere, the 42 with a valid
+2019 pay value had a median of $24,400 against $41,600 for stayers, a gap
+of $17,200 (interval -$22,900 to -$7,800). The same construct in the peer
+metros gives a gap of $5,200 (945 organizations; interval -$7,700 to
+-$2,100) and in the rest of the US $5,100. So the organizations that
+stopped filing in Nashville had been paying less per head, relative to
+survivors, than their counterparts elsewhere, on 42 organizations. Whether
+they closed, merged, or are simply delinquent is not known; 13 have been
+dropped from the BMF.
 
 Human services charities present in both years went from 34% to 43% with
 expenses exceeding revenue (peer metros 39% to 45%, Rest of US 40% to 44%),
@@ -348,8 +375,9 @@ retained returns, not a measured change in distinct volunteers or hours.
   survey work, with line 1e named for what it is. The TY2024 Phase 0 file
   (partial, early filers) could extend it by a year; no TY2024 result exists
   yet.
-- The pay and exit pattern (finding 5) needs the exit cohort traced into
-  the 990-EZ before it is cited anywhere.
+- The pay and exit pattern (finding 5) now rests on 42 organizations with
+  no return since TY2022 or earlier. Before it is cited, those 42 should be
+  looked at by name (closure, merger, delinquency) in `output/exit_cohort_trace.csv`.
 
 ## Reproducibility
 
@@ -357,7 +385,7 @@ retained returns, not a measured change in distinct volunteers or hours.
 national panel, with the 24 raw e-file CSVs verified byte-for-byte against
 their recorded sha256), `build-external.R` (Census, QCEW and Phase 0
 downloads with sha256 checks), `build-peers.R`, then `explore-1` through
-`explore-10`, then `validate-build.R`, which re-derives the filing selection
+`explore-12`, then `validate-build.R`, which re-derives the filing selection
 from the raw Part I files and asserts it matches the panel exactly. Console
 output goes to `output/`. Every read is pinned in `_pins.csv` with a
 vintage and, for files, a sha256; every BMF read carries the master's
