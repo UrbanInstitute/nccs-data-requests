@@ -1,6 +1,19 @@
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
 foundation_code values:
+
     15     16      0     10      4     11     17      3 
 157974 103349  70885  40956  28545   4879   3654   1722 
+
 == Formation and attrition by metro, 501(c)(3) ==
            metro active_2026 new_share_2020plus active_2019 gone_by_2026
 1         Austin       12564                 41        9139           22
@@ -44,6 +57,7 @@ foundation_code values:
 18               17          10.6                  24
 19               14          19.1                  14
 20               11           2.6                  34
+
 == Subsector mix of organizations ruled 2020+ and active 2026: Nashville vs all peers, charities ==
    focus Nashville Peers diff
 1    REL      16.2  12.6  3.6
@@ -58,6 +72,7 @@ foundation_code values:
 10   UNU       1.9   2.3 -0.4
 11   EDU      12.7  13.5 -0.8
 12   HMS      34.9  38.3 -3.4
+
 == Same for the stock active 2026 (all ruling years) ==
    focus Nashville Peers diff
 1    REL      16.2  14.0  2.2
@@ -72,6 +87,7 @@ foundation_code values:
 10   HMS      26.5  26.6 -0.1
 11   ENV       3.7   3.9 -0.2
 12   UNU      16.3  21.3 -5.0
+
 == Nashville by county: formation, attrition, private foundations, size (charities + PF) ==
        county active_2026 new_2020plus gone_by_2026 pf_2026 pf_growth_15_26
 1    Davidson        4472           36           21     405              23
@@ -118,6 +134,7 @@ foundation_code values:
 12        0.4            821
 13        0.7            996
 14        0.0             81
+
 == Nashville private foundations: assets by county, and top 10 ==
              org_name_display     county assets_m ruling_year
 1       Dettwiller Foundation   Davidson      251        2015
@@ -130,6 +147,7 @@ foundation_code values:
 8                 The Healing   Davidson      133        2002
 9  Christy-Houston Foundation Rutherford       97        1987
 10         Jackson Foundation    Dickson       82        1969
+
 == Private foundation formation by year, Nashville vs peers (share of each metro's PF stock) ==
           g  period    n pct
 1 Nashville 2010-14   58  14
@@ -140,6 +158,7 @@ foundation_code values:
 6     Peers 2015-19 2160  22
 7     Peers 2020-22 2147  22
 8     Peers 2023-26 4179  42
+
 == Davidson zip codes: charities active 2026, ranked by number ruled 2020+ (current address, not address at founding) ==
      zip   n ruled_2020plus hms_all hms_ruled_2020plus orgs_assets_over_10m
 1  37013 273            130      70                 40                    2
@@ -195,6 +214,7 @@ foundation_code values:
 24      989
 25      176
 26       82
+
 == Attrition by subsector, Nashville vs peers: of charities active 2019, share gone by 2026 ==
    focus n_Nashville n_Peers gone_Nashville gone_Peers
 1    ART         526   10288             26         25

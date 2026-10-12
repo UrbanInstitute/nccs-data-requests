@@ -109,6 +109,12 @@ stopifnot(all(file.exists(summary_files)), all(file.exists(expenses_files)))
 # it covers exactly these 24 files so the pin can cite it.
 efile_inputs <- utils::read.csv(file.path(milwaukee_data, "..", "_efile_inputs.csv"))
 stopifnot(setequal(efile_inputs$file, basename(c(summary_files, expenses_files))))
+raw_files <- c(summary_files, expenses_files)
+raw_hashes <- vapply(raw_files, sha256_file, character(1))
+expected <- efile_inputs$sha256[match(basename(raw_files), efile_inputs$file)]
+hash_mismatch <- basename(raw_files)[raw_hashes != expected]
+if (length(hash_mismatch) > 0) stop("raw e-file CSV does not match recorded sha256: ", paste(hash_mismatch, collapse = ", "))
+cat("raw e-file CSV sha256 verified against _efile_inputs.csv for", length(raw_files), "files\n")
 
 con <- dbConnect(duckdb())
 

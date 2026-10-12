@@ -22,12 +22,15 @@ peer_counties <- xwalk_cbsa |> filter(cbsa_code %in% names(peer_cbsas))
 peer_states <- unique(xwalk_county$geo_state_abbr[xwalk_county$geo_county_fips %in% peer_counties$county_fips])
 cat("states:", peer_states, "\n")
 
+bmf_manifest <- jsonlite::fromJSON("https://nccsdata.s3.amazonaws.com/geocoding/unified-bmf/latest/_manifest.json")
+bmf_identity <- sprintf("vintage %s, git %s, sha256 %s", bmf_manifest$vintage, bmf_manifest$git_sha,
+                        bmf_manifest$files$bmf_unified_geocoded.parquet$sha256)
 bmf <- read_bmf_master(
   req, state = peer_states, cache = FALSE,
   columns = c("ein", "geo_state_abbr", "geo_county", "subsection_code",
               "foundation_code", "nteev2_subsector", "nteev2_code", "ntee_code_clean",
               "first_year_in_bmf", "last_year_in_bmf", "ruling_date"),
-  note = "peer-metro states for CBSA benchmarking"
+  note = paste("peer-metro states for CBSA benchmarking;", bmf_identity)
 )
 
 peers <- bmf |>

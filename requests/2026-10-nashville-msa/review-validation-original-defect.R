@@ -1,3 +1,7 @@
+# HISTORICAL REPRODUCER of REVIEW.md finding 1. Runs the ORIGINAL two-stage
+# selection algorithm to count tied timestamps and mixed filings; it is
+# expected to exit non-zero. The active check of the fixed build is
+# validate-build.R.
 # Read-only detector for unstable filing selection and broken coverage checks.
 # Run from the repo root: Rscript requests/2026-10-nashville-msa/review-validation.R
 # This preserves OBJECTID through the existing build's selection algorithm.

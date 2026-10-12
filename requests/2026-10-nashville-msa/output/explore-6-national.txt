@@ -1,24 +1,37 @@
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+pinned: bmf-master-geocoded [rolling@2026-10-12] (3698197 rows)
 == Full-990 rows with no BMF match (dropped by the subsection filter) ==
   tax_year   rows no_bmf_match
 1     2019 280177         2016
 2     2023 325106         3401
+
 == Current BMF foundation code among full-990 filers kept (should be public-charity codes) ==
    foundation_code Nashville Peer metros Rest of TN Rest of US
-1               10        20         458         32       3686
-2               11        78        1464        149       9902
-3               12         7         163         40       1501
-4               13         5          57          8        527
-5               15      1107       16754       1944     128813
-6               16       400        7422        699      53974
-7               17        37        1191        105       7770
-8               21        21         478         38       2400
-9               22         3          80          3        415
+1               10        20         474         16       3686
+2               11        78        1549         64       9902
+3               12         7         184         19       1501
+4               13         5          60          5        527
+5               15      1107       17606       1092     128813
+6               16       400        7751        370      53974
+7               17        37        1262         34       7770
+8               21        21         505         11       2400
+9               22         3          81          2        415
 10              23         4          49         NA        434
 11              24         1          17          4        185
 12               4         2          25          1        216
-13               9         1           7          2        155
-14              14        NA           4          2        105
-15              18        NA           4          1         18
+13               9         1           8          1        155
+14              14        NA           5          1        105
+15              18        NA           5         NA         18
 16              25        NA           4         NA          6
 17               3        NA           2         NA         12
 18               2        NA          NA         NA          1
@@ -27,6 +40,7 @@ Nashville 2023 full-990 filers with private-foundation code (02-04):
                           org_name foundation_code rev_total
 1            THE GIBSON FOUNDATION               4   3460257
 2 THE DR LYNN HICKS FOUNDATION INC               4    233466
+
 == By group and year, 501(c)(3) excl HOS/UNI ==
            grp tax_year filers employees exp_real_m med_pay_real  n_pay
 1    Nashville     2017   1178     76052       5444        40727    770
@@ -36,20 +50,20 @@ Nashville 2023 full-990 filers with private-foundation code (02-04):
 5    Nashville     2021   1617     64685       6377        42644    984
 6    Nashville     2022   1718     68522       6421        42629   1044
 7    Nashville     2023   1686     65543       6234        43700   1028
-8  Peer metros     2017  20546   1171567     151500        41019  11693
-9  Peer metros     2018  21645   1354017     173129        41124  12182
-10 Peer metros     2019  23382   1386062     177709        41518  13152
-11 Peer metros     2020  26651   1284219     193490        43339  14822
-12 Peer metros     2021  28303   1329023     201853        42367  15485
-13 Peer metros     2022  29562   1516245     206314        41318  15945
-14 Peer metros     2023  28179   1653433     175677        41849  15135
-15  Rest of TN     2017   2157    108119      10578        33949   1396
-16  Rest of TN     2018   2270    113682      11682        33268   1462
-17  Rest of TN     2019   2469    121379      11926        33236   1602
-18  Rest of TN     2020   2818    120946      12601        34685   1792
-19  Rest of TN     2021   2992    166964      12999        33706   1850
-20  Rest of TN     2022   3128    124790      13372        32414   1907
-21  Rest of TN     2023   3028    105974       8879        32958   1812
+8  Peer metros     2017  21583   1229564     158683        41022  12380
+9  Peer metros     2018  22742   1415650     181072        41084  12911
+10 Peer metros     2019  24581   1450485     185620        41294  13940
+11 Peer metros     2020  28002   1346550     201929        43058  15677
+12 Peer metros     2021  29716   1435363     210630        42232  16359
+13 Peer metros     2022  31029   1582949     215464        41093  16837
+14 Peer metros     2023  29587   1709530     180822        41593  15980
+15  Rest of TN     2017   1120     50122       3396        28440    709
+16  Rest of TN     2018   1173     52049       3739        28154    733
+17  Rest of TN     2019   1270     56956       4015        29534    814
+18  Rest of TN     2020   1467     58615       4161        30138    937
+19  Rest of TN     2021   1579     60624       4223        30737    976
+20  Rest of TN     2022   1661     58086       4222        29319   1015
+21  Rest of TN     2023   1620     49877       3734        30050    967
 22  Rest of US     2017 162826   9078184    1092683        36965  94463
 23  Rest of US     2018 170321   9585608    1143542        36992  98496
 24  Rest of US     2019 181321  10103944    1191117        37350 104353
@@ -67,18 +81,18 @@ Nashville 2023 full-990 filers with private-foundation code (02-04):
 7           79         37       19
 8           61         39       26
 9           63         40       26
-10          65         40       25
+10          66         40       25
 11          74         33       21
 12          72         30       21
 13          74         40       22
 14          73         40       23
-15          65         42       26
-16          68         44       25
-17          70         43       23
-18          77         34       20
-19          77         33       20
-20          77         40       21
-21          77         41       22
+15          67         43       27
+16          68         43       25
+17          70         44       21
+18          78         33       18
+19          78         33       19
+20          77         38       20
+21          78         38       19
 22          57         39       24
 23          59         40       24
 24          62         40       23
@@ -86,16 +100,18 @@ Nashville 2023 full-990 filers with private-foundation code (02-04):
 26          69         30       18
 27          70         40       20
 28          69         41       20
+
 == Growth 2019->2023 and 2019->2022 ==
           grp      span filer_g emp_g exp_g pay_g
 1   Nashville 2019 2023      26  -4.4     7   9.9
-2 Peer metros 2019 2023      21  19.3    -1   0.8
-3  Rest of TN 2019 2023      23 -12.7   -26  -0.8
+2 Peer metros 2019 2023      20  17.9    -3   0.7
+3  Rest of TN 2019 2023      28 -12.4    -7   1.7
 4  Rest of US 2019 2023      16  -1.9     2   0.4
 5   Nashville 2019 2022      28  -0.1    11   7.2
-6 Peer metros 2019 2022      26   9.4    16  -0.5
-7  Rest of TN 2019 2022      27   2.8    12  -2.5
+6 Peer metros 2019 2022      26   9.1    16  -0.5
+7  Rest of TN 2019 2022      31   2.0     5  -0.7
 8  Rest of US 2019 2022      22   9.1    16   0.3
+
 == Human services only ==
            grp tax_year filers employees exp_real_m med_pay_real n_pay
 1    Nashville     2015    311     22090       1178        29125   211
@@ -103,16 +119,16 @@ Nashville 2023 full-990 filers with private-foundation code (02-04):
 3    Nashville     2021    497     20109       1446        38602   307
 4    Nashville     2022    522     19992       1540        40643   330
 5    Nashville     2023    514     19985       1593        41722   324
-6  Peer metros     2015   5738   1247985      28141        35277  3264
-7  Peer metros     2019   7140    506557      33240        36027  4106
-8  Peer metros     2021   8640    413446      40240        37575  4876
-9  Peer metros     2022   9097    429302      38721        36651  5088
-10 Peer metros     2023   8766    467223      37025        37266  4902
-11  Rest of TN     2015    679     35110       1936        24736   416
-12  Rest of TN     2019    810     38416       2146        28584   497
-13  Rest of TN     2021    981     40034       2349        28843   594
-14  Rest of TN     2022   1023     36372       2301        27664   600
-15  Rest of TN     2023   1010     36016       2344        28231   566
+6  Peer metros     2015   6041   1268311      29372        34883  3466
+7  Peer metros     2019   7507    529436      34594        35849  4343
+8  Peer metros     2021   9082    435993      41781        37250  5158
+9  Peer metros     2022   9553    452244      40257        36335  5368
+10 Peer metros     2023   9214    490073      38561        36881  5167
+11  Rest of TN     2015    376     14784        705        23233   214
+12  Rest of TN     2019    443     15537        791        24766   260
+13  Rest of TN     2021    539     17487        809        27063   312
+14  Rest of TN     2022    567     13430        765        25453   320
+15  Rest of TN     2023    562     13166        808        25981   301
 16  Rest of US     2015  45680   3339105     192522        31249 26239
 17  Rest of US     2019  55279   3185465     222668        32593 31441
 18  Rest of US     2021  64967   3407241     247379        33888 36255
@@ -124,21 +140,22 @@ Nashville 2023 full-990 filers with private-foundation code (02-04):
 3          32       21
 4          36       21
 5          39       24
-6          43       30
+6          43       31
 7          40       28
 8          33       24
 9          41       25
-10         40       26
-11         49       33
-12         47       28
-13         37       24
-14         40       25
-15         44       25
+10         41       26
+11         52       32
+12         51       27
+13         37       23
+14         39       23
+15         43       24
 16         43       30
 17         41       27
 18         32       22
 19         41       23
 20         41       23
+
 == Nashville HMS: five largest 2019 employers (by EIN), 2019 vs 2023 ==
                                                       org_name           ein2
 1 Young Men's Christian Association of Middle Tennessee (6273) EIN-62-0476243
@@ -157,44 +174,46 @@ Nashville 2023 full-990 filers with private-foundation code (02-04):
 2     2019  TRUE   5     11009
 3     2023 FALSE 509     12226
 4     2023  TRUE   5      7759
+
 == Balanced 2019-2023 within-org, by group and for human services ==
           grp      n med_emp_chg cut_staff med_exp_chg n_pay med_pay_chg
 1   Nashville   1113           0        38         9.9   687         4.1
-2 Peer metros  18628           0        38         6.9 10293         3.2
-3  Rest of TN   2050           0        41         3.9  1271         0.8
+2 Peer metros  19610           0        38         6.9 10919         3.2
+3  Rest of TN   1068           0        39         3.3   645        -1.5
 4  Rest of US 146516           0        40         5.8 82108         3.5
   exp_gt_rev_19 exp_gt_rev_23 med_na_months_19 med_na_months_23
 1            35            39             10.5             12.1
 2            39            43             11.0             12.5
-3            43            43             11.5             13.8
+3            44            41             12.4             14.9
 4            39            44             12.3             14.1
           grp     n med_emp_chg cut_staff med_exp_chg n_pay med_pay_chg
 1   Nashville   322           0        40        10.1   202         3.7
-2 Peer metros  5705           0        39         7.4  3248         5.0
-3  Rest of TN   686           0        48         3.4   394         7.1
+2 Peer metros  6011           0        39         7.2  3441         5.1
+3  Rest of TN   380           0        48         2.2   201         6.3
 4  Rest of US 44802           0        42         6.2 24825         5.7
   exp_gt_rev_19 exp_gt_rev_23 med_na_months_19 med_na_months_23
 1            34            43              9.6             10.8
 2            39            45              9.2             10.8
-3            47            48             10.2             12.1
+3            52            47             11.4             14.5
 4            40            44              9.9             11.5
+
 == Exit and entrant cohorts: metro and Davidson, with bootstrap intervals on the median gap ==
            group n_exit n_exit_with_pay n_stay n_stay_with_pay med_pay_exit
  Nashville metro    128             113    753             734        31629
         Davidson     81              70    435             429        39786
-     Peer metros   2343            2212  11385           10940        41277
+     Peer metros   2465            2326  12083           11614        41083
       Rest of US  18402           17290  91416           87063        37553
  med_pay_stay   gap ci_low ci_high
-        41560 -9931 -15212   -5181
-        44411 -4625 -15594    3480
-        41533  -255  -2239    1333
-        37285   267   -300     779
+        41560 -9931 -15631   -4767
+        44411 -4625 -15652    4223
+        41332  -249  -2203    1331
+        37285   267   -260     791
           grp entrant     n med_pay med_emp
 1   Nashville   FALSE   761   44476      11
 2   Nashville    TRUE   291   41597       4
-3 Peer metros   FALSE 11530   43038      14
-4 Peer metros    TRUE  4209   38184       5
-5  Rest of TN   FALSE  1403   34048      13
-6  Rest of TN    TRUE   486   29763       5
+3 Peer metros   FALSE 12211   42919      14
+4 Peer metros    TRUE  4400   37974       5
+5  Rest of TN   FALSE   722   30508      12
+6  Rest of TN    TRUE   295   28417       5
 7  Rest of US   FALSE 92666   38643      16
 8  Rest of US    TRUE 26806   33275       6

@@ -13,8 +13,9 @@ Loading required package: DBI
 pinned: bmf-master-geocoded [rolling@2026-10-12] (71133 rows)
 pinned: crosswalk-county-fips [tiger-2023] (3635 rows)
 pinned: crosswalk-cbsa [tiger-2023] (3228 rows)
+raw e-file CSV sha256 verified against _efile_inputs.csv for 24 files
 duckdb keeps downloaded extensions and secrets in a temporary directory:
-ℹ /var/folders/_7/t0p9337j65scb9jh1mgk6sc40000gn/T//RtmpqSOPdE/duckdb
+ℹ /var/folders/_7/t0p9337j65scb9jh1mgk6sc40000gn/T//RtmpLEiedt/duckdb
 This is removed when the R session ends.
 • Extensions are re-downloaded each session.
 • Secrets are lost.

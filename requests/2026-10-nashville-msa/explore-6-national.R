@@ -1,22 +1,25 @@
 # Pass 6: national 501(c)(3) benchmark (needs subsection for every EIN),
 # robustness of the Nashville headline numbers.
 #
-# Comparison groups (REVIEW.md finding 6: one definition everywhere):
+# Comparison groups: a mutually exclusive partition of every full-990 filer
+# (REVIEW.md finding 6 and RESPONSE-REVIEW.md item 1). Set here, carried in
+# panel_charities.parquet as `grp`, and never redefined downstream.
 #   Nashville    = CBSA 34980
-#   Rest of TN   = Tennessee outside CBSA 34980 (includes Memphis, Knoxville)
-#   Peer metros  = the 19 other benchmark metros
-#   Rest of US   = everything outside the 20 metros and outside Tennessee
+#   Peer metros  = all 19 other benchmark metros, including Memphis and Knoxville
+#   Rest of TN   = Tennessee outside the 20 metros
+#   Rest of US   = everything else
 library(dplyr)
 req <- here::here("requests", "2026-10-nashville-msa")
 source(here::here("R", "request_read.R"))
 d <- file.path(req, "data")
-nat_path <- file.path(d, "bmf_national_slim.parquet")
-if (!file.exists(nat_path)) {
-  nat <- read_bmf_master(req, cache = FALSE, columns = c("ein", "subsection_code", "foundation_code", "nteev2_subsector", "geo_state_abbr"),
-                         note = "national slim read for 501(c)(3) benchmark")
-  arrow::write_parquet(nat, nat_path)
-}
-nat <- arrow::read_parquet(nat_path) |> mutate(ein9 = gsub("-", "", ein)) |> distinct(ein9, .keep_all = TRUE)
+# Re-read on every run (no cache) so the pin always describes the file used.
+bmf_manifest <- jsonlite::fromJSON("https://nccsdata.s3.amazonaws.com/geocoding/unified-bmf/latest/_manifest.json")
+bmf_identity <- sprintf("vintage %s, git %s, sha256 %s", bmf_manifest$vintage, bmf_manifest$git_sha,
+                        bmf_manifest$files$bmf_unified_geocoded.parquet$sha256)
+nat <- read_bmf_master(req, cache = FALSE, columns = c("ein", "subsection_code", "foundation_code", "nteev2_subsector", "geo_state_abbr"),
+                       note = paste("national slim read for 501(c)(3) benchmark;", bmf_identity))
+arrow::write_parquet(nat, file.path(d, "bmf_national_slim.parquet"))
+nat <- nat |> mutate(ein9 = gsub("-", "", ein)) |> distinct(ein9, .keep_all = TRUE)
 
 raw <- arrow::read_parquet(file.path(d, "panel_with_geo.parquet")) |>
   select(-subsection_code, -nteev2_subsector, -focus, -eds_meds) |>
@@ -32,8 +35,8 @@ p <- raw |>
          pay_per_emp = ifelse(pay_per_emp >= 5000 & pay_per_emp <= 400000, pay_per_emp, NA),
          pay_per_emp_real = pay_per_emp * deflator,
          grp = case_when(metro == "Nashville" ~ "Nashville",
-                         state == "TN" ~ "Rest of TN",
                          metro != "Rest of US" ~ "Peer metros",
+                         state == "TN" ~ "Rest of TN",
                          TRUE ~ "Rest of US")) |>
   filter(as.integer(subsection_code) == 3, !eds_meds)
 

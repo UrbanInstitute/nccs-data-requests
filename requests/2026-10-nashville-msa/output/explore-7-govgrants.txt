@@ -1,35 +1,47 @@
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
 == Join coverage and blank line 1e, by group and year ==
            grp tax_year   rows unmatched blank_1e share_over_1
 1    Nashville     2020   1475         0       52            0
 2    Nashville     2021   1617         0       55            3
 3    Nashville     2022   1718         0       64            1
 4    Nashville     2023   1686         0       63            1
-5  Peer metros     2020  26651         0       56           23
-6  Peer metros     2021  28303         0       57           26
-7  Peer metros     2022  29562         0       64           25
-8  Peer metros     2023  28179         0       65           19
-9   Rest of TN     2020   2818         0       47            3
-10  Rest of TN     2021   2992         0       50            5
-11  Rest of TN     2022   3128         0       56            4
-12  Rest of TN     2023   3028         0       57            6
+5  Peer metros     2020  28002         0       56           23
+6  Peer metros     2021  29716         0       57           27
+7  Peer metros     2022  31029         0       64           29
+8  Peer metros     2023  29587         0       65           24
+9   Rest of TN     2020   1467         0       45            3
+10  Rest of TN     2021   1579         0       47            4
+11  Rest of TN     2022   1661         0       52            0
+12  Rest of TN     2023   1620         0       54            1
 13  Rest of US     2020 202020         0       53          218
 14  Rest of US     2021 213104         0       54          246
 15  Rest of US     2022 221361         0       60          237
 16  Rest of US     2023 210125         0       63          166
+
 == By group and year ==
            grp tax_year filers share_reporting_1e   gg_m agg_1e_share_rev
 1    Nashville     2020   1475                 44    827             14.4
 2    Nashville     2021   1617                 40    865             13.8
 3    Nashville     2022   1718                 30    861             13.2
 4    Nashville     2023   1686                 30    872             12.7
-5  Peer metros     2020  26651                 40  34550             18.5
-6  Peer metros     2021  28303                 38  36970             16.7
-7  Peer metros     2022  29562                 31  38004             18.1
-8  Peer metros     2023  28179                 29  34313             18.5
-9   Rest of TN     2020   2818                 50   1813             14.3
-10  Rest of TN     2021   2992                 47   1884             13.5
-11  Rest of TN     2022   3128                 40   1918             13.8
-12  Rest of TN     2023   3028                 39   1728             18.2
+5  Peer metros     2020  28002                 40  35580             18.2
+6  Peer metros     2021  29716                 39  38044             16.5
+7  Peer metros     2022  31029                 31  39130             17.8
+8  Peer metros     2023  29587                 29  35242             18.5
+9   Rest of TN     2020   1467                 52    782             19.1
+10  Rest of TN     2021   1579                 49    810             19.1
+11  Rest of TN     2022   1661                 43    791             18.3
+12  Rest of TN     2023   1620                 41    799             19.2
 13  Rest of US     2020 202020                 44 203553             16.4
 14  Rest of US     2021 213104                 43 228627             16.5
 15  Rest of US     2022 221361                 36 228028             16.4
@@ -39,48 +51,49 @@
 2                          21               18               10
 3                          28               16               10
 4                          26               16                9
-5                          18               18               11
+5                          19               18               12
 6                          20               18               11
-7                          28               16               11
+7                          28               17               11
 8                          30               16               11
-9                          26               26               16
-10                         29               25               15
-11                         34               24               15
-12                         34               23               14
+9                          30               29               17
+10                         33               28               16
+11                         34               26               16
+12                         35               25               15
 13                         21               21               13
 14                         22               20               13
 15                         28               19               13
 16                         29               18               12
+
 == 2023 by subsector: Nashville vs Peer metros vs Rest of US ==
            grp focus filers share_reporting_1e  gg_m agg_1e_share_rev
 1    Nashville   ART    123                 46   108             26.2
-2  Peer metros   ART   1920                 41   546             13.0
+2  Peer metros   ART   2019                 41   567             12.9
 3   Rest of US   ART  17491                 44  6253             16.3
 4    Nashville   EDU    214                 26   232             26.4
-5  Peer metros   EDU   3847                 28  4551             22.7
+5  Peer metros   EDU   4022                 28  4890             23.2
 6   Rest of US   EDU  24544                 28 26675             22.1
 7    Nashville   ENV     58                 40    26             20.9
-8  Peer metros   ENV   1202                 21   398             12.2
+8  Peer metros   ENV   1261                 21   411             12.1
 9   Rest of US   ENV  11112                 30  3880             13.9
 10   Nashville   HEL    164                 39   118              6.2
-11 Peer metros   HEL   2523                 30  2441              6.9
+11 Peer metros   HEL   2661                 31  2554              7.0
 12  Rest of US   HEL  18161                 34 28615              6.9
 13   Nashville   HMS    514                 34   217             13.2
-14 Peer metros   HMS   8766                 34  7884             21.8
+14 Peer metros   HMS   9214                 34  8167             21.6
 15  Rest of US   HMS  64906                 39 56717             23.8
 16   Nashville   IFA     60                  7     1              0.9
-17 Peer metros   IFA    637                 10   616             13.7
+17 Peer metros   IFA    661                 11   619             13.7
 18  Rest of US   IFA   4973                 14 13287             28.0
 19 Peer metros   MMB     33                 15     5              3.7
 20  Rest of US   MMB    247                 17    27              0.7
 21   Nashville   PSB    164                 29    62             10.0
-22 Peer metros   PSB   3025                 21 13403             31.2
+22 Peer metros   PSB   3167                 22 13437             31.0
 23  Rest of US   PSB  21582                 27 17854             12.3
 24   Nashville   REL    156                  8     3              2.0
-25 Peer metros   REL   1811                  7   145              4.7
+25 Peer metros   REL   1920                  7   152              4.7
 26  Rest of US   REL  10654                  7   472              3.0
 27   Nashville   UNU    230                 33   104             10.0
-28 Peer metros   UNU   4415                 32  4324             12.2
+28 Peer metros   UNU   4629                 32  4440             12.2
 29  Rest of US   UNU  36455                 36 39227             15.5
    med_share_among_recipients share_25pct_plus share_50pct_plus
 1                          20               19                7
@@ -90,16 +103,16 @@
 5                          28               15               11
 6                          28               15               11
 7                          15               10                5
-8                          19                9                5
+8                          18                9                5
 9                          20               14                8
 10                         54               25               20
 11                         31               17               11
 12                         27               18               12
 13                         29               19               11
-14                         37               20               14
+14                         37               21               14
 15                         39               24               17
 16                         41                5                2
-17                         17                4                4
+17                         17                5                4
 18                         25                7                5
 19                         92               12               12
 20                         32               10                7
@@ -107,11 +120,12 @@
 22                         37               13                9
 23                         38               16               11
 24                         29                5                2
-25                         18                3                2
+25                         23                3                2
 26                         21                3                2
 27                         25               16               10
-28                         34               18               12
+28                         34               19               12
 29                         28               19               13
+
 == 2023 Nashville by county, all charities ==
    geo_county_fips filers share_reporting_1e gg_m agg_1e_share_rev
 1            47037    883                 34  767             14.8
@@ -143,6 +157,7 @@
 12                          9                0                0
 13                         NA                0                0
 14                         NA                0                0
+
 == 2023 Nashville by county, human services only ==
    geo_county_fips filers share_reporting_1e gg_m agg_1e_share_rev
 1            47037    249                 36  177             15.7
@@ -172,6 +187,7 @@
 11                         NA                0                0
 12                          9                0                0
 13                         NA                0                0
+
 == 2023 Nashville human services: Davidson vs collar ==
      where filers share_reporting_1e gg_m agg_1e_share_rev
 1   Collar    265                 32   40              7.8
@@ -179,6 +195,7 @@
   med_share_among_recipients share_25pct_plus share_50pct_plus
 1                         26               16                8
 2                         36               22               13
+
 == Davidson by year ==
   tax_year filers share_reporting_1e gg_m agg_1e_share_rev
 1     2020    812                 47  723             17.0
@@ -190,6 +207,7 @@
 2                         21               20               12
 3                         28               19               12
 4                         28               19               11
+
 == Peer metros 2023 ==
            metro filers share_reporting_1e   gg_m agg_1e_share_rev
 1       Columbus   1922                 42  13505             56.4
@@ -235,6 +253,7 @@
 19                         24               14               10
 20                         28               15               10
 21                         29               19               11
+
 == Nashville 2023: 15 largest reported line 1e amounts ==
                                   org_name focus county gg_m share
 1  TENNESSEE PERFORMING ARTS CENTER (TPAC)   ART  47037 74.2    62

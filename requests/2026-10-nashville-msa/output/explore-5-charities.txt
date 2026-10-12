@@ -1,8 +1,21 @@
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+
 == Subsection of panel rows lacking BMF match (Nashville) ==
 # A tibble: 1 × 2
   `is.na(subsection_code)`     n
   <lgl>                    <int>
 1 FALSE                     1686
+
 == Registered 501(c)(3) orgs per 10k residents by county, 2010/2019/2023 ==
               county pop2023 orgs2023 per10k_2010 per10k_2019 per10k_2023
 1    Davidson County  712334     4146        49.4        52.2        58.2
@@ -34,6 +47,7 @@
 12                7               71
 13                9               32
 14               56              107
+
 == 501(c)(3) full-990 filers (excl HOS/UNI): expenses per resident by county, 2019 vs 2023 (2023 $) ==
               county filers_2019 filers_2023 exp_per_cap_2019 exp_per_cap_2023
 1    Davidson County         759         883             6387             6546
@@ -65,6 +79,7 @@
 12             1.3             1.2
 13             1.0             1.0
 14             0.1             0.0
+
 == Human services 501(c)(3): expenses per resident and employees by county, 2023 ==
               county pop2023 filers exp_per_cap emp_per_1k
 1    Davidson County  712334    249        1564       21.0
@@ -80,6 +95,7 @@
 11  Robertson County   76776     10          52        0.9
 12      Smith County   20538      2          21        1.0
 13      Macon County   26793      2          17        0.5
+
 == Metro-year table, 501(c)(3) charities excl HOS/UNI: Nashville vs Rest of US ==
        metro tax_year filers employees exp_real_m med_pay_real
 1  Nashville     2012    798     58938       4303        34111
@@ -107,6 +123,7 @@
 10                78      27       17        12.0
 11                79      36       18        10.9
 12                79      37       19        10.2
+
 == Peer ranking 2019->2023, 501(c)(3) excl HOS/UNI ==
            metro filers_23 filer_growth emp_growth real_exp_growth pay_growth
 1      Nashville      1686           26         -4               7        9.9
@@ -150,6 +167,7 @@
 18      37509         42         43          30         60
 19      43088         39         37          21         77
 20      36714         46         43          16         68
+
 == Nashville 501(c)(3) excl HOS/UNI by subsector, 2019 vs 2023 ==
    focus tax_year filers employees exp_real_m med_pay_real deficit under3mo
 1    ART     2019     94      3548        263        37547      44       17
@@ -172,6 +190,7 @@
 18   REL     2023    156      1114        155        52011      42       26
 19   UNU     2019    198     12097        917        38527      41       16
 20   UNU     2023    230     10140        983        38958      36       16
+
 == Within-org (balanced 2019-2023) Nashville 501(c)(3): human services deficit transitions ==
   focus   n deficit_19 deficit_23 both med_reserve_19 med_reserve_23
 1   ART  81         42         38   17           18.8           19.3

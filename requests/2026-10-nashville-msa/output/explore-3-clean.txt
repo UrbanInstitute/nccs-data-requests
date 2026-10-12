@@ -1,3 +1,15 @@
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+
 == Median real pay per employee (2023 $), staffed orgs, excl eds/meds ==
            metro med_2015 med_2019 med_2021 med_2023 n_2015 n_2019 n_2021
 1      Nashville    43208    44225    45583    46324    900   1056   1219
@@ -43,6 +55,7 @@
 19    713         -5.4
 20    419         -5.7
 21    665         -5.9
+
 == Same, human services (HMS) only ==
            metro med_2019 med_2023 n_2019 n_2023 growth_19_23
 1         Austin    44975    45994    243    297          2.3
@@ -65,6 +78,7 @@
 18     Charlotte    32529    31471    303    346         -3.3
 19    Louisville    33085    29994    155    181         -9.3
 20     Knoxville    30619    28496     99    106         -6.9
+
 == Balanced panel: orgs filing full 990 in both 2019 and 2023 ==
            metro      n med_emp_chg share_cut_staff share_grew_staff
 1         Denver   2453         0.0            38.6             45.6
@@ -114,6 +128,7 @@
 13         43        21.2
 14         41        20.5
 15         38        22.4
+
 == Nashville balanced panel by subsector ==
   focus   n med_emp_chg share_cut_staff med_real_exp_chg med_real_pay_chg
 1   UNU 440         0.0              36              0.2             -2.5
@@ -135,6 +150,7 @@
 7         43         38
 8         47         63
 9         28         32
+
 == Nashville balanced panel: Davidson vs collar ==
      where   n med_emp_chg share_cut_staff med_real_exp_chg med_real_pay_chg
 1   Collar 606           0              38              5.6              4.7
@@ -142,6 +158,7 @@
   deficit_19 deficit_23
 1         35         37
 2         33         38
+
 == Nashville: median org size, staffed share, comp share of expenses by year ==
    tax_year filers staffed med_emp_staffed med_exp_real_k med_comp_share
 1      2012   1065      70              10            655             43
@@ -169,6 +186,7 @@
 10        45583                63      27       16
 11        44566                62      36       17
 12        46324                64      36       18
+
 == Rest of US same ==
    tax_year filers staffed med_emp_staffed med_exp_real_k med_comp_share
 1      2012 156824      63              15            633             43

@@ -1,3 +1,15 @@
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+
 == Nashville MSA orgs by county, active in selected years ==
        county y2005 y2010 y2015 y2020 y2026 growth_2015_2026
 1    Davidson  3082  3995  3968  4423  5146               30
@@ -14,6 +26,7 @@
 12      Macon    41    57    55    68    82               49
 13     Cannon    38    49    49    57    60               22
 14  Trousdale    21    26    30    35    40               33
+
 == Davidson share of metro orgs over time ==
 2000 4750 46.9 
 2005 6592 46.8 
@@ -21,6 +34,7 @@
 2015 8996 44.1 
 2020 10199 43.4 
 2026 12246 42 
+
 == New registrations (first_year_in_bmf) per year, Davidson vs collar, 2010+ ==
    first_year_in_bmf Collar Davidson
 1               2010    305      223
@@ -38,6 +52,7 @@
 13              2024    456      304
 14              2025    484      338
 15              2026    316      224
+
 == Current (2026) by subsector x Davidson/collar ==
    focus Collar Davidson dav_share
 1    UNU   1926     1184        38
@@ -52,6 +67,7 @@
 10   MMB     85       39        31
 11   UNI      9       13        59
 12   HOS     14        7        33
+
 == Subsection codes current ==
   subsection_code     n
 1               3 10291
@@ -62,14 +78,17 @@
 6               8   141
 7              10   113
 8              13    91
+
 == Geocoding resolution rate, TN orgs active 2026 ==
 # A tibble: 1 × 2
       n has_fips
   <int>    <dbl>
 1 40992    1.000
+
 == Current public charities (501c3 non-PF) by city within Davidson ==
 [1] geo_city n       
 <0 rows> (or 0-length row.names)
+
 == Ruling-year cohorts still active in 2026, metro: share formed 2015+ ==
 # A tibble: 1 × 3
       n formed_2015_plus formed_2020_plus

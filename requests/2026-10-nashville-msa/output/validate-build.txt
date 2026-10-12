@@ -1,0 +1,16 @@
+duckdb keeps downloaded extensions and secrets in a temporary directory:
+ℹ /var/folders/_7/t0p9337j65scb9jh1mgk6sc40000gn/T//RtmpoQgcuR/duckdb
+This is removed when the R session ends.
+• Extensions are re-downloaded each session.
+• Secrets are lost.
+ℹ Run duckdb(shared_home = TRUE) (or create ~/.duckdb) to keep them (suitable for most users).
+ℹ Run duckdb(shared_home = FALSE) to accept the temporary directory (and silence this message).
+ℹ See ?duckdb_storage for details and alternatives.
+        n    keys filings
+1 3174130 3174130 3174130
+[1] 3174130
+  selected not_in_panel panel_not_selected
+1  3174130            0                  0
+  missing_part9 identity_mismatch
+1             0                 0
+validate-build: all checks passed

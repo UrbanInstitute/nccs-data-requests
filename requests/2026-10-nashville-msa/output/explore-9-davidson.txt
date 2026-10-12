@@ -1,3 +1,14 @@
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
 == Peer counties (most registered organizations in each metro) ==
            metro        county_name
 1        Atlanta      Fulton County
@@ -20,6 +31,7 @@
 18      Richmond     Henrico County
 19   San Antonio       Bexar County
 20     St. Louis   St. Louis County
+
 == Satellite cities inside Davidson (geocoded city), active 2026 501(c)(3) ==
         geo_city    n
 1      Nashville 3535
@@ -30,6 +42,7 @@
 6 Goodlettsville   98
 7    Old Hickory   72
 8        Joelton   22
+
 == Peer counties, 501(c)(3) excl HOS/UNI: growth 2019 -> 2023 ==
            metro      span filers_end filer_g emp_g exp_g pay_g n_pay_end
 1      Nashville 2019 2023        883      16  -5.9     5   6.9       577
@@ -75,6 +88,7 @@
 19       45420             18
 20       39200             19
 21       36052             20
+
 == Same, 2019 -> 2022 (sensitivity to the incomplete TY2023) ==
            metro      span filers_end filer_g emp_g exp_g pay_g n_pay_end
 1     Cincinnati 2019 2022       1015      25  -3.6     9   5.5       531
@@ -120,6 +134,7 @@
 19       52172             18
 20       39082             19
 21       42788             20
+
 == Peer counties 2023 levels ==
            metro filers med_pay  n_pay exp_gt_rev under3mo line1e_share
 1        Atlanta   1431   54453    770         43       25          9.6
@@ -165,6 +180,7 @@
 19         25          59
 20         33          69
 21         35          75
+
 == Peer counties, human services only, 2023 (ranked on line 1e share; Rest of US shown but not ranked) ==
            metro filers employees med_pay exp_gt_rev line1e_share any_line1e
 1         Austin    342     32353   48594         43         49.1         30
@@ -210,6 +226,7 @@
 19         18
 20         19
 21         20
+
 == Davidson by year (charities excl HOS/UNI) ==
    tax_year filers employees exp_real_m med_pay n_pay exp_gt_rev under3mo
 1      2012    457     43777       3208   38319   314         40       27
@@ -237,6 +254,7 @@
 10         16.2
 11         15.6
 12         14.8
+
 == Nashville human services line 1e share by county, 2023 ==
    geo_county_fips filers line1e_share any_line1e
 1            47037    249         15.7         36
@@ -252,6 +270,7 @@
 11           47015      3          0.0          0
 12           47111      2          8.3        100
 13           47159      2          0.0          0
+
 == QCEW private-sector benchmark, Davidson, in 2023 dollars ==
   naics annual_avg_employment_2019 annual_avg_employment_2023
 1    10                     460419                     495007

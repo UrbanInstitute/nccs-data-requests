@@ -56,9 +56,10 @@ is compared with whole peer metros. Davidson is compared with one county per
 peer metro, the county with the most registered organizations. That is a
 convenience, not a definition of the central city: it picks St. Louis County
 rather than St. Louis city and Henrico rather than Richmond city. Rankings
-"of 20" are rankings among these 20 counties or 20 metros. "Rest of US"
-always means organizations outside the 20 metros and outside Tennessee;
-"Peer metros" means the 19 others combined.
+"of 20" are rankings among these 20 counties or 20 metros. "Peer metros" means all 19 others
+combined, including Memphis and Knoxville; "Rest of Tennessee" means
+Tennessee outside the 20 metros; "Rest of US" means everything else. The
+four groups partition every filer.
 
 ## Data
 
@@ -146,7 +147,9 @@ return. Uniqueness and identity are asserted at build time.
    extraction leaves the amount empty when the XML element is absent, which
    is how a filer with nothing on the line files, but this has not been
    verified against source filings. Blank shares are similar across the
-   comparison groups, so comparisons are less exposed than levels.
+   comparison groups, but equal blank rates do not establish equal missing
+   amounts or the same reporting behavior, so comparisons carry the same
+   assumption as levels.
 9. **Volunteer counts** are self-reported estimates, blank for about one in
    five Davidson filers, and swing with a few organizations (Second Harvest
    reports 25,000; two organizations account for half of Davidson's
@@ -209,12 +212,11 @@ since 2020 (current address; caveats 5 and 7):
 | 37215 | Green Hills | 233 | 81 | 23 | 9 |
 | 37207 | North Nashville | 177 | 75 | 32 | 2 |
 
-Antioch and South Nashville lead on recent recognitions and have few
-organizations with large balance sheets; Midtown is third on recent
-recognitions and holds the most large institutions. So recent formation is
-not simply "away from the institutions". The narrower statement that holds
-is that the two zips with the most recently recognized charities, and
-North Nashville, have two large organizations each. Full table in
+Antioch and South Nashville lead on recent recognitions; Midtown is third
+and holds the most large institutions. So recent formation is not simply
+"away from the institutions". What the table does show is that Antioch and
+North Nashville have two organizations with assets over $10 million each,
+and South Nashville eight, compared with Midtown's 32. Full table in
 `output/explore-8-bmf.txt`.
 
 ### 3. Formation, attrition, and foundations (BMF, current)
@@ -278,9 +280,9 @@ Charities excluding hospitals and universities, real 2023 dollars (caveats
 | Rest of US | +16% | -1.9% | +9% | +2% | +0.4% | +0.3% |
 
 Employees in this release are lower in 2023 than in 2019 in both Davidson
-and the metro, but through 2022 they were flat, so the fall is partly a
-TY2023 coverage effect and should be described as observed in this release,
-not as an established decline. The metro's pay-per-head rise leads the 20
+and the metro, but through 2022 they were flat. The fall may partly reflect
+incomplete TY2023 coverage; how much is not established, so it should be
+described as observed in this release, not as an established decline. The metro's pay-per-head rise leads the 20
 metros under either endpoint. Davidson's leads the 20 counties through 2023
 but is sixth through 2022 (Cincinnati leads at +5.5%), so the county
 ranking is not robust. Davidson's median pay per head in 2023 was $46,848,
@@ -293,9 +295,10 @@ per job in Davidson rose from $36,900 to $41,500 in 2023 dollars (+12.5%),
 and all private pay rose 6.3%. The two measures are not the same thing and
 this does not show that nonprofits kept pace with the private market.
 
-Part of the rise is composition. Among organizations present in both 2019
-and 2023, the metro's median within-organization real pay change was +4.1%
-(peer metros +3.2%, Rest of US +3.5%). Organizations with staff in 2019
+The cross-sectional rise exceeds the within-organization change: among
+organizations present in both 2019 and 2023, the metro's median real pay
+change was +4.1% (peer metros +3.2%, Rest of US +3.5%). Composition is one
+possible explanation. Organizations with staff in 2019
 that no longer filed a full 990 by 2023 had paid less per head in 2019
 than those that stayed. In the metro the median gap is $9,900 (113 leavers
 with a valid value against 734 stayers; bootstrap 95% interval -$15,200 to

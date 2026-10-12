@@ -5,9 +5,10 @@ library(dplyr)
 req <- here::here("requests", "2026-10-nashville-msa")
 d <- file.path(req, "data")
 p <- arrow::read_parquet(file.path(d, "panel_charities.parquet")) |>
-  mutate(grp = case_when(metro == "Nashville" & geo_county_fips == "47037" ~ "Davidson",
-                         metro == "Nashville" ~ "Nashville collar",
-                         metro == "Rest of US" ~ "Rest of US", TRUE ~ "Peer metros"),
+  # `grp` is the partition set in explore-6; only Nashville is split here.
+  mutate(grp = case_when(grp == "Nashville" & geo_county_fips == "47037" ~ "Davidson",
+                         grp == "Nashville" ~ "Nashville collar",
+                         TRUE ~ grp),
          vol = volunteers, emp = employees,
          reports_vol = !is.na(vol) & vol > 0,   # strictly positive
          vol_nonmissing = !is.na(vol),

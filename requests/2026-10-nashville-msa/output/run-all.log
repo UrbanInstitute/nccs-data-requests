@@ -1,0 +1,16 @@
+[1] TRUE
+== build-panel.R ==
+== build-external.R ==
+== build-peers.R ==
+== explore-1-universe.R ==
+== explore-2-finance.R ==
+== explore-3-clean.R ==
+== explore-4-checks.R ==
+== explore-5-charities.R ==
+== explore-6-national.R ==
+== explore-7-govgrants.R ==
+== explore-8-bmf.R ==
+== explore-9-davidson.R ==
+== explore-10-volunteers.R ==
+== validate-build.R ==
+done

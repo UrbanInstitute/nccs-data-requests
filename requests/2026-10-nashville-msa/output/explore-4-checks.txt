@@ -1,3 +1,15 @@
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+
 == Davidson share of metro (excl eds/meds): filers, employees, real expenses, comp by year ==
    tax_year filers_dav emp_dav exp_dav comp_dav exp_collar_real_m
 1      2012         60      74      66       74              2201
@@ -25,6 +37,7 @@
 10           6193
 11           6247
 12           6202
+
 == Top 12 collar-county orgs by 2023 expenses (excl eds/meds) ==
                                org_name county focus exp_m employees
 1             MIDDLE TENNESSEE ELECTRIC  47149   UNU   897       565
@@ -39,6 +52,7 @@
 10           OPEN ARMS CARE CORPORATION  47187   HMS    63      1195
 11      ALPHA OMICRON PI FRATERNITY INC  47187   UNU    49        34
 12         MAURY REGIONAL MEDICAL GROUP  47119   HEL    48       288
+
 == Same orgs in 2019? top 12 by 2019 expenses ==
                                        org_name county focus exp_m employees
 1                     Middle Tennessee Electric  47149   UNU   619       443
@@ -53,12 +67,14 @@
 10          FEED AMERICA FIRST OF TENNESSEE INC  47149   HMS    40        11
 11                       GARY SINISE FOUNDATION  47187   PSB    39        64
 12 Alpha Omicron Pi Fraternity Inc Group Return  47187   UNU    39       106
+
 == Collar real expense growth 2019-2023 with and without the top 5 2023 orgs ==
   tax_year in_top5 exp_real_m   n
 1     2019   FALSE       1822 720
 2     2019    TRUE        989   3
 3     2023   FALSE       1897 963
 4     2023    TRUE       2113   5
+
 == HMS balanced-panel per-org real pay change by metro (median, IQR, n) ==
            metro   n  med   q25  q75 share_up
 1        Memphis 124 12.7 -13.1 48.7       61
@@ -81,6 +97,7 @@
 18    Louisville 120 -1.3 -19.5 17.9       46
 19      Columbus 206 -1.5 -15.6 18.8       48
 20    Birmingham 119 -3.6 -22.3 28.3       45
+
 == All-sector balanced-panel per-org real pay change by metro ==
            metro      n  med share_up
 1         Denver   1341  5.3       57
@@ -104,6 +121,7 @@
 19    Louisville    468 -0.4       50
 20       Raleigh    483 -2.1       46
 21    Birmingham    431 -2.3       47
+
 == Nashville HMS: pay by year, staffed orgs ==
    tax_year   n med_pay_real med_pay_nominal employees deficit under3mo
 1      2012 186        27371           20624     21815      42       41
@@ -118,6 +136,7 @@
 10     2021 329        39470           35100     20212      28       20
 11     2022 350        40982           39362     20112      33       18
 12     2023 337        42032           42032     20114      41       22
+
 == Nashville HMS by county 2023 ==
    geo_county_fips   n employees exp_m med_pay
 1            47037 256     15049  1221   45831
