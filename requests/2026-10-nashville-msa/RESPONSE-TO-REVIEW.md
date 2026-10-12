@@ -48,3 +48,15 @@ Not done, and why:
   reported beside every median; bounds remain nominal and pre-deflation.
 - Peer-county definition was not replaced with a city definition; the
   limitation is stated instead.
+
+## Follow-up (`RESPONSE-REVIEW.md`, same day)
+
+| # | Item | Action |
+|---|---|---|
+| 1 | Comparator still inconsistent (Tennessee assigned before peer membership; explore-10 redefined `grp`) | Partition fixed and documented in `explore-6`: Nashville / Peer metros (all 19, incl. Memphis and Knoxville, 29,587 filers in 2023) / Rest of TN (Tennessee outside the 20 metros, 1,620) / Rest of US. `explore-10` now only splits Nashville into Davidson and collar and otherwise keeps the panel's `grp`. Memo rows regenerated: peer-metro employee growth +17.9% (was +19.3%), rest of TN line 1e 19.2%, peer HMS line 1e 21.6%, exit-gap intervals re-drawn. |
+| 2 | Hash provenance incomplete; cached national BMF; raw CSVs not byte-verified | Peer-state and national BMF pins now carry the manifest vintage, git sha and parquet sha256. The national slim read is no longer cached; it is re-read and pinned every run. `build-panel.R` hashes all 24 raw CSVs and stops on any mismatch with `_efile_inputs.csv` (verified: 24 files). |
+| 3 | ZIP sentence contradicted its table | Rewritten: Antioch and North Nashville two large organizations each, South Nashville eight, Midtown 32. |
+| 4 | Causal language stronger than the checks | "partly a TY2023 coverage effect" is now "may partly reflect incomplete TY2023 coverage; how much is not established". "Part of the rise is composition" is now "the cross-sectional rise exceeds the within-organization change; composition is one possible explanation". Caveat 8 no longer claims equal blank rates make comparisons less exposed. |
+| 5 | Validation script tests the old algorithm | Renamed `review-validation-original-defect.R` with a header saying it is a historical reproducer expected to fail. New `validate-build.R` (run last by `run-all.R`) asserts panel uniqueness by key and filing id, re-derives the selection from raw Part I and checks the filing-id sets match exactly (3,174,130 both ways, 0 differences), and checks every filing has a Part IX row with the same EIN and year. Passed. |
+
+Full chain rerun via `run-all.R` on 2026-10-12 (log in `output/run-all.log`).

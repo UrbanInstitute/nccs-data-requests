@@ -16,8 +16,9 @@ citation:
   issue: 1
 ---
 
-Revised 2026-10-12 after the second-analyst review in `REVIEW.md`; the
-point-by-point response is in `RESPONSE-TO-REVIEW.md`.
+Revised 2026-10-12 after the second-analyst review in `REVIEW.md` and its
+follow-up `RESPONSE-REVIEW.md`; the point-by-point response is in
+`RESPONSE-TO-REVIEW.md`.
 
 ## The ask
 
@@ -248,7 +249,8 @@ revenue):
 |---|---|---|---|
 | Davidson | 34% | 14.8% | 15.7% (13th of 20 peer counties) |
 | Nashville metro | 30% | 12.7% | 13.2% |
-| Peer metros combined | 29% | 18.5% | 21.8% |
+| Peer metros combined | 29% | 18.5% | 21.6% |
+| Rest of Tennessee | 41% | 19.2% | |
 | Rest of US | 33% | 14.8% | 23.8% |
 
 Davidson's overall line 1e share matches the rest of the US. The difference
@@ -276,8 +278,8 @@ Charities excluding hospitals and universities, real 2023 dollars (caveats
 |---|---|---|---|---|---|---|
 | Davidson | +16% | -5.9% | -1.0% | +5% | +6.9% (1st of 20 counties) | +3.6% (6th of 20) |
 | Nashville metro | +26% | -4.4% | -0.1% | +7% | +9.9% (1st of 20 metros) | +7.2% (1st of 20) |
-| Peer metros combined | +21% | +19% | +9% | -1% | +0.8% | -0.5% |
-| Rest of US | +16% | -1.9% | +9% | +2% | +0.4% | +0.3% |
+| Peer metros combined | +20% | +17.9% | +9.1% | -3% | +0.7% | -0.5% |
+| Rest of US | +16% | -1.9% | +9.1% | +2% | +0.4% | +0.3% |
 
 Employees in this release are lower in 2023 than in 2019 in both Davidson
 and the metro, but through 2022 they were flat. The fall may partly reflect
@@ -301,9 +303,9 @@ change was +4.1% (peer metros +3.2%, Rest of US +3.5%). Composition is one
 possible explanation. Organizations with staff in 2019
 that no longer filed a full 990 by 2023 had paid less per head in 2019
 than those that stayed. In the metro the median gap is $9,900 (113 leavers
-with a valid value against 734 stayers; bootstrap 95% interval -$15,200 to
--$5,200). In Davidson the gap is $4,600 (70 against 429; interval -$15,600
-to +$3,500, so not distinguishable from zero). In the peer metros and the
+with a valid value against 734 stayers; bootstrap 95% interval -$15,600 to
+-$4,800). In Davidson the gap is $4,600 (70 against 429; interval -$15,700
+to +$4,200, so not distinguishable from zero). In the peer metros and the
 rest of the US the gap is within a few hundred dollars of zero. Caveat 4
 applies: this says nothing about whether the leavers closed.
 
@@ -322,8 +324,8 @@ national level.
 |---|---|---|---|---|---|
 | Davidson | 66% | 81% | 50 | 4.0 | 5.1 |
 | Nashville collar | 55% | 67% | 38 | 5.0 | |
-| Peer metros combined | 62% | 75% | | 4.1 | |
-| Rest of US | 59% | 73% | | 2.6 | 2.5 |
+| Peer metros combined | 62% | 75% | 50 | 4.1 | |
+| Rest of US | 59% | 73% | 34 | 2.6 | 2.5 |
 
 Davidson's human services charities report twice the volunteers per paid
 employee of their national counterparts; among the 20 peer counties
@@ -352,10 +354,14 @@ retained returns, not a measured change in distinct volunteers or hours.
 ## Reproducibility
 
 `run-all.R` rebuilds everything: `build-panel.R` (BMF universe and the
-national panel), `build-external.R` (Census, QCEW and Phase 0 downloads with
-sha256 checks), `build-peers.R`, then `explore-1` through `explore-10`,
-writing console output to `output/`. Every read is pinned in `_pins.csv`
-with a vintage and, for files, a sha256. The BMF is read from a rolling
+national panel, with the 24 raw e-file CSVs verified byte-for-byte against
+their recorded sha256), `build-external.R` (Census, QCEW and Phase 0
+downloads with sha256 checks), `build-peers.R`, then `explore-1` through
+`explore-10`, then `validate-build.R`, which re-derives the filing selection
+from the raw Part I files and asserts it matches the panel exactly. Console
+output goes to `output/`. Every read is pinned in `_pins.csv` with a
+vintage and, for files, a sha256; every BMF read carries the master's
+manifest vintage and sha256, and nothing is served from a cache. The BMF is read from a rolling
 URL; its manifest vintage and sha256 are recorded so the build can be
 identified but not re-fetched once the master rolls. The e-file CSVs
 (about 6 GB, 24 files) are those synced for
