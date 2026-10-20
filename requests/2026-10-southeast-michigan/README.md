@@ -20,6 +20,7 @@ template. Due 2026-10-30.
 | `REVIEW-PROMPT.md` | Prompt for an independent review of the plan. |
 | `template/` | The requester's Excel template and the draft fact sheet it feeds. The draft settles definitions (shares, operating surplus as net income over revenue, age as 2026 minus ruling year). |
 | `build-*.R`, `check-*.R` | One script per plan step, written in order. Not yet started. |
+| `REVIEW.md`, `RESPONSE-TO-REVIEW.md` | Independent review of the plan and the finding-by-finding response; the plan incorporates both. |
 | `output/` | Script outputs. The filled template is written here, never over the original in `template/`. |
 | `_pins.csv` | Provenance of every dataset read, written by the helpers in `R/request_read.R`. |
 | `checklist.md`, `request.qmd` | Repo template stubs for the public-safety gate and a possible data story. |

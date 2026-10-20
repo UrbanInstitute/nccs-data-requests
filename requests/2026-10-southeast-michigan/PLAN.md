@@ -1,8 +1,8 @@
 # Plan: Southeast Michigan nonprofit fact sheet (seven counties)
 
 Status: set up 2026-10-20. Deadline for the populated data template is
-end of day Friday 2026-10-30. Christina executes the steps below; Thiya
-reviews code and numbers; the requester owns the fact sheet itself.
+end of day Friday 2026-10-30. The analyst executes the steps below; the
+reviewer checks code and numbers; the requester owns the fact sheet.
 
 ## What is being asked
 
@@ -14,7 +14,7 @@ on its own. The deliverable is the requester's Excel template, filled in
 requester can write the source lines and caveats. Requester identity and
 the full email thread are in `_private.md` (gitignored).
 
-Budget: 40 hours of Thiya's time, 6 of Christina's. The estimate covered
+Budget: 40 reviewer hours, 6 analyst hours. The estimate covered
 two sample-definition meetings, data assembly, all measures below, QA,
 the methods note, and one round of revisions.
 
@@ -82,10 +82,7 @@ the requester's to produce or ask for separately.
    CORE series. BMF sheets: a 2026 BMF vintage, matching the age
    formula. Fill every "[Date]" and "Year" placeholder with the vintage
    or tax year used.
-3. **Suppression threshold.** St. Clair and Monroe have small full-990
-   counts. Proposal: suppress cells with fewer than 10 organizations and
-   state the rule in the methods note.
-4. **Hosting.** COMM product on urban.org or funder site. Format only.
+3. **Hosting.** COMM product on urban.org or funder site. Format only.
 
 ## Measures and sources
 
@@ -106,44 +103,76 @@ registered organization; the financial sheets cover 990 and 990-EZ
 filers for the tax year; employees cover full-990 filers only. Each
 sheet's denominator differs and must be stated.
 
-## Steps for Christina
+## Settled after review (2026-10-20, see REVIEW.md and RESPONSE-TO-REVIEW.md)
 
-Each step is one script in this folder. Reads go through
-`R/request_read.R` so every artifact is pinned in `_pins.csv`. Code is
-tidyverse style with full roxygen comments on any function. Thiya reviews
-each script before the next starts.
+- Reads: BMF geocoded master filtered to the latest `last_vintage_ym`;
+  CORE processed tier, tax year 2023, `990combined` partition for the
+  five financial sheets (`source_form` separates 990 from 990-EZ) and
+  the `990` partition for employees (Part V line 2a, which equals Part I
+  line 5). The requester's "Core PZ file" and "Core PC file" are the
+  retired legacy names for these populations.
+- Public charity: subsection code 3 and foundation code not in 2, 3, 4,
+  compared as integers.
+- Subsector: NTEE v2 subsector mapped to the ten template groups;
+  hospitals fold into Health, universities into Education; Unclassified
+  kept and explained.
+- Age: ruling dates stored as 1900-01-01 are missing, reported in a
+  "not reported" column, not in the 50+ band.
+- Employees 0 band is labelled "zero or not reported".
+- Operating surplus: negative-revenue rows excluded and counted;
+  assigned zeros footnoted.
+- Dollar bands: lower bound inclusive everywhere.
+- No suppression. Every row carries its denominator n.
+- Duplicate EIN within tax year 2023: keep the latest tax period.
 
-1. `build-1-universe.R`: read the geocoded BMF master, join the
-   county-fips crosswalk, keep the seven counties, keep 501(c)(3) public
-   charities. Write `output/universe.csv` with EIN, county, NTEE major
-   group, ruling year, filing type. Report the count per county and the
-   number of unresolved county labels.
-2. `build-2-sample.R`: apply the sample definition (decision 1). Report
-   how many organizations each condition removes, per county.
-3. `build-3-financials.R`: pull tax year 2023 Form 990 and 990-EZ
-   financials for the sample EINs from the CORE series (PZ tier for
-   revenue, expenses, assets, liabilities; PC rows for employees). One
-   row per EIN, with a flag for form type. Verify tax year and return
-   type per row; never trust the file-name year.
-4. `build-4-measures.R`: compute every sheet's distribution for the
-   region and each county, using the band cut points exactly as on the
-   template. Apply suppression (decision 3). Write
-   `output/measures-long.csv` (geography, measure, category, value,
-   denominator n).
-5. `build-5-template.R`: fill the requester's Excel template from the
-   long table. Write to `output/`, never over the original in `docs/`.
-6. `check-6-qa.R`: shares sum to 100 within each distribution; counts
-   match between steps; region equals the sum of counties for counts;
-   spot-check three EINs by hand against ProPublica Nonprofit Explorer.
-7. Methods note: `docs/methods-note.md` with sample definition,
-   sources, coverage by measure, suppression rule, data dictionary for
-   the template columns.
+## Steps for the analyst
+
+Each step is one script in this folder, tracked as a GitHub issue.
+Reads go through `R/request_read.R` so every artifact is pinned in
+`_pins.csv`. Code is tidyverse style with full roxygen comments on any
+function. The reviewer checks each script before the next starts.
+Every count listed in RESPONSE-TO-REVIEW.md as reviewer-verified is
+printed by the script that produces it.
+
+1. `build-1-universe.R`: read the geocoded BMF master, filter to the
+   latest `last_vintage_ym` (print it and the rows dropped), join the
+   county-fips crosswalk, keep the seven counties (print and drop
+   unresolved Michigan rows), apply the public-charity rule (print what
+   each condition removes per county), map subsector to the ten groups,
+   flag missing ruling dates. Write `output/universe.csv`. Print the
+   count per county; these fill the Number sheet.
+2. `build-2-financials.R`: for the universe EINs, read tax year 2023
+   from the 990combined and 990 partitions. Verify tax year per row.
+   Keep the latest tax period per EIN (print duplicates resolved). One
+   row per EIN with `source_form`, revenue, expenses, assets,
+   liabilities, employees. Print: EINs with a 990 row, an EZ row, no
+   row; 2023 filers absent from the current registry; full-990 rows
+   with zero employees but positive wages.
+3. `build-3-measures.R`: every sheet's distribution for the region and
+   each county, bands exactly as on the template, lower bound
+   inclusive. Operating surplus excludes negative revenue (print the
+   count) and footnotes assigned zeros (print the count). Write
+   `output/measures-long.csv` (geography, sheet, band, share, n).
+4. `build-4-template.R`: copy the Excel template from `template/` to
+   `output/` and fill it from the long table. Never write over the
+   original. Fill the [Date] and Year placeholders with the BMF vintage
+   and the CORE tax year.
+5. `check-5-qa.R`: shares sum to 100 per row; denominator n reconciles
+   by county and sheet against steps 1 and 2; form-type by county
+   cross-tab; region equals the sum of counties; Wayne County count
+   checked against an external published figure; three EINs checked by
+   hand against ProPublica Nonprofit Explorer. Print pass or fail per
+   check.
+6. `docs/methods-note.md`: sample rule, reads and vintages from
+   `_pins.csv`, the PZ/PC name mapping, who each sheet covers with n,
+   missing ruling dates, employee zeros, negative revenue, no
+   suppression, data dictionary.
 
 ## Timeline
 
 | Date | Milestone |
 |---|---|
-| Week of 2026-10-20 | Sample meetings; receive Excel template and Core Sample criteria; steps 1 and 2 |
+| By 2026-10-23 | Steps 1 and 2 built and reviewed |
 | By 2026-10-27 | Steps 3 and 4 built and reviewed |
-| By 2026-10-29 | Template filled, QA done, methods note drafted |
-| 2026-10-30 | Deliver populated template and methods note |
+| By 2026-10-29 | QA passed, methods note drafted |
+| 2026-10-30 | Deliver the filled template and methods note |
