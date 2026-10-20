@@ -62,10 +62,12 @@ repo (public). Folder `requests/2026-10-southeast-michigan/`.
 - Each sheet has a different denominator (all registered; 990 and EZ
   filers; full-990 filers). Check that the plan's QA step would catch a
   share computed over the wrong denominator.
-- The subsector sheet keeps hospitals and universities. The plan notes
-  the Nonprofit Trends Core Sample excludes them and treats the sample
-  question as probably closed. Is that a safe reading, or should the
-  plan hold both samples until the requester confirms?
+- The sample is settled: all 501(c)(3) public charities, private
+  foundations excluded, hospitals and universities kept. Check that the
+  plan's rule for separating public charities from private foundations
+  in the BMF is correct and complete (foundation code values), and that
+  the CORE series rows can be restricted the same way so the BMF and
+  financial sheets describe the same population.
 
 ### 3. Definitions that will be misread
 

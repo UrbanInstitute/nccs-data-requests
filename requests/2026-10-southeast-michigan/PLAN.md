@@ -58,7 +58,7 @@ theirs. It settles several questions:
   or zero net income are assigned zero. Use this definition exactly.
 - **Age** is 2026 minus the IRS ruling year.
 - **Sample** for the counts, subsector, and age sheets is every
-  registered 501(c)(3) public charity. The financial sheets use
+  registered 501(c)(3) public charity, private foundations excluded. The financial sheets use
   "reporting" organizations, those filing a 990 or 990-EZ in the tax
   year. Employees use full-990 filers. The draft does not apply the
   Nonprofit Trends Core Sample filter anywhere, and its subsector table
@@ -72,11 +72,12 @@ the requester's to produce or ask for separately.
 
 ## Open decisions (block the build)
 
-1. **Sample filter.** The earlier emails said the funder had not chosen
-   between all public charities and the Core Sample. The draft fact
-   sheet uses all registered public charities throughout. Confirm with
-   the requester that the Core Sample question is closed; if so the two
-   sample meetings shrink to one.
+1. **Sample: settled 2026-10-20.** All 501(c)(3) public charities,
+   excluding private foundations. No Nonprofit Trends Core Sample
+   filter, so hospitals and universities stay in. In the BMF this is
+   subsection code 3 with a foundation code that marks a public charity
+   (not a private foundation); write the exact code rule into step 1 and
+   the methods note. The sample meetings are no longer needed for this.
 2. **Tax year and vintages.** Financial sheets: tax year 2023 from the
    CORE series. BMF sheets: a 2026 BMF vintage, matching the age
    formula. Fill every "[Date]" and "Year" placeholder with the vintage
