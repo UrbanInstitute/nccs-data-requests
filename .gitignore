@@ -29,3 +29,6 @@ requests/**/data/
 # GitHub Pages site (published HTML guides)
 !docs/**/*.html
 !docs/*.html
+
+# Requester-supplied templates and documents carry names; never commit them.
+requests/**/template/
