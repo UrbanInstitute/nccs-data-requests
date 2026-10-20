@@ -56,9 +56,17 @@ print(nash |> filter(as.integer(subsection_code) == 3) |> group_by(county) |>
 cat("\n== Nashville private foundations: assets by county, and top 10 ==\n")
 print(nash |> filter(pf, last_year_in_bmf >= 2026) |> arrange(-asset_amount) |> transmute(org_name_display, county, assets_m = round(asset_amount / 1e6), ruling_year) |> head(10) |> as.data.frame())
 
-cat("\n== Private foundation formation by year, Nashville vs peers (share of each metro's PF stock) ==\n")
-print(peers |> filter(pf, last_year_in_bmf >= 2026, ruling_year >= 2010) |> mutate(g = ifelse(metro == "Nashville", "Nashville", "Peers"), period = cut(ruling_year, c(2009, 2014, 2019, 2022, 2026), labels = c("2010-14", "2015-19", "2020-22", "2023-26"))) |>
-  count(g, period) |> group_by(g) |> mutate(pct = round(100 * n / sum(n))) |> as.data.frame())
+# Period shares use the FULL active stock as the denominator (pre-2010 rulings
+# included as their own row). An earlier version filtered to ruling_year >= 2010
+# before computing pct, so the shares were of post-2010 rulings only while the
+# label said "stock"; caught in the 2026-10-19 foundation-count review.
+cat("\n== Private foundation formation by period, Nashville vs peers (share of each metro's full active PF stock) ==\n")
+print(peers |> filter(pf, last_year_in_bmf >= 2026) |> mutate(g = ifelse(metro == "Nashville", "Nashville", "Peers"), period = cut(ruling_year, c(-Inf, 2009, 2014, 2019, 2022, 2026), labels = c("pre-2010", "2010-14", "2015-19", "2020-22", "2023-26"))) |>
+  count(g, period) |> group_by(g) |> mutate(pct = round(100 * n / sum(n), 1)) |> as.data.frame())
+cat("\n== Private foundation rulings by year 2015-2026, Nashville metro vs pooled peers (active stock; 2026 is partial, rulings through April in this build) ==\n")
+print(peers |> filter(pf, last_year_in_bmf >= 2026, ruling_year >= 2015) |> mutate(g = ifelse(metro == "Nashville", "Nashville", "Peers")) |> count(g, ruling_year) |> tidyr::pivot_wider(names_from = g, values_from = n) |> as.data.frame())
+cat("\n== Davidson County private foundations by ruling year 2015-2026 (active stock) ==\n")
+print(nash |> filter(pf, last_year_in_bmf >= 2026, county == "Davidson", ruling_year >= 2015) |> count(ruling_year) |> as.data.frame())
 
 cat("\n== Davidson zip codes: charities active 2026, ranked by number ruled 2020+ (current address, not address at founding) ==\n")
 z <- nash |> filter(charity, geo_county_fips == "47037", last_year_in_bmf >= 2026) |> group_by(zip = org_addr_zip5) |>

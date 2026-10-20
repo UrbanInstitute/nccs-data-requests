@@ -148,16 +148,48 @@ foundation_code values:
 9  Christy-Houston Foundation Rutherford       97        1987
 10         Jackson Foundation    Dickson       82        1969
 
-== Private foundation formation by year, Nashville vs peers (share of each metro's PF stock) ==
-          g  period    n pct
-1 Nashville 2010-14   58  14
-2 Nashville 2015-19  100  24
-3 Nashville 2020-22   82  20
-4 Nashville 2023-26  174  42
-5     Peers 2010-14 1347  14
-6     Peers 2015-19 2160  22
-7     Peers 2020-22 2147  22
-8     Peers 2023-26 4179  42
+== Private foundation formation by period, Nashville vs peers (share of each metro's full active PF stock) ==
+           g   period    n  pct
+1  Nashville pre-2010  360 46.5
+2  Nashville  2010-14   58  7.5
+3  Nashville  2015-19  100 12.9
+4  Nashville  2020-22   82 10.6
+5  Nashville  2023-26  174 22.5
+6      Peers pre-2010 8264 45.7
+7      Peers  2010-14 1347  7.4
+8      Peers  2015-19 2160 11.9
+9      Peers  2020-22 2147 11.9
+10     Peers  2023-26 4179 23.1
+
+== Private foundation rulings by year 2015-2026, Nashville metro vs pooled peers (active stock; 2026 is partial, rulings through April in this build) ==
+   ruling_year Nashville Peers
+1         2015         7   417
+2         2016        13   380
+3         2017        25   347
+4         2018        22   416
+5         2019        33   600
+6         2020        16   485
+7         2021        18   535
+8         2022        48  1127
+9         2023        71  1599
+10        2024        54  1235
+11        2025        36   959
+12        2026        13   386
+
+== Davidson County private foundations by ruling year 2015-2026 (active stock) ==
+   ruling_year  n
+1         2015  4
+2         2016 10
+3         2017 11
+4         2018 10
+5         2019 18
+6         2020 10
+7         2021  8
+8         2022 20
+9         2023 26
+10        2024 21
+11        2025 18
+12        2026  8
 
 == Davidson zip codes: charities active 2026, ranked by number ruled 2020+ (current address, not address at founding) ==
      zip   n ruled_2020plus hms_all hms_ruled_2020plus orgs_assets_over_10m

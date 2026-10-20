@@ -29,3 +29,6 @@ requests/**/data/
 # GitHub Pages site (published HTML guides)
 !docs/**/*.html
 !docs/*.html
+
+# Requester-shared review documents carry names; never commit them.
+requests/**/docs/*.docx

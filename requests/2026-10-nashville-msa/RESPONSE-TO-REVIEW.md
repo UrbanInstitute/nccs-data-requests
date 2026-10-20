@@ -71,3 +71,32 @@ is $17,200 (bootstrap -$22,900 to -$7,800) against $5,200 for the same
 construct in the peer metros. Caveat 2 is restated with the measured
 mismatch between the e-file release and CORE for TY2023 (6% of CORE
 filings absent from e-file, 5% the other way; net counts within 2%).
+
+## Foundation-count review (2026-10-19)
+
+A second review checked the Davidson County private foundation counts
+prepared for a requester follow-up question. Findings and fixes:
+
+- Counts reproduced exactly (405 active; 73 ruled 2023+; 53 ruled 2015-19;
+  by year 18, 10, 8, 20, 26, 21, 18, 8). Foundation code set (2, 3, 4,
+  stored unpadded) confirmed correct.
+- "Active today" was overstated: `last_year_in_bmf >= 2026` admits
+  organizations absent from the latest month (July 2026). Requiring the
+  latest month gives 397 active, 72 ruled 2023+, 51 ruled 2015-19. The reply
+  uses "about 400" and the tighter period counts.
+- The 2026 rulings run through April in this build, not eight months.
+- The peer-comparison table in `explore-8-bmf.R` computed period shares
+  after filtering to rulings from 2010 on, while its label said "share of
+  each metro's PF stock". Fixed: the denominator is now the full active
+  stock, with pre-2010 as its own row. Corrected shares for 2023-26 are
+  22.5% (Nashville) and 23.1% (pooled peers); the "same as peers" statement
+  survives, the magnitude in the old output did not.
+- Annual rulings peak in 2023 in both Nashville and the peers and fall in
+  2024 and 2025. Whether that fall is real or registry lag cannot be told
+  from this data. The reply describes a 2023 peak shared with the peer
+  metros, not a "national" or "sustained" rise. The round 1 memo sentence
+  "more Davidson foundations recognized since 2023 than in the whole of
+  2015 to 2019" is numerically true but will be reworded in round 2 to
+  carry the peer comparison and the lag caveat.
+- A mailing-address county check was requested but the universe carries
+  no separate mailing county; dropped.
