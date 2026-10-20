@@ -10,7 +10,7 @@ A fact sheet on nonprofits in seven Michigan counties: St. Clair,
 Livingston, Oakland, Macomb, Washtenaw, Wayne, and Monroe. Every measure
 is reported for the seven-county region in aggregate and for each county
 on its own. The deliverable is the requester's Excel template, filled in
-(in `template/`, gitignored), with a short methods note so the
+(in `template/`), with a short methods note so the
 requester can write the source lines and caveats. Requester identity and
 the full email thread are in `_private.md` (gitignored).
 
@@ -18,7 +18,7 @@ Budget: 40 hours of Thiya's time, 6 of Christina's. The estimate covered
 two sample-definition meetings, data assembly, all measures below, QA,
 the methods note, and one round of revisions.
 
-## The template (received 2026-10-20, in `template/`, not committed)
+## The template (received 2026-10-20, in `template/`)
 
 Nine sheets. Each has one row per geography (region plus seven
 counties, except Number which has counties only) and one column per
@@ -45,7 +45,7 @@ nonprofits per 10,000 residents, aggregate totals, government grants,
 volunteers. Treat these as out of scope unless the requester adds
 sheets. The measure map below is now limited to the template.
 
-## What the fact sheet document settles (format draft in `template/`, not committed)
+## What the fact sheet document settles (format draft in `template/`)
 
 The requester's draft fact sheet shows how the Excel numbers will be
 used. We produce the Excel sheet only; the charts, map, and text are

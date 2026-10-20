@@ -23,7 +23,7 @@ repo (public). Folder `requests/2026-10-southeast-michigan/`.
 |---|---|
 | `PLAN.md` | The plan under review: ask, template description, settled definitions, open decisions, measure-to-source map, seven build steps, timeline. |
 | `checklist.md`, `request.qmd` | Repo template stubs, not yet filled. |
-| `template/` | Gitignored. The requester's Excel template (nine sheets) and a draft of the fact sheet it feeds. Not available to you; the plan's template section transcribes the sheet layout and the definitions the draft settles. Treat that transcription as the requester's specification. |
+| `template/` | The requester's Excel template (nine sheets, `CFSEM Census Fact Sheet Figures.xlsx`) and the draft fact sheet it feeds (`client_intended_fact_sheet_format.docx`). Read both; they are the requester's specification. |
 | `../../CLAUDE.md` | Repo house rules: read canonical artifacts, never re-derive geography, pin every read through `R/request_read.R`. |
 | `../../R/request_read.R` | The read helpers the scripts must use. |
 | `../2026-10-nashville-msa/` | The closest prior request (county-level profile from BMF and 990 data). Its `PLAN.md` and `build-*.R` show the house pattern. |
