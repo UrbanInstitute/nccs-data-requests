@@ -103,7 +103,7 @@ registered organization; the financial sheets cover 990 and 990-EZ
 filers for the tax year; employees cover full-990 filers only. Each
 sheet's denominator differs and must be stated.
 
-## Settled after review (2026-10-20, see REVIEW.md and RESPONSE-TO-REVIEW.md)
+## Settled after review (2026-10-20, see REVIEW.md and RESPONSE-TO-REVIEW.md; requester approved these treatments 2026-10-21)
 
 - Reads: BMF geocoded master filtered to the latest `last_vintage_ym`;
   CORE processed tier, tax year 2023, `990combined` partition for the
