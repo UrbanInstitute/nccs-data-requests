@@ -5,7 +5,7 @@ req <- here::here("requests", "2026-10-nashville-msa")
 pins <- file.path(req, "_pins.csv")
 if (file.exists(pins)) file.rename(pins, file.path(req, "data", paste0("_pins-", format(Sys.time(), "%Y%m%d%H%M%S"), ".csv")))
 dir.create(file.path(req, "output"), showWarnings = FALSE)
-scripts <- c("build-panel.R", "build-external.R", "build-peers.R",
+scripts <- c("build-panel.R", "build-external.R", "build-peers.R", "build-funders.R",
              paste0("explore-", c("1-universe", "2-finance", "3-clean", "4-checks", "5-charities",
                                   "6-national", "7-govgrants", "8-bmf", "9-davidson", "10-volunteers", "11-exit-trace", "12-coverage"), ".R"), "validate-build.R")
 for (s in scripts) {

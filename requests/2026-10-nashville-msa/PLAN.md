@@ -20,7 +20,8 @@ answered in the document. The rest are new work, plus one new ask:
 | B | Distribution of operating expenses by percentile, all Davidson charities and human services, to show how small most organizations are | Comments 3 and 4 |
 | C | Government grant share of revenue, year by year 2019 to 2023, Davidson against peers and the US, with the pandemic-era peak visible | Comments 7 and 8 |
 | D | Optional: filers, inflation-adjusted spending, and employees 2019 to 2023 as one chart | Comment 9 |
-| E | Profile of the roughly 100 organizations in the team's Ecosystem Map: age, starts and exits, median operating expenses, government grant share, inflation-adjusted spending, reported employees | New ask; EIN list not yet received |
+| E | Profile of the roughly 100 organizations in the team's Ecosystem Map: age, starts and exits, median operating expenses, government grant share, inflation-adjusted spending, reported employees | New ask; list of names and addresses (no EINs) not yet received |
+| F | Who funds whom: grants reported by Davidson-based funders on their own returns, 2019 to 2023, matched to the Ecosystem Map list | Third ask, approved 2026-10-21 |
 
 ## Measures and sources
 
@@ -36,6 +37,8 @@ New or changed items are marked.
 | Government grant share | Full 990 Part VIII line 1e over total revenue; blank treated as zero (caveat 8) | 1e | Full 990 only |
 | Inflation-adjusted spending | Total expenses, CPI-U to 2023 dollars | | Full 990 (and EZ for the profile) |
 | Reported employees | Full 990 Part I line 5 | 5 | Full 990 only |
+| Grants paid by public charities (new, F) | Schedule I Part II, e-file v2.1; recipients receiving more than $5,000 in aggregate in the year; cash and noncash kept separate; recipient EIN on most rows | Sch I | Full 990 filers that make grants |
+| Grants paid by private foundations (new, F) | 990-PF grants paid (Part XIV on the 2023 form, Part XV earlier; table keeps the PF-P15 name), e-file release `efilepf_v2_3`; recipient name and address, no EIN; grants to individuals flagged and excluded | PF Part XIV/XV | 990-PF filers |
 
 Expenses rather than revenue is used for size throughout; revenue swings
 with one-time gifts and capital campaigns.
@@ -73,6 +76,23 @@ with one-time gifts and capital campaigns.
    coverage by form type for every measure, since the mapped list will be
    small enough to show which organizations are missing what.
 
+4. **Funder table (F).** Built as outgoing giving by funders whose
+   registry address is in Davidson County, wherever the recipient is.
+   Funders based elsewhere are absent by construction. Recipients are
+   matched to the registry by EIN where the row carries one (Schedule I)
+   and by name plus city otherwise (provisional, hand-checked against the
+   Ecosystem Map list when it arrives). Shared funders will be reported
+   as shared funders, not as duplication; organizations with no matched
+   grant will be reported as "no matched grant observed in the selected
+   records", not as a gap. Donor-advised fund grants appear under the
+   sponsoring organization. One filing per funder and tax year, chosen as
+   in round 1. Build: `build-funders.R`. First build (2026-10-21):
+   73,020 records, 300 Schedule I funders and 330 foundations over the
+   five years. The Community Foundation of Middle Tennessee itemized
+   about 10,000 COVID-19 relief grants in 2020 (median $4,000, below the
+   itemization threshold), and its record count falls each year after,
+   so year-to-year record counts are not comparable for that funder.
+
 ## Caveats carried from round 1
 
 Filing lag to tax year 2023; full 990 only for employees and line 1e;
@@ -90,20 +110,25 @@ measures; the profile reports how many.
 - `request.qmd` round 2 section: one short paragraph per chart, the
   profile table, and the coverage table for the profile.
 - Charts as PNG in `output/`, built in a new `explore-13-charts.R`.
-- Profile built in `explore-14-profile.R` from an EIN list kept in the
-  gitignored `data/` folder (requester-supplied, not public).
+- Profile built in `explore-14-profile.R` from the requester's name and
+  address list kept in the gitignored `data/` folder (not public).
+- Funder table built in `build-funders.R`; grant-level parquet stays in
+  `data/`, funder-year aggregates in `output/`, the matched
+  funder-by-recipient table for the mapped organizations delivered with
+  the profile.
 - Everything reproducible from the folder with `run-all.R`.
 
 ## Schedule
 
 | Date | Step |
 |---|---|
-| 2026-10-21 | Plan agreed with reviewer; charts A to D built from existing panel |
+| 2026-10-21 | Plan agreed with reviewer; funder table built; charts A to D built from existing panel |
 | On receipt of EIN list | Profile built, coverage checked |
 | 2026-10-30 | Draft findings to reviewer |
 | 2026-11-06 | Reviewer comments addressed; second-analyst code review |
 | 2026-11-09 | Delivered to requester |
 | 2026-11-13 | Requester's deadline |
 
-Estimated effort: 8 to 10 hours of analyst time, about 2 hours of
+Estimated effort: 8 to 10 hours of analyst time for A to E, plus a
+provisional 3 to 4 hours for F (depends on the name-matching step for E), about 2 hours of
 reviewer time across the plan and the findings.

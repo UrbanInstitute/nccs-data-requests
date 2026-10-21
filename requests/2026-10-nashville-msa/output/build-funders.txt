@@ -1,0 +1,147 @@
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Davidson registry rows: 7920 | private foundations: 640 | active 2026: 5146 
+pinned: efile-v2_1-schedule-i-part-ii [SI-P02-T01-GRANTS-US-ORGS-GOVTS-2019.CSV] (7755 rows)
+pinned: efile-v2_1-schedule-i-part-ii [SI-P02-T01-GRANTS-US-ORGS-GOVTS-2020.CSV] (14302 rows)
+pinned: efile-v2_1-schedule-i-part-ii [SI-P02-T01-GRANTS-US-ORGS-GOVTS-2021.CSV] (4591 rows)
+pinned: efile-v2_1-schedule-i-part-ii [SI-P02-T01-GRANTS-US-ORGS-GOVTS-2022.CSV] (4571 rows)
+pinned: efile-v2_1-schedule-i-part-ii [SI-P02-T01-GRANTS-US-ORGS-GOVTS-2023.CSV] (4091 rows)
+pinned: efile-v2_1-schedule-i-part-ii [SI-P02-T01-GRANTS-US-ORGS-GOVTS-2024.CSV] (0 rows)
+
+Schedule I: raw Davidson rows 35310 | after one filing per funder-year 35244 | funders 300 
+pinned: efilepf-v2_3-grants-paid [PF-P15-T01-SUPPLEMENTARY-INFO-GRANT-PAID-2019.parquet] (5626 rows)
+pinned: efilepf-v2_3-grants-paid [PF-P15-T01-SUPPLEMENTARY-INFO-GRANT-PAID-2020.parquet] (7782 rows)
+pinned: efilepf-v2_3-grants-paid [PF-P15-T01-SUPPLEMENTARY-INFO-GRANT-PAID-2021.parquet] (8009 rows)
+pinned: efilepf-v2_3-grants-paid [PF-P15-T01-SUPPLEMENTARY-INFO-GRANT-PAID-2022.parquet] (8265 rows)
+pinned: efilepf-v2_3-grants-paid [PF-P15-T01-SUPPLEMENTARY-INFO-GRANT-PAID-2023.parquet] (8295 rows)
+pinned: efilepf-v2_3-grants-paid [PF-P15-T01-SUPPLEMENTARY-INFO-GRANT-PAID-2024.parquet] (0 rows)
+990-PF: raw Davidson rows 37977 | after one filing per funder-year 37776 | funders 330 | rows flagged as individual recipients 10144 
+
+== Records by source and tax year (organization recipients only) ==
+                    source_table tax_year funders records cash_m noncash_m
+1             990-PF grants paid     2019     195    4295  142.2       0.0
+2             990-PF grants paid     2020     244    5787  165.2       0.0
+3             990-PF grants paid     2021     249    5832  198.3       0.0
+4             990-PF grants paid     2022     241    5734  193.1       0.0
+5             990-PF grants paid     2023     250    5984  186.2       0.0
+6  Schedule I Part II (full 990)     2019     164    7755  286.7      23.4
+7  Schedule I Part II (full 990)     2020     165   14281  374.1      44.2
+8  Schedule I Part II (full 990)     2021     173    4570  348.6      33.3
+9  Schedule I Part II (full 990)     2022     194    4552  388.7      98.3
+10 Schedule I Part II (full 990)     2023     186    4086  552.9      98.8
+   share_recipient_tn share_recipient_davidson_matched
+1                  70                               28
+2                  66                               26
+3                  67                               28
+4                  69                               30
+5                  71                               28
+6                  65                               42
+7                  79                               31
+8                  71                               29
+9                  60                               28
+10                 62                               31
+
+== Individual-assistance rows excluded, by tax year ==
+  tax_year funders records cash_m
+1     2019      28    1309  12.67
+2     2020      38    1948   9.91
+3     2021      40    2097  14.29
+4     2022      46    2509  13.72
+5     2023      40    2281  15.01
+
+== Recipient match method, organization recipients, 2019-2023 ==
+                   source_table    recipient_matched_by     n
+1            990-PF grants paid name+city (provisional)  7737
+2            990-PF grants paid                    <NA> 19895
+3 Schedule I Part II (full 990)                     ein 11098
+4 Schedule I Part II (full 990) name+city (provisional)   406
+5 Schedule I Part II (full 990)                    <NA> 23740
+
+== Twenty largest Davidson funders by 2023 cash to organizations ==
+                               funder_name                  source_table
+1     Vanderbilt University Medical Center Schedule I Part II (full 990)
+2     Goodwill Industries of Middle TN Inc Schedule I Part II (full 990)
+3                    Vanderbilt University Schedule I Part II (full 990)
+4       THE COMMUNITY FOUNDATION OF MIDDLE Schedule I Part II (full 990)
+5       UNITED WAY OF MIDDLE TENNESSEE INC Schedule I Part II (full 990)
+6          PHILANTHROPIC IMPACT FOUNDATION Schedule I Part II (full 990)
+7                HCA HEALTHCARE FOUNDATION            990-PF grants paid
+8  ACCELERATE - THE NATIONAL COLLABORATIVE Schedule I Part II (full 990)
+9                 LIVING LEGACY FOUNDATION            990-PF grants paid
+10                    THE FRIST FOUNDATION            990-PF grants paid
+11      DOLLAR GENERAL LITERACY FOUNDATION Schedule I Part II (full 990)
+12                     THE ROCHELLE CENTER Schedule I Part II (full 990)
+13    Governors Rural Education Foundation Schedule I Part II (full 990)
+14                   DETTWILLER FOUNDATION            990-PF grants paid
+15   TENNESSEE TECHNOLOGY DEVELOPMENT CORP Schedule I Part II (full 990)
+16  NASHVILLE DISTRICT MANAGEMENT CORP INC Schedule I Part II (full 990)
+17              SCARLETT FAMILY FOUNDATION            990-PF grants paid
+18         THE LAUREN AND LEE FIXEL FAMILY            990-PF grants paid
+19     CATHOLIC CHARITIES OF TENNESSEE INC Schedule I Part II (full 990)
+20                  JOE C DAVIS FOUNDATION            990-PF grants paid
+   records cash_m share_cash_to_tn share_cash_to_davidson_matched
+1      234  112.3            0.196                          0.185
+2        3   75.4            1.000                          1.000
+3      192   71.8            0.714                          0.681
+4     1263   59.7            0.634                          0.409
+5      313   26.9            0.985                          0.657
+6        3   23.7            0.993                          0.000
+7      294   21.8            0.322                          0.141
+8       43   20.3            0.000                          0.000
+9       72   18.3            0.406                          0.001
+10     171   18.2            0.964                          0.811
+11     493   15.8            0.204                          0.091
+12       1   15.6            1.000                          0.000
+13       1   15.0            1.000                          0.000
+14      76    8.6            0.971                          0.355
+15      73    8.5            0.904                          0.092
+16       1    7.8            1.000                          1.000
+17     348    7.6            0.924                          0.328
+18      19    7.4            0.000                          0.000
+19      11    7.1            0.761                          0.444
+20     107    7.1            0.611                          0.313
+
+== Davidson-matched recipients with the most distinct Davidson funders, 2019-2023 ==
+   recipient_ein9_matched                                     recipient_name
+1               620983550                                  ALIVE HOSPICE INC
+2               621681766                NASHVILLE PUBLIC LIBRARY FOUNDATION
+3               352528741 MONROE CARELL JR CHILDREN'S HOSPITAL AT VANDERBILT
+4               621411210                         NASHVILLE ZOO AT GRASSMERE
+5               452424130                           NASHVILLE RESCUE MISSION
+6               620476822                              VANDERBILT UNIVERSITY
+7               582050089                                  THISTLE FARMS INC
+8               621333658                            FRIENDS OF WARNER PARKS
+9               452905951                             NASHVILLE FOOD PROJECT
+10              620811413                                ROOM IN THE INN INC
+11              272397528                                  CROSSROADS CAMPUS
+12              620501916                                HARPETH HALL SCHOOL
+13              621740928            NASHVILLE PUBLIC TELEVISION COUNCIL INC
+14              620968273                                   OASIS CENTER INC
+15              621631055                                      RENEWAL HOUSE
+   funders records cash_m
+1       51     180    2.6
+2       49     262   12.3
+3       47     244  201.6
+4       45     225   33.1
+5       44     235    6.7
+6       42     240   94.4
+7       41     188    2.9
+8       41     176    6.0
+9       39     185    2.6
+10      39     185    3.2
+11      38     133    4.0
+12      37     212    6.0
+13      37     169    2.6
+14      35     171    5.5
+15      35     114    3.4
+
+wrote 73020 rows to data/funders_davidson_2019_2023.parquet
