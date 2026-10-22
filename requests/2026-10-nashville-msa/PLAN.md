@@ -122,7 +122,9 @@ measures; the profile reports how many.
 
 | Date | Step |
 |---|---|
-| 2026-10-21 | Plan agreed with reviewer; funder table built; charts A to D built from existing panel |
+| 2026-10-22 | Individual asks sent to candidate reviewers, supervisor and project manager copied, answer requested by 2026-10-26 |
+| 2026-10-26 | Reviewer answer due. If none has confirmed by end of day, ask the supervisor the same day to follow up, as agreed on 2026-10-22; do not wait for a reply to the original asks |
+| 2026-10-27 to 10-29 | Reviewer reads the plan (about half an hour); funder table built 10-21; charts A to D built from existing panel |
 | On receipt of EIN list | Profile built, coverage checked |
 | 2026-10-30 | Draft findings to reviewer |
 | 2026-11-06 | Reviewer comments addressed; second-analyst code review |
