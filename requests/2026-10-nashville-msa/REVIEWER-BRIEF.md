@@ -38,4 +38,4 @@ Filings lag about three years, so 2023 is the latest full year and nothing after
 
 Plan review by 2026-10-29, about half an hour. Draft findings to you 2026-10-30. Your comments addressed by 2026-11-06. Delivery 2026-11-09. About two hours of your time in total. The profile and funder table depend on the list arriving by about 2026-10-27; if it slips, the 10-30 draft covers the charts and the profile follows.
 
-Attachments: round 1 memo; the team's comments on it.
+Attachment: the round 1 note as sent to the requester, with their team's comments on it.
