@@ -32,3 +32,4 @@ requests/**/data/
 
 # Requester-shared review documents carry names; never commit them.
 requests/**/docs/*.docx
+requests/**/docs/*.xlsx
