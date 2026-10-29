@@ -1,3 +1,14 @@
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
 listed organizations matched to an EIN: 131 ; registered in Davidson County and in scope: 116 
 == Grant rows from Davidson-based funders to listed organizations, TY2019-2023 ==
                                         match_route 2019 2020 2021 2022 2023
@@ -5,6 +16,7 @@ listed organizations matched to an EIN: 131 ; registered in Davidson County and 
 2                Schedule I, recipient EIN as filed  916 1482  415  341  332
 3 Schedule I, recipient name and city (provisional)   15   17   15   13   14
 PF name pairs written for hand check: 213 
+
 == Totals by year ($ millions; Schedule I cash and noncash separate, 990-PF a single amount) ==
   tax_year grant_rows funders recipients total_m schedule_i_cash_m
 1     2019       1379     120         82   30.93             19.29
@@ -18,6 +30,7 @@ PF name pairs written for hand check: 213
 3                 1.74       18.89
 4                 1.38       19.10
 5                 4.79       21.52
+
 == Listed organizations reached, by the requester's type ==
                              org_type TRUE FALSE
 1             Educational Institution    2     0
@@ -32,6 +45,7 @@ PF name pairs written for hand check: 213
 10 Workforce development organization    1     1
 listed organizations registered in Davidson: 116 ; with at least one matched grant: 104 
 listed organizations registered outside Davidson (out of scope, not searched): 15 
+
 == Funders per recipient (five-year, distinct funders) ==
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
    1.00    4.00   10.00   12.21   15.00   77.00 
@@ -42,6 +56,7 @@ listed organizations registered outside Davidson (out of scope, not searched): 1
 4         6-10 21
 5        11-20 32
 6          21+ 15
+
 == Recipients per funder (five-year, among listed recipients) ==
    funder_is_private_foundation funder_is_listed recipients_band  n
 1                         FALSE            FALSE               1 30
@@ -65,8 +80,10 @@ listed organizations registered outside Davidson (out of scope, not searched): 1
 19                         TRUE             TRUE           11-20  1
 20                         TRUE             TRUE             21+  3
 funders giving to at least one listed organization: 234 ; of which listed themselves: 21 
+
 == Concentration: share of matched grant dollars from the top funders ==
 top 1: 25 %  top 3: 47 %  top 5: 56 %  top 10: 70 %
+
 == Listed-to-listed giving (both funder and recipient on the list) ==
   tax_year rows funders recipients total_m
 1     2019  921      16         76   19.57

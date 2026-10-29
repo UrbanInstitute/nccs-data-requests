@@ -1,8 +1,8 @@
 # Plan: Nashville round 2 (follow-up charts and Ecosystem Map profile)
 
 Status: reviewer (Teresa) comments received 2026-10-29, logged in
-`RESPONSE-REVIEWER-ROUND2.md`. Requester's list of 141 organizations
-received 2026-10-23 and matched 2026-10-29 (`explore-14-profile.R`).
+`REVIEWS.md`. Requester's list of 141 organizations
+received 2026-10-23 and matched 2026-10-29 (`profile-list.R`).
 Deadline from the requester is 2026-11-13; internal delivery target
 2026-11-09. Written 2026-10-19; scope reset 2026-10-23.
 
@@ -26,7 +26,7 @@ survive as the pieces of deliverable 2.
    funded whom in tax years 2019 to 2023 matched to the listed organizations,
    with a narrative on overlap and gaps that states the evidentiary limits.
    The funder piece is narrowed to Nashville-based funders giving to
-   Nashville-based listed organizations; the full `build-funders.R` extract
+   Nashville-based listed organizations; the full `build.R` (section build-funders) extract
    (recipients anywhere) stays as the source and is not itself delivered.
 
 Reviewer's design rule for every table and chart: name the filing
@@ -115,7 +115,7 @@ with one-time gifts and capital campaigns.
    grant will be reported as "no matched grant observed in the selected
    records", not as a gap. Donor-advised fund grants appear under the
    sponsoring organization. One filing per funder and tax year, chosen as
-   in round 1. Build: `build-funders.R`. First build (2026-10-21):
+   in round 1. Build: `build.R` (section build-funders). First build (2026-10-21):
    73,020 records, 300 Schedule I funders and 330 foundations over the
    five years. The Community Foundation of Middle Tennessee itemized
    about 10,000 COVID-19 relief grants in 2020 (median $4,000, below the
@@ -138,10 +138,10 @@ measures; the profile reports how many.
 
 - `request.qmd` round 2 section: one short paragraph per chart, the
   profile table, and the coverage table for the profile.
-- Charts as PNG in `output/`, built in a new `explore-13-charts.R`.
-- Profile built in `explore-14-profile.R` from the requester's name and
+- Charts as PNG in `output/`, built in a new `profile-charts.R`.
+- Profile built in `profile-list.R` from the requester's name and
   address list kept in the gitignored `data/` folder (not public).
-- Funder table built in `build-funders.R`; grant-level parquet stays in
+- Funder table built in `build.R` (section build-funders); grant-level parquet stays in
   `data/`, funder-year aggregates in `output/`, the matched
   funder-by-recipient table for the mapped organizations delivered with
   the profile.

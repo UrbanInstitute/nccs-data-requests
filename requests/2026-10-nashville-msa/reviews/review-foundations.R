@@ -9,8 +9,8 @@ prepare_universe <- function(path) {
       period = cut(ruling_year, c(2009, 2014, 2019, 2022, 2026),
         labels = c("2010-14", "2015-19", "2020-22", "2023-26")))
 }
-tennessee <- prepare_universe("data/universe_tn.parquet")
-peers <- prepare_universe("data/universe_peers.parquet")
+tennessee <- prepare_universe("../data/universe_tn.parquet")
+peers <- prepare_universe("../data/universe_peers.parquet")
 davidson_all <- tennessee |> dplyr::filter(pf, county_name == "Davidson County")
 davidson <- davidson_all |> dplyr::filter(last_year_in_bmf >= 2026)
 cat("Davidson stock:", nrow(davidson), "\n")
@@ -70,19 +70,19 @@ metro_counts <- active_peers |> dplyr::group_by(metro) |>
     n_2025 = sum(ruling_year == 2025, na.rm = TRUE),
     n_2026 = sum(ruling_year == 2026, na.rm = TRUE))
 print(as.data.frame(metro_counts))
-utils::write.csv(metro_counts, "output/review-foundations-metros.csv", row.names = FALSE)
+utils::write.csv(metro_counts, "../output/review-foundations-metros.csv", row.names = FALSE)
 period_shares <- active_peers |> dplyr::count(metro, period, .drop = FALSE) |>
   dplyr::left_join(metro_counts |> dplyr::select(metro, stock), by = "metro") |>
   dplyr::mutate(pct_stock = 100 * n / stock)
-utils::write.csv(period_shares, "output/review-foundations-period-shares.csv", row.names = FALSE)
+utils::write.csv(period_shares, "../output/review-foundations-period-shares.csv", row.names = FALSE)
 cat("Pooled annual counts:\n")
 print(active_peers |> dplyr::filter(ruling_year >= 2019) |> dplyr::count(g, ruling_year), n = Inf)
 # Fast detector for the misleading denominator in the original table.
 stopifnot(all(tapply(original$n, original$g, sum) < stocks$stock[match(names(tapply(original$n, original$g, sum)), stocks$g)]))
 stopifnot(nrow(davidson) == dplyr::n_distinct(davidson$ein),
   sum(is.na(davidson$ruling_date)) == 0, max(tennessee$last_year_in_bmf) == 2026)
-if (file.exists("data/review_foundations_vintage_evidence.parquet")) {
-  evidence <- arrow::read_parquet("data/review_foundations_vintage_evidence.parquet")
+if (file.exists("../data/review_foundations_vintage_evidence.parquet")) {
+  evidence <- arrow::read_parquet("../data/review_foundations_vintage_evidence.parquet")
   monthly <- davidson |> dplyr::left_join(evidence, by = "ein")
   cat("Monthly evidence from the pinned September build (latest observed month is July):\n")
   print(monthly |> dplyr::count(last_vintage_ym, status_code))
@@ -95,7 +95,7 @@ cat("Latest ruling dates in each universe:\n")
 print(max(tennessee$ruling_date, na.rm = TRUE)); print(max(peers$ruling_date, na.rm = TRUE))
 cat("Davidson earliest BMF observation 2023 onward:", sum(davidson$first_year_in_bmf >= 2023), "\n")
 cat("Input SHA256:\n")
-paths <- c("data/universe_tn.parquet", "data/universe_peers.parquet")
+paths <- c("../data/universe_tn.parquet", "../data/universe_peers.parquet")
 print(data.frame(path = paths, sha256 = vapply(paths, function(path) {
   connection <- file(path, "rb"); on.exit(close(connection));
   as.character(openssl::sha256(connection))

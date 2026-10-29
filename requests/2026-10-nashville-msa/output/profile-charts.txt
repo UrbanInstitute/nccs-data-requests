@@ -1,3 +1,33 @@
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+pinned: core-merged [merged] (522716 rows)
+pinned: core-merged [merged] (524386 rows)
+pinned: core-merged [merged] (526299 rows)
+pinned: core-merged [merged] (528444 rows)
+pinned: core-merged [merged] (528576 rows)
+pinned: core-merged [merged] (523095 rows)
+pinned: core-merged [merged] (516871 rows)
+pinned: core-merged [merged] (525074 rows)
+pinned: core-merged [merged] (515769 rows)
+pinned: core-merged [merged] (74678 rows)
+There were 20 warnings (use warnings() to see them)
+pinned: core-merged [merged] (101495 rows)
+pinned: core-merged [merged] (11951 rows)
+pinned: core-merged [merged] (111765 rows)
+pinned: core-merged [merged] (113804 rows)
+pinned: core-merged [merged] (116138 rows)
+pinned: core-merged [merged] (114199 rows)
+pinned: core-merged [merged] (10391 rows)
+There were 14 warnings (use warnings() to see them)
 == A. Davidson County registry (on the 2026 registry) against tax year 2023 returns observed ==
                                                     population registry_count
 1                           501(c)(3) human services charities           1041
@@ -39,6 +69,7 @@
 17                             Form 990-PF  307     6
 18                           Full Form 990 1151    22
 19 No return seen (990-N postcard or none) 3306    64
+
 == A2. Hospitals and universities on the Davidson registry (NTEE-V2 subsector HOS or UNI) ==
   nteev2_subsector                             filing_2023 n
 1              HOS                             Form 990-PF 1
@@ -50,6 +81,7 @@
   is_hos_uni filers expenses_bn
 1      FALSE    874        4.36
 2       TRUE     13       10.68
+
 == B. Davidson recognitions by ruling year, organizations still on the 2026 registry (2026 partial) ==
    ruling_year Human services charities Other exempt organizations
 1         2005                        8                          7
@@ -97,6 +129,7 @@
 20                    192                  21
 21                    214                  18
 22                     87                   8
+
 == C1. Stopped filing: Davidson 990/990-EZ filers (not private foundations) with no return in the next two form years ==
   last_form_year filers stopped_after exit_year share_pct
 1           2015   1559            93      2016       6.0
@@ -116,6 +149,7 @@
 6                            judged
 7                            judged
 8 provisional: 2024 release partial
+
 == C2. Left the registry: Davidson organizations on the registry by 2018, by first vintage year absent ==
    left_year charity_FALSE charity_TRUE
 1       2015            32           86
@@ -128,6 +162,7 @@
 8       2024            22           51
 9       2025            37           75
 10      2026            20           58
+
 == D. Total expenses by percentile, tax year 2023, Davidson 501(c)(3) public charities ==
                                    population filers p10 p25 median  p75  p90
 1 All Davidson charities, full 990 and 990-EZ   1197  36 101    339 1356 6067
@@ -142,6 +177,7 @@
 4 20408               23             61
 5 16088               25             65
 (p10 to p95 in $ thousands; filers reporting zero expenses dropped; 990-N filers, under $50,000 in receipts, are not in any row)
+
 == E. Line 1e government grants as a share of total revenue, full-990 charities excl. hospitals and universities ==
        population           group tax_year filers share_reporting_1e
 1   All charities Davidson County     2020    812                 47
@@ -193,6 +229,7 @@
 22                          26.0
 23                          26.5
 24                          23.8
+
 == F. Davidson full-990 charities excl. hospitals and universities, 2019-2023 (index 2019 = 100) ==
   tax_year filers spending_2023_dollars employees filers_index
 1     2019    759            4433653160     50785        100.0
@@ -206,8 +243,10 @@
 3                       109.2            92.4
 4                       108.1            99.0
 5                       105.2            94.1
+
 == F2. Same organizations in both years (balanced): change from 2019 ==
   endpoint organizations employees_change_pct spending_change_pct
 1     2022           693                 -2.8                 4.0
 2     2023           627                 -0.8                 7.7
+
 charts written to output/: chart_b, chart_c, chart_d, chart_e, chart_f (PNG) with CSV tables

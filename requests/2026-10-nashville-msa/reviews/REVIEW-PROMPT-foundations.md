@@ -25,12 +25,12 @@ already on disk.
 
 | Path | What it is |
 |---|---|
-| `data/universe_tn.parquet` | Every Tennessee organization in the geocoded Unified BMF, with county and CBSA crosswalk columns joined. Built by `build-panel.R`. Pinned in `_pins.csv`. |
-| `data/universe_peers.parquet` | Same shape, for organizations in the 19 peer metros. Built by `build-peers.R`. |
+| `data/universe_tn.parquet` | Every Tennessee organization in the geocoded Unified BMF, with county and CBSA crosswalk columns joined. Built by `build.R` (section build-panel). Pinned in `_pins.csv`. |
+| `data/universe_peers.parquet` | Same shape, for organizations in the 19 peer metros. Built by `build.R` (section build-peers). |
 | `_pins.csv` | Which BMF vintage and crosswalk vintage each pull came from. |
-| `build-panel.R`, `build-peers.R` | How the universes were built. Read these for the column meanings. |
-| `explore-8-bmf.R` | My computation. Read it only AFTER you have produced your own numbers. |
-| `output/explore-8-bmf.txt` | My captured output, same rule. |
+| `build.R` (section build-panel), `build.R` (section build-peers) | How the universes were built. Read these for the column meanings. |
+| `analysis-round1.R` (pass 8) | My computation. Read it only AFTER you have produced your own numbers. |
+| `output/analysis-round1.txt (pass 8)` | My captured output, same rule. |
 
 Relevant columns in the universe files: `subsection_code`,
 `foundation_code`, `ruling_date`, `county_name`, `cbsa_code`,

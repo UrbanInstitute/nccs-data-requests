@@ -9,6 +9,74 @@ The following objects are masked from ‘package:base’:
 
     intersect, setdiff, setequal, union
 
+Loading required package: DBI
+pinned: bmf-master-geocoded [rolling@2026-10-29] (71133 rows)
+pinned: crosswalk-county-fips [tiger-2023] (3635 rows)
+pinned: crosswalk-cbsa [tiger-2023] (3228 rows)
+raw e-file CSV sha256 verified against _efile_inputs.csv for 24 files
+duckdb keeps downloaded extensions and secrets in a temporary directory:
+ℹ /var/folders/_7/t0p9337j65scb9jh1mgk6sc40000gn/T//Rtmpoar73Z/duckdb
+This is removed when the R session ends.
+• Extensions are re-downloaded each session.
+• Secrets are lost.
+ℹ Run duckdb(shared_home = TRUE) (or create ~/.duckdb) to keep them (suitable for most users).
+ℹ Run duckdb(shared_home = FALSE) to accept the temporary directory (and silence this message).
+ℹ See ?duckdb_storage for details and alternatives.
+[1] 3249518
+[1] 3249518
+[1] 3174130
+[1] 3174130
+  filings unique_keys unique_filings part9_rows missing_part9 identity_mismatch
+1 3174130     3174130        3174130    3174130             0                 0
+Filings without a Part IX row: 0 (kept with NA expense split)
+[1] 3174130
+pinned: efile-v2_1-p01-p09-panel [efile_v2_1 TY2012-2023, 24 files (sha256 in ../2026-06-milwaukee-msa/_efile_inputs.csv)] (3174130 rows)
+   tax_year      n
+1      2012 178206
+2      2013 197315
+3      2014 216695
+4      2015 231523
+5      2016 241666
+6      2017 252074
+7      2018 263359
+8      2019 280177
+9      2020 315323
+10     2021 330745
+11     2022 341941
+12     2023 325106
+pinned: census-popest-counties [vintage 2019] (NA rows)
+pinned: census-popest-counties [vintage 2023] (NA rows)
+pinned: bls-qcew-annual-county [2019] (NA rows)
+pinned: bls-qcew-annual-county [2023] (NA rows)
+pinned: bls-qcew-annual-county [2019] (NA rows)
+pinned: bls-qcew-annual-county [2023] (NA rows)
+pinned: bls-qcew-annual-county [2019] (NA rows)
+pinned: bls-qcew-annual-county [2023] (NA rows)
+pinned: efile-phase0-government_grants [phase0 v2026.06 git 22b131b] (1412695 rows)
+external inputs built
+states: AL AR AZ CO FL GA IL IN KS KY MO MS NC OH OK SC TN TX VA 
+pinned: bmf-master-geocoded [rolling@2026-10-29] (1764877 rows)
+           metro     n
+1        Atlanta 41203
+2      St. Louis 21362
+3        Phoenix 20681
+4         Denver 17383
+5   Indianapolis 15949
+6         Austin 15426
+7       Columbus 15265
+8      Charlotte 15029
+9    Kansas City 14113
+10    Cincinnati 13562
+11     Nashville 12246
+12       Memphis 12074
+13   San Antonio 11200
+14       Raleigh  9183
+15  Jacksonville  9030
+16      Richmond  8809
+17 Oklahoma City  8093
+18    Louisville  7659
+19    Birmingham  7485
+20     Knoxville  4435
 Davidson registry rows: 7920 | private foundations: 640 | active 2026: 5146 
 pinned: efile-v2_1-schedule-i-part-ii [SI-P02-T01-GRANTS-US-ORGS-GOVTS-2019.CSV] (7755 rows)
 pinned: efile-v2_1-schedule-i-part-ii [SI-P02-T01-GRANTS-US-ORGS-GOVTS-2020.CSV] (14302 rows)

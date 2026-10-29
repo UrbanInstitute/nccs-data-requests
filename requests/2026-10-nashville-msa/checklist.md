@@ -21,11 +21,11 @@
 
 ## Review
 
-- [x] Second-analyst review received 2026-10-12 (`REVIEW.md`, 12 findings), all
-      accepted; response in `RESPONSE-TO-REVIEW.md`; build and outputs
+- [x] Second-analyst review received 2026-10-12 (`reviews/REVIEW.md`, 12 findings), all
+      accepted; response in `REVIEWS.md`; build and outputs
       regenerated.
 - [x] Exit cohort traced through CORE (full 990 + 990-EZ) and the BMF
-      (`explore-11-exit-trace.R`, 2026-10-12): 58 of 128 are an e-file
+      (`analysis-round1.R` (pass 11), 2026-10-12): 58 of 128 are an e-file
       coverage artifact, 17 switched to 990-EZ, 53 have no TY2023/24 return.
 - [ ] Look at the 42 genuine leavers by name before finding 5 is cited.
 
@@ -54,7 +54,7 @@ and cite pinned vintages in the front matter from `_pins.csv`.
   begins. For June fiscal years the same return sits under CORE 2023 and
   e-file 2022. Found 2026-10-29 while filling the requester's list (36 of 86
   double-source rows disagreed until relabeled; zero after). The
-  explore-12 coverage comparison (CORE vs e-file counts per tax year) did not
+  analysis-round1.R pass 12 coverage comparison (CORE vs e-file counts per tax year) did not
   relabel. Rerun with the relabeling (2026-10-29, Davidson 501(c)(3) excl.
   HOS/UNI, form year 2023): 883 e-file, 649 CORE, every CORE filing also in
   e-file, 234 e-file-only, most of them fiscal-year filers whose form-2023

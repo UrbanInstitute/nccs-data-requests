@@ -16,9 +16,9 @@ citation:
   issue: 1
 ---
 
-Revised 2026-10-12 after the second-analyst review in `REVIEW.md` and its
-follow-up `RESPONSE-REVIEW.md`; the point-by-point response is in
-`RESPONSE-TO-REVIEW.md`.
+Revised 2026-10-12 after the second-analyst review in `reviews/REVIEW.md` and its
+follow-up `REVIEWS.md`; the point-by-point response is in
+`REVIEWS.md`.
 
 ## The ask
 
@@ -126,7 +126,7 @@ return. Uniqueness and identity are asserted at build time.
    the e-file release and 88 e-file filings are absent from CORE. For TY2020
    to TY2022 the mismatch is 1-4%. Neither source is complete for TY2023,
    so every 2019-2023 ranking is shown with its 2019-2022 version; where
-   they differ, both are stated. (`output/explore-12-coverage.txt`)
+   they differ, both are stated. (`output/analysis-round1.txt (pass 12)`)
 3. **Full Form 990 only.** The 990-EZ (gross receipts under $200,000 and
    assets under $500,000) has no employee count, no compensation breakdown
    and no line 1e, and the 990-N has no financials. The financial tables
@@ -224,7 +224,7 @@ and holds the most large institutions. So recent formation is not simply
 "away from the institutions". What the table does show is that Antioch and
 North Nashville have two organizations with assets over $10 million each,
 and South Nashville eight, compared with Midtown's 32. Full table in
-`output/explore-8-bmf.txt`.
+`output/analysis-round1.txt (pass 8)`.
 
 ### 3. Formation, attrition, and foundations (BMF, current)
 
@@ -314,7 +314,7 @@ leavers with a valid value against 734 stayers; bootstrap 95% interval
 -$15,700 to +$4,200, not distinguishable from zero).
 
 Tracing the 128 metro leavers through CORE and the BMF
-(`explore-11-exit-trace.R`) shows what "leaving" meant:
+(`analysis-round1.R` (pass 11)) shows what "leaving" meant:
 
 | Where the 128 went | n | Median 2019 pay per head |
 |---|---|---|
@@ -381,11 +381,11 @@ retained returns, not a measured change in distinct volunteers or hours.
 
 ## Reproducibility
 
-`run-all.R` rebuilds everything: `build-panel.R` (BMF universe and the
+`run-all.R` rebuilds everything: `build.R` (section build-panel) (BMF universe and the
 national panel, with the 24 raw e-file CSVs verified byte-for-byte against
-their recorded sha256), `build-external.R` (Census, QCEW and Phase 0
-downloads with sha256 checks), `build-peers.R`, then `explore-1` through
-`explore-12`, then `validate-build.R`, which re-derives the filing selection
+their recorded sha256), `build.R` (section build-external) (Census, QCEW and Phase 0
+downloads with sha256 checks), `build.R` (section build-peers), then `analysis-round1.R` (pass 1) through
+`analysis-round1.R` (pass 12), then `validate-build.R`, which re-derives the filing selection
 from the raw Part I files and asserts it matches the panel exactly. Console
 output goes to `output/`. Every read is pinned in `_pins.csv` with a
 vintage and, for files, a sha256; every BMF read carries the master's

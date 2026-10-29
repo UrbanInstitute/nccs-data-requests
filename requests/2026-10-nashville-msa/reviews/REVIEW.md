@@ -60,7 +60,7 @@ Rename it “net assets expressed in months of annual expenses” and explicitly
 
 ### 5. ZIP-code ranking contradicts the proposed formation story
 
-**Evidence:** `request.qmd:156-165`; `explore-8-bmf.R:62-65`; `output/explore-8-bmf.txt:128-155`.
+**Evidence:** `request.qmd:156-165`; `explore-8-bmf.R:62-65`; `output/analysis-round1.txt (pass 8):128-155`.
 
 **Expected:** the claimed highest new-organization ZIPs should actually rank highest.
 

@@ -25,18 +25,18 @@ geography; pin every read).
 | `docs/` | The requester's prior work: the Tennessee nonprofit workforce brief (PDF and text) and the Urban Wire piece (text). The write-up should complement, not contradict, these. |
 | `INPUTS.md` | Every input and where it came from. |
 | `_pins.csv` | Provenance log written by the read helpers (dataset, vintage, URL, row count). |
-| `build-panel.R` | Builds the Tennessee universe (BMF plus crosswalk joins) and the national full-990 org-year panel from the e-file v2.1 Part I and Part IX files (dedup logic lives here). |
-| `build-peers.R` | Builds EIN to metro mapping for the 20 metros. |
-| `explore-1-universe.R` | BMF density, formation, subsector mix by county. |
-| `explore-2-finance.R` | First financial pass, all organizations (superseded by 5 and 6 but kept for the all-organization view). |
-| `explore-3-clean.R` | Org-level medians, trimming, balanced 2019-2023 panel. |
-| `explore-4-checks.R` | Checks on what drives collar-county growth and the human services pay rise. |
-| `explore-5-charities.R` | Restricts to 501(c)(3), per-capita by county. |
-| `explore-6-national.R` | National 501(c)(3) benchmark, robustness (2019-2022), exit and entrant cohorts. Writes `panel_charities.parquet`, used by 7, 9, 10. |
-| `explore-7-govgrants.R` | Government grants dependence (Phase 0). |
-| `explore-8-bmf.R` | BMF-only: formation, attrition, foundations, zip codes. |
-| `explore-9-davidson.R` | Davidson alone against peer principal counties. |
-| `explore-10-volunteers.R` | Volunteer reliance. |
+| `build.R` (section build-panel) | Builds the Tennessee universe (BMF plus crosswalk joins) and the national full-990 org-year panel from the e-file v2.1 Part I and Part IX files (dedup logic lives here). |
+| `build.R` (section build-peers) | Builds EIN to metro mapping for the 20 metros. |
+| `analysis-round1.R` (pass 1) | BMF density, formation, subsector mix by county. |
+| `analysis-round1.R` (pass 2) | First financial pass, all organizations (superseded by 5 and 6 but kept for the all-organization view). |
+| `analysis-round1.R` (pass 3) | Org-level medians, trimming, balanced 2019-2023 panel. |
+| `analysis-round1.R` (pass 4) | Checks on what drives collar-county growth and the human services pay rise. |
+| `analysis-round1.R` (pass 5) | Restricts to 501(c)(3), per-capita by county. |
+| `analysis-round1.R` (pass 6) | National 501(c)(3) benchmark, robustness (2019-2022), exit and entrant cohorts. Writes `panel_charities.parquet`, used by 7, 9, 10. |
+| `analysis-round1.R` (pass 7) | Government grants dependence (Phase 0). |
+| `analysis-round1.R` (pass 8) | BMF-only: formation, attrition, foundations, zip codes. |
+| `analysis-round1.R` (pass 9) | Davidson alone against peer principal counties. |
+| `analysis-round1.R` (pass 10) | Volunteer reliance. |
 | `output/explore-*.txt` | Console output of each script, captured 2026-10-12. The write-up's numbers should trace to these. |
 | `output/county_population_2010_2023.csv`, `output/qcew_private_pay_benchmarks.csv` | The Census and BLS benchmark rows used. |
 | `data/` | Gitignored. Derived parquet files and the raw external downloads (`data/external/`). Rebuilt by the scripts; the e-file CSV inputs live in `../2026-06-milwaukee-msa/data/`. |
@@ -44,20 +44,20 @@ geography; pin every read).
 | `_private.md` | Gitignored. Requester identity and a draft note to them. Not part of the review. |
 
 Reads use the `nccsdata` R package and anonymous HTTPS; no AWS credentials
-are needed to rerun. Rerunning `build-panel.R` scans about 6 GB of CSV and
+are needed to rerun. Rerunning `build.R` (section build-panel) scans about 6 GB of CSV and
 takes a minute.
 
 ## What to check
 
 ### 1. Code does what the write-up says
 
-- Dedup in `build-panel.R`: one return per EIN2 x tax year, amended and
+- Dedup in `build.R` (section build-panel): one return per EIN2 x tax year, amended and
   group returns keep the latest timestamp, return type 990 only, tax year
   taken from the column. Confirm the SQL does this and that Part IX joins
   to Part I on EIN2 and tax year without duplicating rows.
 - Geography: counties come only from the published crosswalks; CBSA 34980
   has 14 counties; Davidson is FIPS 47037. Peer "principal county" in
-  `explore-9-davidson.R` is the county with the most registered
+  `analysis-round1.R` (pass 9) is the county with the most registered
   organizations. Is that a fair stand-in for the city in every peer? (St.
   Louis County is not the city of St. Louis; Henrico is not Richmond city.)
 - Population filters: `as.integer(subsection_code) == 3` and exclusion of
