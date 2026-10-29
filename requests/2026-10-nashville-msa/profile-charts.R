@@ -33,6 +33,12 @@ output_dir <- file.path(request_dir, "output")
 
 davidson_fips <- "47037"
 
+# Hospitals and universities whose registry NTEE code is undefined, so the
+# code-based flag used by the round 1 panel misses them. Applied to every
+# population in this script, including the panel-based sections E and F.
+hos_uni_supplement <- c("620485733",   # Lipscomb University
+                        "061395640")   # Richmond, The American International University in London (Nashville office)
+
 registry_tn <- arrow::read_parquet(file.path(data_dir, "universe_tn.parquet"))
 
 davidson_registry <- registry_tn |>
@@ -46,9 +52,7 @@ davidson_registry <- registry_tn |>
     # the code; the Davidson ones found by listing full-990 filers with
     # undefined codes and expenses over $20M are added here by EIN
     # (second-analyst review, 2026-10-29).
-    is_hos_uni = nteev2_subsector %in% c("HOS", "UNI") |
-      ein9 %in% c("620485733",   # Lipscomb University
-                  "061395640"),  # Richmond, The American International University in London (Nashville office)
+    is_hos_uni = nteev2_subsector %in% c("HOS", "UNI") | ein9 %in% hos_uni_supplement,
     is_human_services = nteev2_subsector %in% "HMS",
     ruling_year = as.integer(substr(as.character(ruling_date), 1, 4)),
     on_registry_2026 = last_year_in_bmf >= 2026
@@ -99,9 +103,20 @@ efile_panel <- arrow::read_parquet(file.path(data_dir, "panel_990_national.parqu
             total_revenue = rev_total, employees)
 
 # One record per EIN and form year, full 990 preferred over EZ, e-file and
-# CORE unioned (each release misses some of the other's filings).
+# CORE unioned (each release misses some of the other's filings). A CORE
+# copy of a filing that the e-file panel already holds is dropped whatever
+# year the period-month rule assigned it, because short accounting periods
+# can put the same filing in different years under the two labels
+# (second-analyst review, 2026-10-29).
+efile_filing_keys <- efile_panel |>
+  filter(!is.na(total_expenses), !is.na(total_revenue)) |>
+  distinct(ein9, total_expenses, total_revenue)
+
+core_990_ez_new <- core_990_ez |>
+  anti_join(efile_filing_keys, by = c("ein9", "total_expenses", "total_revenue"))
+
 returns <- bind_rows(
-  core_990_ez |> select(ein9, form_year, source_form, total_expenses, total_revenue) |> mutate(from = "core"),
+  core_990_ez_new |> select(ein9, form_year, source_form, total_expenses, total_revenue) |> mutate(from = "core"),
   core_pf |> select(ein9, form_year, source_form) |> mutate(from = "core"),
   efile_panel |> select(ein9, form_year, source_form, total_expenses, total_revenue) |> mutate(from = "efile")
 ) |>
@@ -272,7 +287,8 @@ government_grants <- arrow::read_parquet(file.path(data_dir, "government_grants.
   distinct(ein, tax_year, .keep_all = TRUE) |>
   transmute(ein9 = ein, tax_year, govt_grants = coalesce(government_grants, 0))
 
-panel_charities <- arrow::read_parquet(file.path(data_dir, "panel_charities.parquet"))
+panel_charities <- arrow::read_parquet(file.path(data_dir, "panel_charities.parquet")) |>
+  filter(!(ein9 %in% hos_uni_supplement))
 
 grant_share <- panel_charities |>
   filter(tax_year %in% 2020:2023) |>

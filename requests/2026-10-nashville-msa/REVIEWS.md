@@ -220,3 +220,18 @@ wording, or not confirmed, with the evidence.
 Not changed on the second analyst's advice alone: the hand match decisions
 (finding 4) stay as recorded, with their confidence levels going to the
 requester for confirmation.
+
+
+<!-- second-analyst review, round 2 fixes, 2026-10-29 (second pass) -->
+
+## Response to the second-analyst re-review (2026-10-29, second pass)
+
+Five findings after the first set of fixes. Each reproduced before acting.
+
+| # | Finding | Checked | Disposition |
+|---|---|---|---|
+| 1 | The round 1 exit-artifact explanation is wrong: the 58 CORE returns read as "2023 full 990 missing from the e-file release" are June-year returns for form year 2022 | Confirmed: the exit trace (pass 11) used CORE's period-end year. Relabeled to form year, the category empties. Of 128 metro leavers, 76 last filed for 2022, 17 for 2021, 13 switched to the 990-EZ, 22 have no return since 2020. The genuine-leaver pay gap becomes about $9,600 per head (102 organizations; interval about $3,800 to $14,000), not $17,200 | Fixed in `analysis-round1.R` pass 11 (and pass 12, which now also reads the 2024 file). The round 1 memo sentence "nearly half of them did file for 2023 and are simply missing from the IRS release" is withdrawn and the correction goes to the reviewer and the requester with the round 2 draft. |
+| 2 | The two universities added by EIN stayed in the grant-share and workforce populations | Confirmed: $274.6M expenses and 2,826 employees in 2023; all-charity grant share 14.78% with them, 15.50% without | Fixed: `profile-charts.R` removes the supplement EINs from the charity panel before sections E and F. Balanced-panel employee change is now -0.6% (2019 to 2023). |
+| 3 | Short-period misdating survives source precedence when the two labels put one filing in different years | Confirmed at a small scale: 3 Davidson full-990 filings | Fixed: a CORE copy of any filing the e-file panel holds (same EIN, total expenses and total revenue) is dropped whatever year it was assigned. |
+| 4 | PLAN.md still describes the full-990-only sheet with 89 figures | True | Fixed: deliverable 1 now states the three forms and lines, the source column, and 106 figures. |
+| 5 | A moved review helper has stale run instructions and pins to reviews/_pins.csv | Confirmed | Fixed: instructions say run from `reviews/`; the pin goes to the request's `_pins.csv` one level up. |

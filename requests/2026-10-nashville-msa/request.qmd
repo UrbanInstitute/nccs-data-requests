@@ -318,23 +318,30 @@ Tracing the 128 metro leavers through CORE and the BMF
 
 | Where the 128 went | n | Median 2019 pay per head |
 |---|---|---|
-| Filed a full 990 for TY2023; it is in the SOI extract but not the e-file release | 58 | $34,200 |
-| Filed a 990-EZ for TY2023 (fell below the full-990 threshold) | 17 | $17,600 |
-| Last return TY2022 | 20 | $23,500 |
-| Last return TY2021 | 15 | $29,400 |
-| No return since TY2020, dropped from the BMF | 13 | $18,000 |
+| Last return TY2022 (late or stopped) | 76 | $33,900 |
+| Last return TY2021 | 17 | $27,100 |
+| Filed a 990-EZ for TY2023 (fell below the full-990 threshold) | 13 | $18,600 |
+| No return since TY2020, dropped from the BMF | 17 | $18,200 |
 | No return since TY2020, still registered | 5 | $24,900 |
 
-Nearly half of the "exits" are an e-file coverage artifact (caveat 2).
-Among the 53 with no TY2023 or TY2024 return anywhere, the 42 with a valid
-2019 pay value had a median of $24,400 against $41,600 for stayers, a gap
-of $17,200 (interval -$22,900 to -$7,800). The same construct in the peer
-metros gives a gap of $5,200 (945 organizations; interval -$7,700 to
--$2,100) and in the rest of the US $5,100. So the organizations that
-stopped filing in Nashville had been paying less per head, relative to
-survivors, than their counterparts elsewhere, on 42 organizations. Whether
-they closed, merged, or are simply delinquent is not known; 13 have been
-dropped from the BMF.
+Correction (2026-10-29). An earlier version of this table said 58 of the
+128 had filed a full 990 for TY2023 that was in the SOI extract but not
+the e-file release, and called nearly half the exits a coverage artifact.
+That was wrong: the SOI extract labels a return by the year its accounting
+period ends, so those 58 June-year returns were the TY2022 form, not
+TY2023. No leaver is in one release and missing from the other. Most
+leavers simply last filed for TY2022; whether they are late or have
+stopped cannot be read yet.
+
+Among the 115 with no TY2023 or TY2024 return anywhere, the 102 with a
+valid 2019 pay value had a median of about $32,000 against $41,600 for
+stayers, a gap of $9,600 (interval -$14,000 to -$3,800). The same
+construct in the peer metros gives no gap (2,193 organizations; interval
+-$2,000 to +$1,600) and in the rest of the US a gap of about +$500. So
+the organizations that stopped filing in Nashville had been paying less
+per head, relative to survivors, than their counterparts elsewhere.
+Whether they closed, merged, or are simply delinquent is not known; 17
+have been dropped from the BMF.
 
 Human services charities present in both years went from 34% to 43% with
 expenses exceeding revenue (peer metros 39% to 45%, Rest of US 40% to 44%),

@@ -1,5 +1,6 @@
 # Optional network step for fields omitted from the request universe.
-# Run from this request folder before review-foundations.R.
+# Run from the reviews/ folder (Rscript review-foundations-fetch-vintage.R)
+# before review-foundations.R. Pins go to the request's _pins.csv one level up.
 suppressPackageStartupMessages(library(dplyr))
 source("../../../R/request_read.R")
 source_key <- "geocoding/unified-bmf/v2026_09/bmf_unified_geocoded.parquet"
@@ -22,7 +23,7 @@ if (!file.exists(cache_path)) {
   arrow::write_parquet(evidence, cache_path)
 }
 evidence <- arrow::read_parquet(cache_path)
-record_pin(".", "bmf-foundations-review-monthly-evidence", "2026_09",
+record_pin("..", "bmf-foundations-review-monthly-evidence", "2026_09",
   source_uri, nrow(evidence),
   paste("Versioned manifest matches original pin; git 1b1f8a9; source sha256",
     expected_hash, "; selected ein, last_vintage_ym, status_code; TN EIN subset.",

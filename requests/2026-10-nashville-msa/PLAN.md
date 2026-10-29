@@ -12,12 +12,15 @@ Two deliverables replace items A to F below as the frame; the items
 survive as the pieces of deliverable 2.
 
 1. **The requester's spreadsheet, filled.** Tax year 2023 total expenses
-   (full Form 990 Part I line 18) for each listed organization that filed a
-   full 990; for the rest, a status saying why there is no figure (not
-   matched, private foundation, 990-EZ, church, no 2023 return yet with the
-   latest year seen). Full 990 only, as asked; 990-EZ totals are held in the
-   detail file and offered, not written in. Done 2026-10-29: 89 of 141 have a
-   figure, 15 are unmatched and go back to the requester.
+   for each listed organization from whichever return it filed: full Form
+   990 Part I line 18, Form 990-EZ line 17, or Form 990-PF Part I line 26
+   (total expenses and disbursements; operating and administrative
+   expenses and grants paid are given beside it, since a foundation's
+   total is mostly giving). A column names the form and line for every
+   figure. For the rest, a status saying why there is no figure (not
+   matched, no 2023 return yet with the latest year seen, church, newly
+   recognized). As of 2026-10-29: 106 of 141 rows carry a figure (92 full
+   990, 6 990-EZ, 8 990-PF); 10 are unmatched and are with the requester.
 2. **A sector health profile** of the Nashville (Davidson County) nonprofit
    and philanthropic sector: narrative, tables and charts covering age,
    starts and apparent exits (limits stated), median operating expenses,

@@ -766,8 +766,21 @@ core <- bind_rows(lapply(2021:2024, function(y) {
 })) |> mutate(ein9 = gsub("-", "", ein))
 cat("CORE EIN sample:", head(core$ein, 2), " source_form values:", paste(names(table(core$source_form)), collapse = ", "), "\n")
 
+# CORE labels a return by the year its accounting period ENDS; the e-file
+# panel and the IRS label by the form year (period beginning). Relabel so
+# that "TY2023" means the same thing in both sources (second-analyst
+# review, 2026-10-29; before this, 58 June-year form-2022 returns were
+# read as 2023 returns missing from the e-file release).
+core <- core |>
+  mutate(period_end_year = as.integer(substr(tax_period, 1, 4)),
+         period_end_month = as.integer(substr(tax_period, 5, 6)),
+         tax_year = if_else(period_end_month == 12L, period_end_year, period_end_year - 1L))
+
 core_c <- core |> filter(ein9 %in% cohort$ein9) |> arrange(ein9, tax_year, desc(tax_period)) |> distinct(ein9, tax_year, .keep_all = TRUE)
 core_wide <- core_c |> select(ein9, tax_year, source_form) |> tidyr::pivot_wider(names_from = tax_year, values_from = source_form, names_prefix = "core_")
+# After relabeling, a form year may have no cohort returns at all (form 2024
+# is only in the partial 2024 release); keep every column the status rules use.
+for (missing_col in setdiff(paste0("core_", 2021:2024), names(core_wide))) core_wide[[missing_col]] <- NA_character_
 core_rev23 <- core_c |> filter(tax_year == 2023) |> select(ein9, rev_2023_core = total_revenue, form_2023 = source_form)
 cohort <- cohort |> left_join(core_wide, by = "ein9") |> left_join(core_rev23, by = "ein9") |>
   left_join(tn |> select(ein9, last_year_in_bmf), by = "ein9")
@@ -831,13 +844,18 @@ peers <- arrow::read_parquet(file.path(d, "universe_peers.parquet")) |> distinct
 tn <- arrow::read_parquet(file.path(d, "universe_tn.parquet"))
 nat <- arrow::read_parquet(file.path(d, "bmf_national_slim.parquet")) |> mutate(ein9 = gsub("-", "", ein)) |> distinct(ein9, .keep_all = TRUE)
 
-core <- bind_rows(lapply(2019:2023, function(y) {
+core <- bind_rows(lapply(2019:2024, function(y) {
   x <- nccsdata::nccs_read_core(tier = "merged", tax_year = y, form = "990combined",
                                 columns = c("ein", "tax_year", "source_form", "tax_period", "total_expenses"), confirm = FALSE)
   record_pin(req, "core-merged-990combined", vintage = as.character(y), source = nccsdata::nccs_core_url("merged", y, "990combined"),
              n_rows = nrow(x), note = "TY2023 coverage comparison")
   x
-})) |> mutate(ein9 = gsub("-", "", ein)) |> arrange(ein9, tax_year, desc(tax_period)) |> distinct(ein9, tax_year, .keep_all = TRUE)
+})) |> mutate(ein9 = gsub("-", "", ein)) |>
+  # Relabel CORE's period-end year to the IRS form year (see pass 11).
+  mutate(period_end_year = as.integer(substr(tax_period, 1, 4)),
+         period_end_month = as.integer(substr(tax_period, 5, 6)),
+         tax_year = if_else(period_end_month == 12L, period_end_year, period_end_year - 1L)) |>
+  arrange(ein9, tax_year, desc(tax_period)) |> distinct(ein9, tax_year, .keep_all = TRUE)
 
 # Same population definition as the panel: 501(c)(3), excl HOS/UNI (current BMF).
 charity <- nat |> filter(as.integer(subsection_code) == 3, !(nteev2_subsector %in% c("HOS", "UNI"))) |> select(ein9, state = geo_state_abbr)
