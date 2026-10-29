@@ -1,0 +1,77 @@
+pinned: bmf-master-geocoded [rolling@2026-10-29] (3698197 rows)
+matched EINs not in the TN extract: 1 ; found nationally: 1 
+pinned: core-merged [merged] (515769 rows)
+pinned: core-merged [merged] (74678 rows)
+== Match outcome (141 listed organizations) ==
+  decision confidence  n
+1      ein       high 32
+2      ein        low  2
+3      ein     medium  9
+4     none       <NA> 15
+5     top1       high 77
+6     top1     medium  6
+== Tax year 2023 status ==
+                                                                                             status_ty2023
+1                                                                                      Full Form 990 filed
+2                                                                          Not matched to the IRS registry
+3                                                    Private foundation: files Form 990-PF, not a full 990
+4                                                            Filed the short Form 990-EZ, not the full 990
+5  No tax year 2023 full 990 or 990-EZ in the IRS releases (likely a 990-N postcard filer or a late filer)
+6                                                        Church or church-affiliated: not required to file
+7                                                           Recognized after tax year 2023: no 2023 return
+8                                                         No longer on the IRS registry (last listed 2010)
+9      No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($1,472,424)
+10    No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($11,917,254)
+11    No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($12,736,299)
+12     No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($2,799,937)
+13   No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($200,660,969)
+14     No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($3,802,504)
+15    No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($34,609,887)
+16    No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($39,406,529)
+17     No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($6,072,389)
+18       No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($639,039)
+19     No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($7,472,033)
+    n
+1  89
+2  15
+3   9
+4   6
+5   5
+6   3
+7   2
+8   1
+9   1
+10  1
+11  1
+12  1
+13  1
+14  1
+15  1
+16  1
+17  1
+18  1
+19  1
+== Status by the requester's organization type ==
+                             org_type FALSE TRUE
+1             Educational Institution     3    0
+2             Educational institution     0    1
+3            Faith-based organization     4    4
+4                 Health organization     2    9
+5           Intermediary organization     2    2
+6             Major regional employer     1    0
+7                           Nonprofit     0    1
+8              Nonprofit organization    24   68
+9                               Other     1    1
+10         Philanthropic organization    12    2
+11             Private Sector Company     1    0
+12 Workforce development organization     2    1
+== Expense source for the filled rows ==
+                               expenses_source  n
+1 e-file and CORE (SOI) both hold the full 990 63
+2    e-file full 990 (not in the CORE release) 26
+rows where CORE and e-file totals differ by more than $1: 0 
+filled rows with a fiscal year end from CORE: 63 
+== Operating expenses, tax year 2023, full-990 filers on the list ==
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max.       NAs 
+    61821    712610   2014492  20835044  10327043 384174276        52 
+organizations with 990-EZ total expenses available instead: 6 

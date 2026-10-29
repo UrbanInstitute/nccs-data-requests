@@ -49,3 +49,18 @@ and cite pinned vintages in the front matter from `_pins.csv`.
 - Filing selection for e-file v2.1 part tables (one filing per EIN x year,
   shared OBJECTID across parts) is producer semantics written here twice;
   route upstream per ADR 0024 rather than keep re-deriving it.
+- CORE merged tier labels a return by the year its accounting period ENDS;
+  the e-file panel (and the IRS) label by the form year, the year the period
+  begins. For June fiscal years the same return sits under CORE 2023 and
+  e-file 2022. Found 2026-10-29 while filling the requester's list (36 of 86
+  double-source rows disagreed until relabeled; zero after). The
+  explore-12 coverage comparison (CORE vs e-file counts per tax year) did not
+  relabel and so overstates the two-way gaps for fiscal-year filers; rerun
+  it with the form-year relabeling before quoting the "each misses 5-6%"
+  figure again. Route to nccs-contracts: the CORE contract should state the
+  tax-year definition.
+- Registry names can be abbreviated ("The Community Fdn Of Middle Tn",
+  "Senior Citizens" for FiftyForward), so string-distance name matching
+  missed several of the largest organizations; a second pass searching the
+  e-file filing names caught them. Any promoted name-match helper should
+  search both name sources.

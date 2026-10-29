@@ -46,3 +46,16 @@ ownership (own_code 5), all industries (industry 10, agglvl 71) and NAICS
 - `_pins-*.csv`: pins logs from earlier runs, moved aside by run-all.R
 - `government_grants.parquet`: Phase 0 download
 - `cpi.csv`, `county_pop.csv`
+- `list_match_candidates.csv`: top three registry name matches per listed organization (explore-14-profile.R first pass)
+- `list_match_decisions.csv`: hand-checked decision per listed organization: accept the top candidate, a named EIN, or none, with confidence and note (written by the analyst 2026-10-29)
+- `list_matched.csv`, `list_filled.xlsx`: the requester's list with EIN, registry name, tax year 2023 full-990 total expenses, and status (explore-14-profile.R)
+
+## Requester-supplied list (gitignored under `docs/`)
+
+`List of Nonprofits and Philanthropies for Thiya.xlsx`, received 2026-10-23:
+141 organizations, columns Name, Organization Type, Address, Operating
+Expenses (blank). No EINs. Matched to the registry by name with the
+address ZIP as a check; every match hand-checked. The CORE merged tier is
+read for tax years 2023 and 2024 and relabeled to the IRS form year
+(period beginning in 2023) so that fiscal-year filers line up with the
+e-file panel.

@@ -1,7 +1,36 @@
 # Plan: Nashville round 2 (follow-up charts and Ecosystem Map profile)
 
-Status: with the senior researcher (Teresa) for review, sent 2026-10-22. Deadline from the requester is
-2026-11-13; internal delivery target 2026-11-09. Written 2026-10-19.
+Status: reviewer (Teresa) comments received 2026-10-29, logged in
+`RESPONSE-REVIEWER-ROUND2.md`. Requester's list of 141 organizations
+received 2026-10-23 and matched 2026-10-29 (`explore-14-profile.R`).
+Deadline from the requester is 2026-11-13; internal delivery target
+2026-11-09. Written 2026-10-19; scope reset 2026-10-23.
+
+## Scope as reset by the requester (2026-10-23)
+
+Two deliverables replace items A to F below as the frame; the items
+survive as the pieces of deliverable 2.
+
+1. **The requester's spreadsheet, filled.** Tax year 2023 total expenses
+   (full Form 990 Part I line 18) for each listed organization that filed a
+   full 990; for the rest, a status saying why there is no figure (not
+   matched, private foundation, 990-EZ, church, no 2023 return yet with the
+   latest year seen). Full 990 only, as asked; 990-EZ totals are held in the
+   detail file and offered, not written in. Done 2026-10-29: 89 of 141 have a
+   figure, 15 are unmatched and go back to the requester.
+2. **A sector health profile** of the Nashville (Davidson County) nonprofit
+   and philanthropic sector: narrative, tables and charts covering age,
+   starts and apparent exits (limits stated), median operating expenses,
+   government grant share of revenue (2020 to 2023; line 1e excludes
+   contracts), inflation-adjusted spending, reported employees, and who
+   funded whom in tax years 2019 to 2023 matched to the listed organizations,
+   with a narrative on overlap and gaps that states the evidentiary limits.
+   The funder piece is narrowed to Nashville-based funders giving to
+   Nashville-based listed organizations; the full `build-funders.R` extract
+   (recipients anywhere) stays as the source and is not itself delivered.
+
+Reviewer's design rule for every table and chart: name the filing
+population (registry, full 990, 990-EZ, 990-N, or a combination).
 
 ## What is being asked
 
@@ -125,7 +154,8 @@ measures; the profile reports how many.
 | 2026-10-22 | Individual asks sent to candidate reviewers, supervisor and project manager copied, answer requested by 2026-10-26 |
 | 2026-10-22 | Reviewer confirmed (senior researcher, Teresa); plan and schedule sent to her the same day |
 | 2026-10-23 to 10-29 | Reviewer reads the plan (about half an hour) and answers method questions 1 to 3; funder table built 10-21; charts A to D built from existing panel |
-| On receipt of EIN list | Profile built, coverage checked |
+| 2026-10-23 | Requester's list received (names and addresses, no EINs) |
+| 2026-10-29 | Reviewer comments received and logged; list matched and spreadsheet filled; unmatched names back to the requester |
 | 2026-10-30 | Draft findings to reviewer |
 | 2026-11-06 | Reviewer comments addressed; second-analyst code review |
 | 2026-11-09 | Delivered to requester |
