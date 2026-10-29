@@ -1,7 +1,4 @@
-pinned: bmf-master-geocoded [rolling@2026-10-29] (3698197 rows)
 matched EINs not in the TN extract: 1 ; found nationally: 1 
-pinned: core-merged [merged] (515769 rows)
-pinned: core-merged [merged] (74678 rows)
 == Match outcome (141 listed organizations) ==
   decision confidence  n
 1      ein       high 32
@@ -11,26 +8,26 @@ pinned: core-merged [merged] (74678 rows)
 5     top1       high 77
 6     top1     medium  6
 == Tax year 2023 status ==
-                                                                                             status_ty2023
-1                                                                                      Full Form 990 filed
-2                                                                          Not matched to the IRS registry
-3                                                    Private foundation: files Form 990-PF, not a full 990
-4                                                            Filed the short Form 990-EZ, not the full 990
-5  No tax year 2023 full 990 or 990-EZ in the IRS releases (likely a 990-N postcard filer or a late filer)
-6                                                        Church or church-affiliated: not required to file
-7                                                           Recognized after tax year 2023: no 2023 return
-8                                                         No longer on the IRS registry (last listed 2010)
-9      No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($1,472,424)
-10    No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($11,917,254)
-11    No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($12,736,299)
-12     No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($2,799,937)
-13   No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($200,660,969)
-14     No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($3,802,504)
-15    No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($34,609,887)
-16    No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($39,406,529)
-17     No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($6,072,389)
-18       No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($639,039)
-19     No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($7,472,033)
+                                                                                                                                  status_ty2023
+1                                                                                                                           Full Form 990 filed
+2                                                                                                               Not matched to the IRS registry
+3                                                                                         Private foundation: files Form 990-PF, not a full 990
+4                                                                                                 Filed the short Form 990-EZ, not the full 990
+5  No tax year 2023 full 990 or 990-EZ in the IRS releases (a 990-N postcard filer, a late filer, or not filing; the releases do not say which)
+6                                                                                             Church or church-affiliated: not required to file
+7                                                                                     Recognized in 2024 or later; no tax year 2023 return seen
+8                                                                                              No longer on the IRS registry (last listed 2010)
+9                                           No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($1,472,424)
+10                                         No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($11,917,254)
+11                                         No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($12,736,299)
+12                                          No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($2,799,937)
+13                                        No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($200,660,969)
+14                                          No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($3,802,504)
+15                                         No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($34,609,887)
+16                                         No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($39,406,529)
+17                                          No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($6,072,389)
+18                                            No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($639,039)
+19                                          No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($7,472,033)
     n
 1  89
 2  15

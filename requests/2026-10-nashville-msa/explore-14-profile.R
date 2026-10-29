@@ -172,11 +172,11 @@ filled <- matched |>
       core_form %in% "990ez" ~ "Filed the short Form 990-EZ, not the full 990",
       !is.na(last_year_in_bmf) & as.integer(last_year_in_bmf) < 2023L ~
         paste0("No longer on the IRS registry (last listed ", last_year_in_bmf, ")"),
-      !is.na(ruling_date) & ruling_date >= as.Date("2024-01-01") ~ "Recognized after tax year 2023: no 2023 return",
+      !is.na(ruling_date) & ruling_date >= as.Date("2024-01-01") ~ "Recognized in 2024 or later; no tax year 2023 return seen",
       !is.na(latest_full_990_year) ~
         paste0("No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year ",
                latest_full_990_year, " ($", trimws(format(latest_full_990_expenses, big.mark = ",")), ")"),
-      TRUE ~ "No tax year 2023 full 990 or 990-EZ in the IRS releases (likely a 990-N postcard filer or a late filer)"
+      TRUE ~ "No tax year 2023 full 990 or 990-EZ in the IRS releases (a 990-N postcard filer, a late filer, or not filing; the releases do not say which)"
     ),
     operating_expenses_ty2023 = full_990_expenses,
     ez_total_expenses = if_else(core_form %in% "990ez", core_total_expenses, NA_real_)

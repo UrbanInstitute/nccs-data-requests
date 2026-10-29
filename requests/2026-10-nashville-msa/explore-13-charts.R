@@ -41,7 +41,14 @@ davidson_registry <- registry_tn |>
     is_501c3 = as.integer(subsection_code) == 3L,
     is_private_foundation = is_501c3 & foundation_code %in% c("2", "3", "4"),
     is_charity = is_501c3 & !is_private_foundation,
-    is_hos_uni = nteev2_subsector %in% c("HOS", "UNI"),
+    # Hospitals and universities are flagged by the NTEE-V2 subsector code.
+    # Institutions whose registry NTEE code is undefined are not caught by
+    # the code; the Davidson ones found by listing full-990 filers with
+    # undefined codes and expenses over $20M are added here by EIN
+    # (second-analyst review, 2026-10-29).
+    is_hos_uni = nteev2_subsector %in% c("HOS", "UNI") |
+      ein9 %in% c("620485733",   # Lipscomb University
+                  "061395640"),  # Richmond, The American International University in London (Nashville office)
     is_human_services = nteev2_subsector %in% "HMS",
     ruling_year = as.integer(substr(as.character(ruling_date), 1, 4)),
     on_registry_2026 = last_year_in_bmf >= 2026
@@ -98,8 +105,9 @@ returns <- bind_rows(
   core_pf |> select(ein9, form_year, source_form) |> mutate(from = "core"),
   efile_panel |> select(ein9, form_year, source_form, total_expenses, total_revenue) |> mutate(from = "efile")
 ) |>
-  mutate(form_rank = match(source_form, c("990", "990pf", "990ez"))) |>
-  arrange(ein9, form_year, form_rank, from) |>
+  mutate(form_rank = match(source_form, c("990", "990pf", "990ez")),
+         source_rank = match(from, c("efile", "core"))) |>
+  arrange(ein9, form_year, form_rank, source_rank) |>
   distinct(ein9, form_year, .keep_all = TRUE)
 
 
@@ -203,12 +211,14 @@ cat("\n== C2. Left the registry: Davidson organizations on the registry by 2018,
 print(as.data.frame(left_registry))
 write.csv(left_registry, file.path(output_dir, "chart_c2_left_registry.csv"), row.names = FALSE)
 
-chart_c <- ggplot(stopped |> filter(last_form_year <= 2022), aes(exit_year, share_pct, fill = status)) +
-  geom_col() +
-  scale_x_continuous(breaks = 2016:2023) +
-  labs(title = "Davidson County: share of 990 and 990-EZ filers that stopped filing",
-       subtitle = "Filed for the prior form year, no return of either type in the next two years. Private foundations excluded.",
-       x = "First year without a return", y = "Percent of prior-year filers", fill = NULL) +
+# Chart shows judged years only. "Stopped filing" is a two-year filing
+# interruption, not a confirmed closure: some organizations file again later.
+chart_c <- ggplot(stopped |> filter(status == "judged"), aes(exit_year, share_pct)) +
+  geom_col(fill = "#F8766D") +
+  scale_x_continuous(breaks = 2016:2022) +
+  labs(title = "Davidson County: share of 990 and 990-EZ filers with a two-year filing gap",
+       subtitle = "Filed for the prior form year, no return of either type in the next two years.\nA filing gap, not a confirmed closure. Private foundations excluded.",
+       x = "First year without a return", y = "Percent of prior-year filers") +
   theme_minimal(base_size = 11) + theme(legend.position = "bottom")
 save_chart(chart_c, "chart_c_stopped_filing.png")
 
@@ -308,6 +318,26 @@ workforce <- panel_charities |>
 
 cat("\n== F. Davidson full-990 charities excl. hospitals and universities, 2019-2023 (index 2019 = 100) ==\n")
 print(as.data.frame(workforce))
+
+# Sensitivity: the same organizations in both 2019 and 2023 (balanced), and
+# the 2019 to 2022 endpoint, because the 2023 e-file release is incomplete
+# and the filer population changes.
+davidson_panel <- panel_charities |> filter(grp == "Nashville", geo_county_fips == davidson_fips)
+balanced_change <- function(end_year) {
+  in_both <- davidson_panel |> filter(tax_year %in% c(2019, end_year)) |> count(ein9) |> filter(n == 2) |> pull(ein9)
+  davidson_panel |> filter(ein9 %in% in_both, tax_year %in% c(2019, end_year)) |>
+    group_by(tax_year) |> summarise(organizations = n(), employees = sum(employees, na.rm = TRUE),
+                                    spending_2023_dollars = sum(exp_total * deflator, na.rm = TRUE), .groups = "drop") |>
+    mutate(endpoint = end_year)
+}
+workforce_sensitivity <- bind_rows(balanced_change(2023), balanced_change(2022)) |>
+  group_by(endpoint) |>
+  summarise(organizations = first(organizations),
+            employees_change_pct = round(100 * (last(employees) / first(employees) - 1), 1),
+            spending_change_pct = round(100 * (last(spending_2023_dollars) / first(spending_2023_dollars) - 1), 1), .groups = "drop")
+cat("\n== F2. Same organizations in both years (balanced): change from 2019 ==\n")
+print(as.data.frame(workforce_sensitivity))
+write.csv(workforce_sensitivity, file.path(output_dir, "chart_f_balanced_sensitivity.csv"), row.names = FALSE)
 write.csv(workforce, file.path(output_dir, "chart_f_filers_spending_employees.csv"), row.names = FALSE)
 
 chart_f <- workforce |>

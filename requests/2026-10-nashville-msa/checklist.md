@@ -55,9 +55,11 @@ and cite pinned vintages in the front matter from `_pins.csv`.
   e-file 2022. Found 2026-10-29 while filling the requester's list (36 of 86
   double-source rows disagreed until relabeled; zero after). The
   explore-12 coverage comparison (CORE vs e-file counts per tax year) did not
-  relabel and so overstates the two-way gaps for fiscal-year filers; rerun
-  it with the form-year relabeling before quoting the "each misses 5-6%"
-  figure again. Route to nccs-contracts: the CORE contract should state the
+  relabel. Rerun with the relabeling (2026-10-29, Davidson 501(c)(3) excl.
+  HOS/UNI, form year 2023): 883 e-file, 649 CORE, every CORE filing also in
+  e-file, 234 e-file-only, most of them fiscal-year filers whose form-2023
+  return falls in CORE's partial 2024 release. The gap is one-way, not the
+  "each misses 5-6%" stated in round 1; restate before reuse. Route to nccs-contracts: the CORE contract should state the
   tax-year definition.
 - Registry names can be abbreviated ("The Community Fdn Of Middle Tn",
   "Senior Citizens" for FiftyForward), so string-distance name matching

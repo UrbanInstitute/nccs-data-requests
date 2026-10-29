@@ -7,10 +7,10 @@
 5                                   501(c)(3) public charities           4067
 6                                   501(c)(3) public charities           4067
 7                                   501(c)(3) public charities           4067
-8  501(c)(3) public charities excl. hospitals and universities           4048
-9  501(c)(3) public charities excl. hospitals and universities           4048
-10 501(c)(3) public charities excl. hospitals and universities           4048
-11 501(c)(3) public charities excl. hospitals and universities           4048
+8  501(c)(3) public charities excl. hospitals and universities           4046
+9  501(c)(3) public charities excl. hospitals and universities           4046
+10 501(c)(3) public charities excl. hospitals and universities           4046
+11 501(c)(3) public charities excl. hospitals and universities           4046
 12                                              501(c)(3), all           4472
 13                                              501(c)(3), all           4472
 14                                              501(c)(3), all           4472
@@ -29,7 +29,7 @@
 7  No return seen (990-N postcard or none) 2869    71
 8                              Form 990-EZ  311     8
 9                              Form 990-PF    2     0
-10                           Full Form 990  874    22
+10                           Full Form 990  872    22
 11 No return seen (990-N postcard or none) 2861    71
 12                             Form 990-EZ  311     7
 13                             Form 990-PF  304     7
@@ -46,9 +46,10 @@
 3              HOS No return seen (990-N postcard or none) 4
 4              UNI                           Full Form 990 9
 5              UNI No return seen (990-N postcard or none) 4
+6              UNU                           Full Form 990 2
   is_hos_uni filers expenses_bn
-1      FALSE    876        4.64
-2       TRUE     11       10.41
+1      FALSE    874        4.36
+2       TRUE     13       10.68
 == B. Davidson recognitions by ruling year, organizations still on the 2026 registry (2026 partial) ==
    ruling_year Human services charities Other exempt organizations
 1         2005                        8                          7
@@ -129,14 +130,14 @@
 10      2026            20           58
 == D. Total expenses by percentile, tax year 2023, Davidson 501(c)(3) public charities ==
                                    population filers p10 p25 median  p75  p90
-1 All Davidson charities, full 990 and 990-EZ   1197  36 101    340 1356 6067
-2            Excl. hospitals and universities   1186  36 100    333 1283 5720
+1 All Davidson charities, full 990 and 990-EZ   1197  36 101    339 1356 6067
+2            Excl. hospitals and universities   1184  36  99    332 1265 5594
 3                              Human services    319  33 103    347 1201 5949
-4                Full 990 only, all charities    888 108 268    656 2376 8512
+4                Full 990 only, all charities    888 108 266    655 2376 8512
 5               Full 990 only, human services    248 103 247    509 1854 8009
     p95 share_under_250k share_under_1m
 1 15012               43             71
-2 14408               43             71
+2 14152               43             72
 3 13765               42             73
 4 20408               23             61
 5 16088               25             65
@@ -205,4 +206,8 @@
 3                       109.2            92.4
 4                       108.1            99.0
 5                       105.2            94.1
+== F2. Same organizations in both years (balanced): change from 2019 ==
+  endpoint organizations employees_change_pct spending_change_pct
+1     2022           693                 -2.8                 4.0
+2     2023           627                 -0.8                 7.7
 charts written to output/: chart_b, chart_c, chart_d, chart_e, chart_f (PNG) with CSV tables
