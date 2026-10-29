@@ -1,0 +1,208 @@
+== A. Davidson County registry (on the 2026 registry) against tax year 2023 returns observed ==
+                                                    population registry_count
+1                           501(c)(3) human services charities           1041
+2                           501(c)(3) human services charities           1041
+3                           501(c)(3) human services charities           1041
+4                                   501(c)(3) public charities           4067
+5                                   501(c)(3) public charities           4067
+6                                   501(c)(3) public charities           4067
+7                                   501(c)(3) public charities           4067
+8  501(c)(3) public charities excl. hospitals and universities           4048
+9  501(c)(3) public charities excl. hospitals and universities           4048
+10 501(c)(3) public charities excl. hospitals and universities           4048
+11 501(c)(3) public charities excl. hospitals and universities           4048
+12                                              501(c)(3), all           4472
+13                                              501(c)(3), all           4472
+14                                              501(c)(3), all           4472
+15                                              501(c)(3), all           4472
+16                                All registered organizations           5146
+17                                All registered organizations           5146
+18                                All registered organizations           5146
+19                                All registered organizations           5146
+                               filing_2023    n share
+1                              Form 990-EZ   71     7
+2                            Full Form 990  247    24
+3  No return seen (990-N postcard or none)  723    69
+4                              Form 990-EZ  311     8
+5                              Form 990-PF    2     0
+6                            Full Form 990  885    22
+7  No return seen (990-N postcard or none) 2869    71
+8                              Form 990-EZ  311     8
+9                              Form 990-PF    2     0
+10                           Full Form 990  874    22
+11 No return seen (990-N postcard or none) 2861    71
+12                             Form 990-EZ  311     7
+13                             Form 990-PF  304     7
+14                           Full Form 990  887    20
+15 No return seen (990-N postcard or none) 2970    66
+16                             Form 990-EZ  382     7
+17                             Form 990-PF  307     6
+18                           Full Form 990 1151    22
+19 No return seen (990-N postcard or none) 3306    64
+== A2. Hospitals and universities on the Davidson registry (NTEE-V2 subsector HOS or UNI) ==
+  nteev2_subsector                             filing_2023 n
+1              HOS                             Form 990-PF 1
+2              HOS                           Full Form 990 2
+3              HOS No return seen (990-N postcard or none) 4
+4              UNI                           Full Form 990 9
+5              UNI No return seen (990-N postcard or none) 4
+  is_hos_uni filers expenses_bn
+1      FALSE    876        4.64
+2       TRUE     11       10.41
+== B. Davidson recognitions by ruling year, organizations still on the 2026 registry (2026 partial) ==
+   ruling_year Human services charities Other exempt organizations
+1         2005                        8                          7
+2         2006                       15                         10
+3         2007                       21                          6
+4         2008                       10                          2
+5         2009                       13                          3
+6         2010                       23                          8
+7         2011                       22                          3
+8         2012                       16                         11
+9         2013                       19                          6
+10        2014                       48                         13
+11        2015                       36                         13
+12        2016                       28                         10
+13        2017                       45                         11
+14        2018                       31                         12
+15        2019                       45                         12
+16        2020                       47                          9
+17        2021                       43                          7
+18        2022                       85                          6
+19        2023                       79                          7
+20        2024                       92                         19
+21        2025                       95                         20
+22        2026                       56                          4
+   Other public charities Private foundations
+1                      45                   5
+2                      43                  11
+3                      38                   9
+4                      30                  12
+5                      53                  10
+6                      44                   2
+7                      49                  11
+8                      47                   3
+9                      45                   4
+10                    127                   7
+11                    104                   4
+12                     83                  10
+13                     65                  11
+14                     74                  10
+15                    109                  18
+16                     96                  10
+17                    101                   8
+18                    137                  20
+19                    154                  26
+20                    192                  21
+21                    214                  18
+22                     87                   8
+== C1. Stopped filing: Davidson 990/990-EZ filers (not private foundations) with no return in the next two form years ==
+  last_form_year filers stopped_after exit_year share_pct
+1           2015   1559            93      2016       6.0
+2           2016   1556            65      2017       4.2
+3           2017   1576            67      2018       4.3
+4           2018   1608            56      2019       3.5
+5           2019   1626            67      2020       4.1
+6           2020   1615            93      2021       5.8
+7           2021   1628            67      2022       4.1
+8           2022   1652           204      2023      12.3
+                             status
+1                            judged
+2                            judged
+3                            judged
+4                            judged
+5                            judged
+6                            judged
+7                            judged
+8 provisional: 2024 release partial
+== C2. Left the registry: Davidson organizations on the registry by 2018, by first vintage year absent ==
+   left_year charity_FALSE charity_TRUE
+1       2015            32           86
+2       2016            27           87
+3       2017            83          236
+4       2019            13           34
+5       2020            14           86
+6       2021            45          116
+7       2023            29           83
+8       2024            22           51
+9       2025            37           75
+10      2026            20           58
+== D. Total expenses by percentile, tax year 2023, Davidson 501(c)(3) public charities ==
+                                   population filers p10 p25 median  p75  p90
+1 All Davidson charities, full 990 and 990-EZ   1197  36 101    340 1356 6067
+2            Excl. hospitals and universities   1186  36 100    333 1283 5720
+3                              Human services    319  33 103    347 1201 5949
+4                Full 990 only, all charities    888 108 268    656 2376 8512
+5               Full 990 only, human services    248 103 247    509 1854 8009
+    p95 share_under_250k share_under_1m
+1 15012               43             71
+2 14408               43             71
+3 13765               42             73
+4 20408               23             61
+5 16088               25             65
+(p10 to p95 in $ thousands; filers reporting zero expenses dropped; 990-N filers, under $50,000 in receipts, are not in any row)
+== E. Line 1e government grants as a share of total revenue, full-990 charities excl. hospitals and universities ==
+       population           group tax_year filers share_reporting_1e
+1   All charities Davidson County     2020    812                 47
+2   All charities Davidson County     2021    873                 44
+3   All charities Davidson County     2022    913                 35
+4   All charities Davidson County     2023    883                 34
+5   All charities     Peer metros     2020  28002                 40
+6   All charities     Peer metros     2021  29716                 39
+7   All charities     Peer metros     2022  31029                 31
+8   All charities     Peer metros     2023  29587                 29
+9   All charities      Rest of US     2020 202020                 44
+10  All charities      Rest of US     2021 213104                 43
+11  All charities      Rest of US     2022 221361                 36
+12  All charities      Rest of US     2023 210125                 33
+13 Human services Davidson County     2020    232                 50
+14 Human services Davidson County     2021    253                 44
+15 Human services Davidson County     2022    256                 34
+16 Human services Davidson County     2023    249                 36
+17 Human services     Peer metros     2020   8562                 45
+18 Human services     Peer metros     2021   9082                 43
+19 Human services     Peer metros     2022   9553                 35
+20 Human services     Peer metros     2023   9214                 34
+21 Human services      Rest of US     2020  61530                 49
+22 Human services      Rest of US     2021  64967                 48
+23 Human services      Rest of US     2022  67612                 42
+24 Human services      Rest of US     2023  64906                 39
+   aggregate_1e_share_of_revenue
+1                           17.0
+2                           16.2
+3                           15.6
+4                           14.8
+5                           18.2
+6                           16.5
+7                           17.8
+8                           18.5
+9                           16.4
+10                          16.5
+11                          16.4
+12                          14.8
+13                          17.9
+14                          14.5
+15                          14.2
+16                          15.7
+17                          28.0
+18                          20.3
+19                          21.1
+20                          21.6
+21                          26.2
+22                          26.0
+23                          26.5
+24                          23.8
+== F. Davidson full-990 charities excl. hospitals and universities, 2019-2023 (index 2019 = 100) ==
+  tax_year filers spending_2023_dollars employees filers_index
+1     2019    759            4433653160     50785        100.0
+2     2020    812            4568859410     46157        107.0
+3     2021    873            4839491186     46913        115.0
+4     2022    913            4794099171     50287        120.3
+5     2023    883            4662885677     47774        116.3
+  spending_2023_dollars_index employees_index
+1                       100.0           100.0
+2                       103.0            90.9
+3                       109.2            92.4
+4                       108.1            99.0
+5                       105.2            94.1
+charts written to output/: chart_b, chart_c, chart_d, chart_e, chart_f (PNG) with CSV tables

@@ -49,6 +49,10 @@ ownership (own_code 5), all industries (industry 10, agglvl 71) and NAICS
 - `list_match_candidates.csv`: top three registry name matches per listed organization (explore-14-profile.R first pass)
 - `list_match_decisions.csv`: hand-checked decision per listed organization: accept the top candidate, a named EIN, or none, with confidence and note (written by the analyst 2026-10-29)
 - `list_matched.csv`, `list_filled.xlsx`: the requester's list with EIN, registry name, tax year 2023 full-990 total expenses, and status (explore-14-profile.R)
+- `funders_to_listed_grants.csv`, `funders_to_listed_pf_name_pairs.csv`: grants from Davidson-based funders to the listed organizations, TY2019-2023, and the 990-PF name pairs used (explore-15-funders-listed.R)
+
+Round 2 chart tables are in `output/chart_*.csv` with PNGs alongside
+(explore-13-charts.R); they hold counts and aggregates only.
 
 ## Requester-supplied list (gitignored under `docs/`)
 
