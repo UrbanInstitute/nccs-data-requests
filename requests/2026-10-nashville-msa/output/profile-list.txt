@@ -1,47 +1,4 @@
-
-Attaching package: ‘dplyr’
-
-The following objects are masked from ‘package:stats’:
-
-    filter, lag
-
-The following objects are masked from ‘package:base’:
-
-    intersect, setdiff, setequal, union
-
-pinned: bmf-master-geocoded [rolling@2026-10-29] (3698197 rows)
 matched EINs not in the TN extract: 4 ; found nationally: 4 
-pinned: core-merged [merged] (515769 rows)
-pinned: core-merged [merged] (74678 rows)
-Warning messages:
-1: Potentially unsafe or invalid elements have been discarded from R metadata.
-ℹ Type: "externalptr"
-→ If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
-2: Potentially unsafe or invalid elements have been discarded from R metadata.
-ℹ Type: "externalptr"
-→ If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
-3: Potentially unsafe or invalid elements have been discarded from R metadata.
-ℹ Type: "externalptr"
-→ If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
-4: Potentially unsafe or invalid elements have been discarded from R metadata.
-ℹ Type: "externalptr"
-→ If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
-pinned: core-merged [merged] (114199 rows)
-pinned: core-merged [merged] (10391 rows)
-Warning messages:
-1: Potentially unsafe or invalid elements have been discarded from R metadata.
-ℹ Type: "externalptr"
-→ If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
-2: Potentially unsafe or invalid elements have been discarded from R metadata.
-ℹ Type: "externalptr"
-→ If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
-3: Potentially unsafe or invalid elements have been discarded from R metadata.
-ℹ Type: "externalptr"
-→ If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
-4: Potentially unsafe or invalid elements have been discarded from R metadata.
-ℹ Type: "externalptr"
-→ If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
-
 == Match outcome (141 listed organizations) ==
   decision confidence  n
 1      ein       high 33
@@ -50,7 +7,6 @@ Warning messages:
 4     none       <NA> 10
 5     top1       high 77
 6     top1     medium  6
-
 == Tax year 2023 status ==
                                                                                                                                   status_ty2023
 1                                                                                                                           Full Form 990 filed
@@ -94,7 +50,6 @@ Warning messages:
 18  1
 19  1
 20  1
-
 == Status by the requester's organization type ==
                              org_type FALSE TRUE
 1             Educational Institution     3    0
@@ -109,7 +64,6 @@ Warning messages:
 10         Philanthropic organization     4   10
 11             Private Sector Company     1    0
 12 Workforce development organization     2    1
-
 == Source form and line for the filled rows ==
                                                                       source_form_line
 1                                             Form 990, Part I line 18, total expenses
@@ -119,14 +73,25 @@ Warning messages:
 1 92
 2  6
 3  8
-
 == Full-990 rows: release coverage ==
                                expenses_source  n
 1 e-file and CORE (SOI) both hold the full 990 64
 2    e-file full 990 (not in the CORE release) 28
 rows where CORE and e-file totals differ by more than $1: 0 
 filled rows with a fiscal year end from CORE: 78 
-
 == Total expenses, tax year 2023, all filled rows ==
      Min.   1st Qu.    Median      Mean   3rd Qu.      Max.       NAs 
         0    524984   1768752  18183514   8904431 384174276        35 
+== 7. Listed organizations against all Davidson public charities (registry for age; full 990 for size, employees and line 1e) ==
+                                                                population
+1           Listed organizations registered in Davidson (public charities)
+2 All Davidson 501(c)(3) public charities excl. hospitals and universities
+  organizations median_age_years share_recognized_2020_or_later
+1           105             23.4                             12
+2          4046             11.1                             36
+  full_990_filers_2023 median_expenses_full_990 median_employees_full_990
+1                   81                  1775419                        20
+2                  872                   627396                         4
+  share_reporting_1e aggregate_1e_share_of_revenue
+1                 60                          17.0
+2                 35                          15.6

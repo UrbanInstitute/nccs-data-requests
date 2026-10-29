@@ -268,3 +268,62 @@ cat("filled rows with a fiscal year end from CORE:", sum(!is.na(filled$fiscal_ye
 
 cat("\n== Total expenses, tax year 2023, all filled rows ==\n")
 print(summary(filled$operating_expenses_ty2023))
+
+
+# --- 7. The listed organizations against Davidson charities ----------------
+#
+# Age (years since IRS recognition), size (tax year 2023 total expenses),
+# reported employees and line 1e government grant share, for the listed
+# organizations registered in Davidson County, beside all Davidson 501(c)(3)
+# public charities (excluding hospitals and universities) on the same measures. Each row names its filing
+# population. Counts only; no names.
+
+davidson_charities <- registry_tn |>
+  filter(ein %in% (arrow::read_parquet(file.path(data_dir, "universe_tn.parquet")) |>
+                     filter(geo_county_fips == "47037", as.integer(subsection_code) == 3L,
+                            !(foundation_code %in% c("2", "3", "4")), last_year_in_bmf >= 2026,
+                            !(nteev2_subsector %in% c("HOS", "UNI")),
+                            !(ein9 %in% c("620485733", "061395640"))) |>
+                     pull(ein))) |>
+  mutate(ein9 = gsub("-", "", ein))
+
+listed_davidson <- filled |>
+  filter(!is.na(ein9), ein9 %in% davidson_charities$ein9)
+
+age_years <- function(ruling) as.numeric(as.Date("2026-07-01") - as.Date(ruling)) / 365.25
+
+efile_2023_all <- arrow::read_parquet(file.path(data_dir, "panel_990_national.parquet")) |>
+  filter(tax_year == 2023, ein9 %in% davidson_charities$ein9) |>
+  select(ein9, exp_total, rev_total, employees)
+
+grants_2023 <- arrow::read_parquet(file.path(data_dir, "government_grants.parquet")) |>
+  filter(form_type == "990", tax_year == 2023) |>
+  arrange(desc(filing_receipt_id)) |>
+  distinct(ein, .keep_all = TRUE) |>
+  transmute(ein9 = ein, govt_grants = coalesce(government_grants, 0))
+
+profile_block <- function(ein9_set, label) {
+  registry_rows <- davidson_charities |> filter(ein9 %in% ein9_set)
+  full_990_rows <- efile_2023_all |> filter(ein9 %in% ein9_set) |> left_join(grants_2023, by = "ein9")
+  tibble(
+    population = label,
+    organizations = nrow(registry_rows),
+    median_age_years = round(median(age_years(registry_rows$ruling_date), na.rm = TRUE), 1),
+    share_recognized_2020_or_later = round(100 * mean(as.Date(registry_rows$ruling_date) >= as.Date("2020-01-01"), na.rm = TRUE)),
+    full_990_filers_2023 = nrow(full_990_rows),
+    median_expenses_full_990 = round(median(full_990_rows$exp_total, na.rm = TRUE)),
+    median_employees_full_990 = round(median(full_990_rows$employees, na.rm = TRUE)),
+    share_reporting_1e = round(100 * mean(full_990_rows$govt_grants > 0, na.rm = TRUE)),
+    aggregate_1e_share_of_revenue = round(100 * sum(full_990_rows$govt_grants, na.rm = TRUE) /
+                                            sum(full_990_rows$rev_total, na.rm = TRUE), 1)
+  )
+}
+
+listed_profile <- bind_rows(
+  profile_block(listed_davidson$ein9, "Listed organizations registered in Davidson (public charities)"),
+  profile_block(davidson_charities$ein9, "All Davidson 501(c)(3) public charities excl. hospitals and universities")
+)
+
+cat("\n== 7. Listed organizations against all Davidson public charities (registry for age; full 990 for size, employees and line 1e) ==\n")
+print(as.data.frame(listed_profile))
+write.csv(listed_profile, file.path(request_dir, "output", "list_profile_vs_davidson.csv"), row.names = FALSE)

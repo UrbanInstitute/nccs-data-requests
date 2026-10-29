@@ -372,6 +372,231 @@ zero: 46% reported fewer, 37% more. In human services 52% reported fewer,
 median -7%. Nationally 43% reported fewer. These are estimates from the
 retained returns, not a measured change in distinct volunteers or hours.
 
+## Round 2: sector health profile and the listed organizations (draft for review, 2026-10-30)
+
+This section answers the requester's second ask: a profile of the
+Davidson County (Metro Nashville) nonprofit and philanthropic sector, and
+a filled spreadsheet for the 141 organizations on the team's Ecosystem
+Map. It also carries the changes the senior researcher asked for on round
+1. Every table names its filing population, because the registry, the full
+Form 990, the Form 990-EZ, the Form 990-PF and the 990-N postcard describe
+different sets of organizations. "Tax year" means the IRS form year, the
+year the accounting period begins; the SOI extract labels returns by the
+year the period ends and has been relabeled throughout (see Corrections).
+
+### Corrections to round 1
+
+Three statements in the round 1 findings are withdrawn or changed.
+
+1. **Exit artifact.** Round 1 said nearly half of the organizations that
+   appeared to stop filing a full 990 after 2019 had filed for 2023 and
+   were missing from the e-file release. That rested on reading the SOI
+   extract's period-end year as the tax year. Relabeled, those returns are
+   for 2022. No leaver is in one release and missing from the other. Of
+   the 128 metro leavers, 76 last filed for 2022, 17 for 2021, 13 moved to
+   the 990-EZ and 22 have filed nothing since 2020. The pay gap between
+   genuine leavers and stayers is about $9,600 per head on 102
+   organizations (interval -$14,000 to -$3,800), not $17,200 on 42, and the
+   peer metros show no gap (finding 5, corrected in place).
+2. **Release coverage.** Round 1 said the e-file and SOI releases each miss
+   5 to 6 percent of the other's 2023 filings. Relabeled, every SOI filing
+   for 2023 is also in the e-file release; the gap is one way, and it is
+   the SOI 2024 file being partial for fiscal-year filers.
+3. **Hospitals and universities.** They are identified by the NTEE-V2
+   subsector code, not by name. Two Davidson universities carry an
+   undefined code and were inside the charity totals in round 1; they are
+   now excluded by EIN, and the all-charity government grant share for
+   2023 is 15.5 percent, not 14.8. The justification for excluding them:
+   11 institutions account for $10.7 billion of the $15.0 billion that
+   Davidson 501(c)(3) full-990 filers spent in 2023, so including them
+   turns every aggregate into a statement about those institutions. The
+   coverage table shows both populations.
+
+### Who is actually observed: the registry against returns filed
+
+The registry (IRS Business Master File) lists every organization currently
+recognized. Most of them file no return with financial information. For
+tax year 2023, counting the full 990 from the e-file release and the 990
+and 990-EZ from the SOI extract together:
+
+| Davidson County, on the 2026 registry | Registered | Full 990 | 990-EZ | 990-PF | No return seen |
+|---|---|---|---|---|---|
+| All registered organizations | 5,146 | 1,151 (22%) | 382 (7%) | 307 (6%) | 3,306 (64%) |
+| 501(c)(3), all | 4,472 | 887 (20%) | 311 (7%) | 304 (7%) | 2,970 (66%) |
+| 501(c)(3) public charities | 4,067 | 885 (22%) | 311 (8%) | 2 | 2,869 (71%) |
+| Public charities excl. hospitals and universities | 4,046 | 872 (22%) | 311 (8%) | 2 | 2,861 (71%) |
+| Human services charities | 1,041 | 247 (24%) | 71 (7%) | 0 | 723 (69%) |
+
+"No return seen" covers 990-N postcard filers (receipts under $50,000),
+late filers and organizations that have stopped; the releases do not
+separate them. About one Davidson charity in five files a full 990, and
+those organizations are the population for every financial and workforce
+figure below.
+
+### Age, starts and filing gaps
+
+**Recognitions by year** (registry ruling year, organizations still on the
+registry in 2026; recognition, not founding; `output/chart_b_starts.png`).
+Davidson recognitions ran at 130 to 200 a year from 2014 to 2021, then
+rose to 248 in 2022, 266 in 2023, 324 in 2024 and 347 in 2025. Human
+services charities followed the same path (45 a year to 2021, 79 to 95 a
+year since). Private foundations peaked at 26 in 2023. The recent rise is
+partly real and partly survival: older cohorts have had time to lapse.
+
+**Filing gaps** (`output/chart_c_stopped_filing.png`). The registry does
+not record when an organization leaves, so two series are kept separate
+and never summed. (1) Stopped filing: of Davidson organizations that filed
+a 990 or 990-EZ for a given year, the share with no return of either type
+in the following two years ran between 3.5 and 6 percent a year from 2016
+to 2022, with 2021 (the year after 2020 returns) at 5.8 percent. This is a
+two-year filing gap, not a confirmed closure; some file again later. The
+figure for 2023 (12 percent) is provisional because the SOI 2024 file is
+partial and is not charted. (2) Left the registry: the first registry
+vintage in which an organization present by 2018 is absent. The series
+steps with the vintages (236 charities in 2017, 116 in 2021, 83 in 2023)
+and reflects revocation lists as much as closures.
+
+### How small most organizations are
+
+Total expenses for tax year 2023, Davidson public charities excluding
+hospitals and universities, full 990 and 990-EZ filers together (1,184
+organizations; 990-N filers, under $50,000 in receipts, are not in any
+row; `output/chart_d_expense_distribution.png`):
+
+| Population (tax year 2023) | Filers | 25th pct | Median | 75th pct | 90th pct | Under $250k | Under $1M |
+|---|---|---|---|---|---|---|---|
+| All charities, full 990 and 990-EZ | 1,184 | $99k | $332k | $1.27M | $5.6M | 43% | 72% |
+| Human services, full 990 and 990-EZ | 319 | $103k | $347k | $1.20M | $5.9M | 42% | 73% |
+| All charities, full 990 only | 888 | $266k | $655k | $2.38M | $8.5M | 23% | 61% |
+| Human services, full 990 only | 248 | $247k | $509k | $1.85M | $8.0M | 25% | 65% |
+
+Among organizations large enough to file either form, half spend under
+$332,000 a year and seven in ten under $1 million. Human services
+organizations are no larger than the rest.
+
+### Government grants, 2020 to 2023
+
+Reported government grants (Form 990 Part VIII line 1e) as a share of total
+revenue, full-990 public charities excluding hospitals and universities,
+dollar-weighted (`output/chart_e_govt_grant_share.png`). Line 1e is grants
+only; contracts and reimbursements are on line 2 and cannot be separated.
+A blank line is treated as zero; about two thirds of filers report nothing
+on it, so the median organization's share is zero in every year.
+
+| Share of revenue on line 1e | 2020 | 2021 | 2022 | 2023 |
+|---|---|---|---|---|
+| All charities, Davidson | 17.7% | 16.9% | 16.4% | 15.5% |
+| All charities, peer metros | 18.2% | 16.5% | 17.8% | 18.5% |
+| All charities, rest of US | 16.4% | 16.5% | 16.4% | 14.8% |
+| Human services, Davidson | 17.9% | 14.5% | 14.2% | 15.7% |
+| Human services, peer metros | 28.0% | 20.3% | 21.1% | 21.6% |
+| Human services, rest of US | 26.2% | 26.0% | 26.5% | 23.8% |
+
+Davidson's human services charities reported a smaller share in every
+year, and the gap to the peer metros opened in 2020 and has not closed.
+The 2020 peak is visible everywhere; the 990 cannot say how much of it
+was federal pandemic relief.
+
+### Filers, spending and employees, 2019 to 2023
+
+Full-990 public charities excluding hospitals and universities, e-file
+release (`output/chart_f_filers_spending_employees.png`). Employee counts
+on the 990 are noisy and are shown two ways.
+
+| Davidson County | 2019 | 2023 | Change | Same organizations in both years | Change |
+|---|---|---|---|---|---|
+| Filers | 757 | 881 | +16% | 625 | |
+| Spending, 2023 dollars | $4.15bn | $4.39bn | +6% | | +9% |
+| Reported employees | 47,861 | 44,948 | -6% | | -0.6% |
+
+Among the 625 organizations present in both years, employees were flat
+and real spending rose 9 percent; the 6 percent decline in the full
+population comes from the organizations that left or joined it. Through
+2022 the same comparison gives -2.8 percent and +4.5 percent. The round 1
+claim that part of the employee decline was a release artifact is
+withdrawn (Corrections, 1).
+
+### The listed organizations
+
+The team's list names 141 organizations with addresses and no
+identifiers. Each was matched by hand to the registry (131 matched; the
+10 unmatched are companies, church-run bodies, a Salvation Army unit
+under the national exemption, a mutual aid collective, and two
+intermediaries with no registry record under their names). The
+spreadsheet returned to the team carries, for each matched organization,
+tax year 2023 total expenses from the return it filed, with the form and
+line named: 92 from the full 990 (line 18), 6 from the 990-EZ (line 17)
+and 8 from the 990-PF (line 26, total expenses and disbursements, with
+operating expenses and grants paid beside it). Eleven organizations show
+only a 2022 full 990 so far; their 2022 figure is given in the status
+column. Three matches are flagged low confidence and are with the team.
+
+Against all Davidson public charities, the listed organizations are
+older, larger, more often staffed, and more often government funded. The
+list was assembled as the organizations active in the team's field of
+work, so this describes the list, not the sector.
+
+| Measure | Listed, registered in Davidson | All Davidson public charities excl. hospitals and universities |
+|---|---|---|
+| Organizations on the registry | 105 | 4,046 |
+| Median age (years since recognition) | 23 | 11 |
+| Recognized 2020 or later | 12% | 36% |
+| Full-990 filers, tax year 2023 | 81 | 872 |
+| Median total expenses (full 990) | $1.78M | $627k |
+| Median reported employees (full 990) | 20 | 4 |
+| Reporting any line 1e grants (full 990) | 60% | 35% |
+| Line 1e share of revenue, dollar-weighted (full 990) | 17.0% | 15.6% |
+
+### Who funded whom, 2019 to 2023
+
+Source: grants reported by funders whose registry address is in Davidson
+County, on their own returns: Schedule I of the full 990 (recipients over
+$5,000 in aggregate, with the recipient EIN) and the 990-PF grants paid
+schedule (recipient name and city only, matched by cleaned name and
+hand-checked). Recipients are the 116 listed organizations registered in
+Davidson; the 15 registered elsewhere are out of scope. Grants to
+individuals are excluded. Funders based outside Davidson are absent by
+construction, so an organization with no matched grant is not unfunded.
+
+| Tax year | Grant rows | Funders | Listed recipients reached | Total ($M) | of which Schedule I cash | Schedule I noncash | 990-PF |
+|---|---|---|---|---|---|---|---|
+| 2019 | 1,379 | 120 | 82 | 30.9 | 19.3 | 0.7 | 11.0 |
+| 2020 | 2,116 | 159 | 89 | 56.1 | 34.6 | 2.8 | 18.7 |
+| 2021 | 1,041 | 159 | 89 | 43.7 | 23.0 | 1.7 | 18.8 |
+| 2022 | 978 | 154 | 88 | 52.7 | 32.2 | 1.4 | 18.9 |
+| 2023 | 951 | 154 | 101 | 58.6 | 32.3 | 4.8 | 21.5 |
+
+Over the five years, 104 of the 116 listed organizations received at least
+one matched grant from one of 234 Davidson-based funders. The median
+listed recipient had 10 distinct Davidson funders; 47 had more than ten
+and 11 had one. Funding is concentrated: the largest funder supplied 25
+percent of matched dollars, the top three 47 percent and the top ten 70
+percent. Twenty-one of the funders are themselves on the list (the
+community foundation, the United Way and several foundations), and
+grants between listed organizations ran from $20 million in 2019 to
+$38 million in 2023; where a listed intermediary regrants, the same
+dollar can appear twice.
+
+On "duplication" and "gaps": a shared funder is a shared funder, not
+duplication, and no matched grant is not a gap, because the table sees
+only Davidson-based funders, only itemized Schedule I recipients, and
+only names the match caught. The 2020 Schedule I spike is the community
+foundation's itemized COVID-19 relief grants.
+
+### Questions for the reviewer
+
+1. Exits: the two-series treatment above (filing gap through 2022 as the
+   primary series, registry vintages as the check), with 2023 withheld.
+   Is the two-year rule acceptable, and should the filing-gap chart carry
+   the registry series beside it?
+2. Comparator for the list: all Davidson public charities as the
+   headline, with full-990 filers of similar size as a second column if
+   wanted. The list is older and larger on every measure; is the second
+   comparison worth the space?
+3. 990-EZ filers: included in the expense distribution and in the
+   spreadsheet with the form named; excluded from employees and line 1e,
+   which the EZ does not carry. Agreed?
+
 ## What this could become
 
 - A county capacity map for Metro and the Community Foundation (finding 1,
