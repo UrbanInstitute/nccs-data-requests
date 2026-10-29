@@ -256,7 +256,7 @@ percentiles <- bind_rows(
   percentile_table(expenses_2023$total_expenses, "All Davidson charities, full 990 and 990-EZ"),
   percentile_table(expenses_2023$total_expenses[!expenses_2023$is_hos_uni], "Excl. hospitals and universities"),
   percentile_table(expenses_2023$total_expenses[expenses_2023$is_human_services], "Human services"),
-  percentile_table(expenses_2023 |> filter(source_form == "990") |> pull(total_expenses), "Full 990 only, all charities"),
+  percentile_table(expenses_2023 |> filter(source_form == "990", !is_hos_uni) |> pull(total_expenses), "Full 990 only, excl. hospitals and universities"),
   percentile_table(expenses_2023 |> filter(source_form == "990", is_human_services) |> pull(total_expenses), "Full 990 only, human services")
 )
 

@@ -129,18 +129,18 @@
 9       2025            37           75
 10      2026            20           58
 == D. Total expenses by percentile, tax year 2023, Davidson 501(c)(3) public charities ==
-                                   population filers p10 p25 median  p75  p90
-1 All Davidson charities, full 990 and 990-EZ   1197  36 101    339 1356 6067
-2            Excl. hospitals and universities   1184  36  99    332 1265 5594
-3                              Human services    319  33 103    347 1201 5949
-4                Full 990 only, all charities    888 108 266    655 2376 8512
-5               Full 990 only, human services    248 103 247    509 1854 8009
-    p95 share_under_250k share_under_1m
-1 15012               43             71
-2 14152               43             72
-3 13765               42             73
-4 20408               23             61
-5 16088               25             65
+                                       population filers p10 p25 median  p75
+1     All Davidson charities, full 990 and 990-EZ   1197  36 101    339 1356
+2                Excl. hospitals and universities   1184  36  99    332 1265
+3                                  Human services    319  33 103    347 1201
+4 Full 990 only, excl. hospitals and universities    875 106 262    632 2263
+5                   Full 990 only, human services    248 103 247    509 1854
+   p90   p95 share_under_250k share_under_1m
+1 6067 15012               43             71
+2 5594 14152               43             72
+3 5949 13765               42             73
+4 7890 17159               24             62
+5 8009 16088               25             65
 (p10 to p95 in $ thousands; filers reporting zero expenses dropped; 990-N filers, under $50,000 in receipts, are not in any row)
 == E. Line 1e government grants as a share of total revenue, full-990 charities excl. hospitals and universities ==
        population           group tax_year filers share_reporting_1e

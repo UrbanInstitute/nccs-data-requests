@@ -235,3 +235,20 @@ Five findings after the first set of fixes. Each reproduced before acting.
 | 3 | Short-period misdating survives source precedence when the two labels put one filing in different years | Confirmed at a small scale: 3 Davidson full-990 filings | Fixed: a CORE copy of any filing the e-file panel holds (same EIN, total expenses and total revenue) is dropped whatever year it was assigned. |
 | 4 | PLAN.md still describes the full-990-only sheet with 89 figures | True | Fixed: deliverable 1 now states the three forms and lines, the source column, and 106 figures. |
 | 5 | A moved review helper has stale run instructions and pins to reviews/_pins.csv | Confirmed | Fixed: instructions say run from `reviews/`; the pin goes to the request's `_pins.csv` one level up. |
+
+
+<!-- second-analyst review of the round 2 draft text, 2026-10-29 -->
+
+## Response to the second-analyst review of the round 2 draft (2026-10-29)
+
+Seven findings on the round 2 section of `request.qmd`. All accepted.
+
+| # | Finding | Checked | Disposition |
+|---|---|---|---|
+| 1 | The public qmd identifies members of the confidential list through affiliation descriptions and named funders | True | Funder names, the description of how the list was assembled, and the unmatched-organization detail removed from the qmd; they stay in the private deliverable (the filled sheet and the funder table). |
+| 2 | Earlier sections keep the withdrawn coverage figures, institution-inclusive results and the obsolete 42-organization next step | True | Caveat 2 restated; finding 4's table and sentence carry the 15.5% figure beside the old one with the reason; the employee paragraph now gives the balanced-panel share; the next-step bullet names 102 organizations. |
+| 3 | "Every SOI filing" holds only for Davidson (227 CORE-only cases elsewhere); "genuine leavers" and "no return anywhere" overstate; four short-period records still misdated | True | Wording narrowed to Davidson and to "no return in either release"; the short-period limit is stated in the corrections because the SOI extract carries no period start. |
+| 4 | Expense table's full-990 row included institutions | Confirmed: 888 and $655k with them, 875 and $632k without | Fixed in `profile-charts.R` and the table. |
+| 5 | Institution count is 13, not 11; PF dollars $18.9M (2021) and $19.1M (2022) | Confirmed from the outputs | Fixed. |
+| 6 | Grant-share series cannot establish when the gap began; changing membership explains about 91%, not all, of the employee decrease | True | Reworded both. |
+| 7 | Chart paths displayed as filenames | True | Five charts embedded as images; the Word render carries them. |
