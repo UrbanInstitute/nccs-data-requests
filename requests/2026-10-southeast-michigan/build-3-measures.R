@@ -13,7 +13,6 @@ dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 # assign zero when revenue or net income is zero (print the count).
 
 bmf_cfsem_universe <- read.csv(file.path(out_dir, "universe.csv"))
-bmf_seven_all_vintages <- read.csv(file.path(out_dir, "universe-all-vintages.csv"))
 financials <- read.csv(file.path(out_dir, "financials.csv"))
 
 message("Public charities in universe: ", nrow(bmf_cfsem_universe))
