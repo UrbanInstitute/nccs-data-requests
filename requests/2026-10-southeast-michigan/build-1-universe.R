@@ -17,7 +17,7 @@ bmf <- read_bmf_master(
               "foundation_code", "ruling_date",
               "last_vintage_ym", "last_year_in_bmf"))
 
-message("BMF rows:", nrows(bmf))
+message("BMF rows: ", nrow(bmf))
 
 latest_month <- max(bmf$last_vintage_ym)
 
