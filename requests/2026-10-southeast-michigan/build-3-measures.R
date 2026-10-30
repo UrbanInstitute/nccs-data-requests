@@ -261,6 +261,34 @@ message(
   sum(abs(share_totals$total - 100) > 0.000001)
 )
 
+# Region n must equal the sum of the county n on every sheet.
+region_vs_counties <- measures |>
+  dplyr::filter(sheet != "Number") |>
+  dplyr::distinct(geography, sheet, n) |>
+  dplyr::group_by(sheet) |>
+  dplyr::summarise(
+    region_n = n[geography == region_label],
+    county_total = sum(n[geography != region_label]),
+    .groups = "drop"
+  )
+message("Sheets where region n differs from the county total (should be 0): ",
+        sum(region_vs_counties$region_n != region_vs_counties$county_total))
+
+# Each sheet's region n must equal its input rows minus the exclusions printed above.
+expected_n <- c(
+  Subsector = nrow(bmf_cfsem_universe),
+  Age = nrow(bmf_cfsem_universe),
+  Revenue = sum(!is.na(financials$total_revenue)),
+  Expenses = sum(!is.na(financials$total_expenses)),
+  Assets = sum(!is.na(financials$total_assets_eoy)),
+  Liabilities = sum(!is.na(financials$total_liabilities_eoy)),
+  `Operating Surplus` = nrow(surplus_data),
+  Employees = sum(financials$source_form == "990")
+)
+actual_n <- region_vs_counties$region_n[match(names(expected_n), region_vs_counties$sheet)]
+print(data.frame(sheet = names(expected_n), expected = expected_n, actual = actual_n, row.names = NULL))
+message("Sheets where n does not reconcile (should be 0): ", sum(expected_n != actual_n))
+
 #### Write output/measures-long.csv ####
 write.csv(measures, file.path(out_dir, "measures-long.csv"), row.names = FALSE)
 message("Rows written to measures-long.csv: ", nrow(measures))
