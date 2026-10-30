@@ -8,8 +8,7 @@ req <- here::here("requests", "2026-10-southeast-michigan")
 out_dir <- file.path(req, "data", "output")
 dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 
-#### R Read ####
-#ran this read 10/26/2026
+#### Read the BMF master for Michigan ####
 bmf <- read_bmf_master(
   req, state = "MI",
   columns = c("ein", "org_name_display","org_addr_state","geo_state_abbr", 
