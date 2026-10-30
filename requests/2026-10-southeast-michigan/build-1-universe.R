@@ -79,15 +79,6 @@ bmf_mi_foundation <- bmf_mi_pc |>
   dplyr::filter(!foundation_rule) |>
   dplyr::count(county_name) 
 
-#county_name           n
-#<chr>                <int>
-# 1 Livingston County    47
-# 2 Macomb County       124
-# 3 Monroe County        19
-# 4 Oakland County      852
-# 5 St. Clair County     22
-# 6 Washtenaw County    167
-# 7 Wayne County        512
 
 message("Rows removed by Foundation Rule (Per County):", (bmf_mi_foundation))
 
