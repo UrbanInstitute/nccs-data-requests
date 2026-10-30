@@ -222,6 +222,10 @@ message(
   "Missing employee count (put in the zero band): ",
   sum(is.na(employee_data$n_employees_w3))
 )
+message(
+  "Negative employee count (also put in the zero band; should be 0): ",
+  sum(employee_data$n_employees_w3 < 0, na.rm = TRUE)
+)
 
 employee_data <- employee_data |>
   dplyr::mutate(
