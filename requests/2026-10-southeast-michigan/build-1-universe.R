@@ -8,8 +8,7 @@ req <- here::here("requests", "2026-10-southeast-michigan")
 out_dir <- file.path(req, "data", "output")
 dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 
-#### R Read ####
-#ran this read 10/26/2026
+#### Read the BMF master for Michigan ####
 bmf <- read_bmf_master(
   req, state = "MI",
   columns = c("ein", "org_name_display","org_addr_state","geo_state_abbr", 
@@ -18,7 +17,7 @@ bmf <- read_bmf_master(
               "foundation_code", "ruling_date",
               "last_vintage_ym", "last_year_in_bmf"))
 
-message("BMF rows:", nrows(bmf))
+message("BMF rows: ", nrow(bmf))
 
 latest_month <- max(bmf$last_vintage_ym)
 
@@ -30,11 +29,9 @@ bmf_latest <- bmf |>
 message("Rows dropped (not in latest vintage):", nrow(bmf) - nrow(bmf_latest))
 message("Rows kept(latest vintage):", nrow(bmf_latest))
 
-#### Geography: label join for most states; coordinate join for Michigan ####
+#### Join the county crosswalk and keep the seven counties ####
 xwalk_county <- read_crosswalk(req, "county-fips")
-#pinned: crosswalk-county-fips [tiger-2023] (3635 rows)
 xwalk_cbsa   <- read_crosswalk(req, "cbsa")
-#pinned: crosswalk-cbsa [tiger-2023] (3228 rows)
 
 #####Join geography onto the raw labels / coordinates #####
 #Join the county-fips crosswalk; 
@@ -52,10 +49,15 @@ xwalk_mi <- bmf_latest |>
   dplyr::left_join(xwalk_county, by = c("geo_state_abbr", "geo_county" = "geo_county_raw")) |>
   dplyr::left_join(xwalk_cbsa,   by = c("geo_county_fips" = "county_fips"))
 
-merged_mi <- xwalk_mi |>
-  dplyr::filter(county_name %in% counties) 
+unresolved_mi <- xwalk_mi |>
+  dplyr::filter(is.na(county_name))
+message("Michigan rows whose county did not resolve (dropped): ", nrow(unresolved_mi))
 
-message("Rows dropped:", nrow(xwalk_mi) - nrow(merged_mi))
+merged_mi <- xwalk_mi |>
+  dplyr::filter(county_name %in% counties)
+
+message("Rows in other Michigan counties (dropped): ", nrow(xwalk_mi) - nrow(unresolved_mi) - nrow(merged_mi))
+message("Rows kept in the seven counties: ", nrow(merged_mi))
 
 #apply public charity rule  subsection code 3 and foundation code not in 2, 3, 4, 
 #compared as integers; print what each condition removes per county. 
@@ -69,32 +71,17 @@ bmf_mi_subsection <- bmf_mi_pc |>
   dplyr::filter(!subsection_rule) |>
   dplyr::count(county_name) 
 
-message("Rows removed by Subsection Rule (Per County):", (bmf_mi_subsection))
+message("Rows removed by the subsection rule, per county:")
+print(bmf_mi_subsection)
 
-# county_name           n
-# 1 Livingston County   146
-# 2 Macomb County       729
-# 3 Monroe County       146
-# 4 Oakland County     1167
-# 5 St. Clair County    169
-# 6 Washtenaw County    384
-# 7 Wayne County       1118
 
 bmf_mi_foundation <- bmf_mi_pc |>
   dplyr::filter(!foundation_rule) |>
   dplyr::count(county_name) 
 
-#county_name           n
-#<chr>                <int>
-# 1 Livingston County    47
-# 2 Macomb County       124
-# 3 Monroe County        19
-# 4 Oakland County      852
-# 5 St. Clair County     22
-# 6 Washtenaw County    167
-# 7 Wayne County        512
 
-message("Rows removed by Foundation Rule (Per County):", (bmf_mi_foundation))
+message("Rows removed by the foundation rule, per county:")
+print(bmf_mi_foundation)
 
 bmf_mi_rule <- bmf_mi_pc |>
   dplyr::filter(foundation_rule & subsection_rule) 
@@ -119,22 +106,24 @@ bmf_mi_ntee <- bmf_mi_rule |>
 
 #### Flag ruling dates stored as 1900-01-01 as missing#####
 bmf_cfsem_universe <- bmf_mi_ntee |>
-  dplyr::mutate(ruling_date = na_if(ruling_date, as.Date("1900-01-01")))
+  dplyr::mutate(ruling_date = dplyr::na_if(ruling_date, as.Date("1900-01-01")))
 
 universe_count <- bmf_cfsem_universe|>
   dplyr::count(county_name)
 
-message("Rows Per County):", (universe_count))
+message("Public charities per county (fills the Number sheet):")
+print(universe_count)
 
-#county_name           n
-#<chr>             <int>
-#1 Livingston County   642
-#2 Macomb County      2160
-#3 Monroe County       505
-#4 Oakland County     5840
-#5 St. Clair County    566
-#6 Washtenaw County   2098
-#7 Wayne County       8066
 
 #Write output/universe.csv and print the count per county
-write.csv(bmf_cfsem_universe, file.path(out_dir,"universe.csv"), row.names = FALSE)
+write.csv(bmf_cfsem_universe, file.path(out_dir, "universe.csv"), row.names = FALSE)
+
+# Seven-county public charities from every vintage, used in step 2 to count
+# filers that are no longer in the current registry.
+bmf_seven_all_vintages <- bmf |>
+  dplyr::left_join(xwalk_county, by = c("geo_state_abbr", "geo_county" = "geo_county_raw")) |>
+  dplyr::filter(county_name %in% counties) |>
+  dplyr::filter(as.integer(subsection_code) %in% 3L, !as.integer(foundation_code) %in% c(2L, 3L, 4L)) |>
+  dplyr::select(ein, county_name, last_vintage_ym)
+write.csv(bmf_seven_all_vintages, file.path(out_dir, "universe-all-vintages.csv"), row.names = FALSE)
+message("Seven-county public charities across all vintages: ", nrow(bmf_seven_all_vintages))
