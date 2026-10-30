@@ -197,10 +197,10 @@ message(
   sum(surplus_data$assigned_zero)
 )
 
-# Lower bound inclusive, so exactly -20% falls in "-19.99 to -5".
+# "-20% or lower" includes exactly -20; every other band's lower bound is inclusive.
 surplus_data <- surplus_data |>
   dplyr::mutate(band = dplyr::case_when(
-    pct < -20 ~ "-20% or lower",
+    pct <= -20 ~ "-20% or lower",
     pct < -5 ~ "-19.99 to -5",
     pct < 0 ~ "-4.99 to -0.01",
     pct == 0 ~ "0",
