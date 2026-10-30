@@ -14,19 +14,19 @@ The Research to Action Lab, working with Metro Nashville and the Community Found
 
 Three things in the first memo have changed.
 
-**Exits.** The first memo said that nearly half of the organizations that appeared to stop filing a full 990 after 2019 had in fact filed for 2023 and were missing from the e-file release. The two sources date returns differently, and I had read a set of fiscal-year 2022 returns as 2023 returns. Dated the same way, no organization is in one source and missing from the other. Of the 128 metro organizations that stopped filing a full 990, 76 last filed for 2022, 17 for 2021, 13 moved to the shorter 990-EZ, and 22 have no return since 2020. The pay gap between those that stopped and those that stayed is about $9,600 per employee, on 102 organizations, not $17,200 on 42. The peer metros show no gap.
+**Exits.** The first memo said that nearly half of the organizations that appeared to stop filing a full 990 after 2019 had in fact filed for 2023 and were missing from the e-file release. The two sources label years differently by design. The e-file returns carry the IRS tax year, the year the accounting period begins. CORE labels a return by the calendar year the period ends. An organization's July 2022 to June 2023 return is therefore a 2022 return in the e-file data and a 2023 return in CORE. I did not convert between the two: the 58 organizations I counted as having filed for 2023 were fiscal-year filers whose 2022 return carried CORE's 2023 label, and none had filed for 2023 in either source. Converted, no organization is in one source and missing from the other. Of the 128 metro organizations that stopped filing a full 990, 76 last filed for 2022, 17 for 2021, 13 moved to the shorter 990-EZ, and 22 have no return since 2020. The pay gap between those that stopped and those that stayed is about $9,600 per employee, on 102 organizations, not $17,200 on 42. The peer metros show no gap.
 
-**Coverage.** The first memo said the two sources of 990 returns each miss 5 to 6 percent of the other's 2023 filings. Dated the same way, the e-file returns hold everything the IRS statistical extract holds for Davidson, plus 234 filings the extract has not yet released.
+**Coverage.** The first memo said the two sources of 990 returns each miss 5 to 6 percent of the other's 2023 filings. Converted to the same year, the e-file returns hold everything CORE holds for Davidson, plus 234 filings that CORE has not yet released.
 
-**Hospitals and universities.** Two Davidson universities carry no classification code on the registry and were inside the charity totals. They are now excluded with the rest. The all-charity government grant share for 2023 is 15.5 percent, not 14.8.
+**Hospitals and universities.** Two Davidson universities carry no classification code in the BMF and were inside the charity totals. They are now excluded with the rest. The all-charity government grant share for 2023 is 15.5 percent, not 14.8.
 
 ## Sources
 
 Three sources, each named in every table.
 
-- **The IRS registry** (Business Master File): every organization currently recognized, with its address, type and year of recognition. The September 2026 registry is used.
+- **The BMF** (the IRS Business Master File): every organization currently recognized, with its address, type and year of recognition. The September 2026 BMF is used.
 - **The 990 returns as e-filed**: the full Form 990, the shorter 990-EZ, and the 990-PF that private foundations file. Finances and workforce come from the full 990; the 990-EZ carries total expenses but no employee count or government grant line; the 990-PF carries expenses and grants paid. Returns end at tax year 2023.
-- **The IRS statistical extract** of the same returns, used to check what the e-file release holds and to find organizations that moved to the shorter form.
+- **CORE** (the NCCS CORE files, built from the IRS statistical extracts of the same returns), used to check what the e-file release holds and to find organizations that moved to the shorter form. CORE labels a return by the calendar year its accounting period ends; this draft converts to the IRS tax year throughout.
 
 Tax year means the IRS form year, the year the accounting period begins. Dollar figures are in 2023 dollars. Nashville is compared with 19 other metros of similar size (Memphis, Knoxville, Austin, Charlotte, Raleigh, Indianapolis, Louisville, Columbus, Kansas City, Jacksonville, Oklahoma City, Atlanta, Denver, St. Louis, Cincinnati, Richmond, Birmingham, San Antonio, Phoenix), our choice, and with the rest of the country. Hospitals and universities are excluded from every financial and workforce figure unless a table says otherwise.
 
@@ -34,30 +34,30 @@ Tax year means the IRS form year, the year the accounting period begins. Dollar 
 
 ### Who is actually observed
 
-The registry lists every organization recognized; most file no return with financial information. For 2023:
+The BMF lists every organization recognized; most file no return with financial information. For 2023:
 
-| Davidson County, on the 2026 registry | Registered | Full 990 | 990-EZ | 990-PF | No return seen |
+| Davidson County, in the 2026 BMF | Registered | Full 990 | 990-EZ | 990-PF | No return seen |
 |---|---|---|---|---|---|
 | All registered organizations | 5,146 | 1,151 (22%) | 382 (7%) | 307 (6%) | 3,306 (64%) |
 | 501(c)(3) public charities | 4,067 | 885 (22%) | 311 (8%) | 2 | 2,869 (71%) |
 | Public charities excl. hospitals and universities | 4,046 | 872 (22%) | 311 (8%) | 2 | 2,861 (71%) |
 | Human services charities | 1,041 | 247 (24%) | 71 (7%) | 0 | 723 (69%) |
 
-"No return seen" covers organizations under $50,000 in receipts, which file only a postcard, late filers, and organizations that have stopped; the sources do not separate them. About one charity in five files a full 990, and those are the population for every financial and workforce figure below. "Recognized" in this draft always means on the registry; "filed" always means a return.
+"No return seen" covers organizations under $50,000 in receipts, which file only a postcard, late filers, and organizations that have stopped; the sources do not separate them. About one charity in five files a full 990, and those are the population for every financial and workforce figure below. "Recognized" in this draft always means listed in the BMF; "filed" always means a return.
 
 ### Hospitals and universities
 
-They are identified by the registry's classification code (NTEE-V2 subsectors HOS and UNI), with two universities added by hand because their code is blank. Thirteen institutions in Davidson filed a full 990 for 2023 and spent $10.7 billion of the $15.0 billion that all Davidson charities spent. Including them turns every aggregate into a statement about those thirteen, which is why they are excluded. The coverage table above shows the sector with and without them.
+They are identified by the BMF's classification code (NTEE-V2 subsectors HOS and UNI), with two universities added by hand because their code is blank. Thirteen institutions in Davidson filed a full 990 for 2023 and spent $10.7 billion of the $15.0 billion that all Davidson charities spent. Including them turns every aggregate into a statement about those thirteen, which is why they are excluded. The coverage table above shows the sector with and without them.
 
 ### Exits
 
-The registry does not record when an organization leaves, so two series are kept apart and never added together.
+The BMF does not record when an organization leaves, so two series are kept apart and never added together.
 
-**Stopped filing.** Of the Davidson organizations that filed a 990 or 990-EZ in a given year, the share with no return of either type in the next two years ran between 3.5 and 6 percent a year from 2016 to 2022. This is a two-year filing gap, not a confirmed closure; some file again later. The figure for 2023 cannot be judged yet because the statistical extract's 2024 file is incomplete.
+**Stopped filing.** Of the Davidson organizations that filed a 990 or 990-EZ in a given year, the share with no return of either type in the next two years. CORE runs from 1989, so the series runs from 1991 to 2022. It has stayed between 3 and 7 percent a year in most years, with higher years in the late 1990s (12 percent in 1998) and around 2008 to 2010 (7 to 8 percent), when the IRS introduced the postcard return for organizations under $25,000, so some of those gaps are moves to the postcard rather than exits. From 2016 to 2022 it ran between 3.5 and 6 percent. This is a two-year filing gap, not a confirmed closure; some file again later. The figure for 2023 cannot be judged yet because CORE's 2024 file is incomplete.
 
 ![Share of Davidson 990 and 990-EZ filers with a two-year filing gap](output/chart_c_stopped_filing.png)
 
-**Left the registry.** For each year, we take every Davidson organization on the registry the year before and count the share that is absent from that year on. It ran at 3 to 6 percent a year, with two spikes (7.9 percent in 2017, 5.9 percent in 2021) and two years with no exits at all (2018, 2022), because the registry is updated in batches and reflects revocation lists as much as closures.
+**Left the BMF.** For each year, we take every Davidson organization in the BMF the year before and count the share that is absent from that year on. It ran at 3 to 6 percent a year, with two spikes (7.9 percent in 2017, 5.9 percent in 2021) and two years with no exits at all (2018, 2022), because the BMF is updated in batches and reflects revocation lists as much as closures.
 
 When an organization stops appearing in the full 990 returns, that does not mean it closed. It may have merged, shrunk enough to file the shorter form, filed late, or filed a return the IRS has not released yet. Whether the ones with no return closed or merged is not known.
 
@@ -119,17 +119,17 @@ Among the organizations present in both years, employees were flat and real spen
 
 ### Recognitions by year
 
-Davidson recognitions ran at 130 to 200 a year from 2014 to 2021, then rose to 248 in 2022, 266 in 2023, 324 in 2024 and 347 in 2025 among organizations still on the registry. Human services charities followed the same path. Part of the recent rise is survival: older cohorts have had time to lapse.
+Davidson recognitions ran at 130 to 200 a year from 2014 to 2021, then rose to 248 in 2022, 266 in 2023, 324 in 2024 and 347 in 2025 among organizations still in the BMF. Human services charities followed the same path. Part of the recent rise is survival: older cohorts have had time to lapse.
 
 ![Davidson County recognitions by year](output/chart_b_starts.png)
 
 ### The listed organizations
 
-The team's list names 141 organizations; 131 were matched to the registry by hand, and the 10 unmatched are companies, church-run bodies and organizations with no registry record under their names. Against all Davidson public charities, the listed organizations are older, larger, more often staffed, and more often government funded. The list is the team's selection, so this describes the list, not the sector.
+The team's list names 141 organizations; 131 were matched to the BMF by hand, and the 10 unmatched are companies, church-run bodies and organizations with no BMF record under their names. Against all Davidson public charities, the listed organizations are older, larger, more often staffed, and more often government funded. The list is the team's selection, so this describes the list, not the sector.
 
 | Measure | Listed, registered in Davidson | All Davidson public charities excl. hospitals and universities |
 |---|---|---|
-| Organizations on the registry | 105 | 4,046 |
+| Organizations in the BMF | 105 | 4,046 |
 | Median age (years since recognition) | 23 | 11 |
 | Recognized 2020 or later | 12% | 36% |
 | Full-990 filers, 2023 | 81 | 872 |
@@ -154,6 +154,6 @@ Over the five years, 104 of the 116 listed organizations received at least one g
 
 ## Three questions for you
 
-1. **Exits.** Is the two-year filing gap acceptable as the main series, with the registry series as a check and 2023 withheld?
+1. **Exits.** Is the two-year filing gap acceptable as the main series, with the BMF series as a check and 2023 withheld?
 2. **Comparator for the list.** All Davidson public charities is the headline. Is a second comparison against full-990 filers of similar size worth the space?
 3. **990-EZ filers.** They are in the expense distribution and the spreadsheet with the form named, and out of the employee and grant measures, which the EZ does not carry. Agreed?

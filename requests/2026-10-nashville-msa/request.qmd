@@ -76,7 +76,7 @@ four groups partition every filer.
 | Geocoded Unified BMF (vintage 2026_09, sha256 in `_pins.csv`) | Every registered organization: current address and classification, ruling date, first and last vintage observed, latest reported revenue and assets | 1989-2026 | Monthly; current |
 | E-file v2.1 Form 990 Part I and Part IX (legacy NODC release, slated for supersession) | Employees, volunteers, revenue, expenses, net assets, compensation lines | TY2012-2023 | Lags two to three years |
 | NCCS e-file Phase 0 `government_grants` (v2026.06, sha256 verified) | Form 990 Part VIII line 1e | TY2020-2023 | Lags two to three years |
-| CORE merged tier, `990combined` (IRS SOI extracts plus legacy; full 990 and 990-EZ) | Filing presence and form type per EIN and year, for the exit trace and the coverage check | TY2019-2024 | Lags two to three years |
+| CORE merged tier, `990combined` (IRS COREs plus legacy; full 990 and 990-EZ) | Filing presence and form type per EIN and year, for the exit trace and the coverage check | TY2019-2024 | Lags two to three years |
 | Census county population estimates (vintages 2019, 2023) | Denominators | 2010-2023 | |
 | BLS QCEW annual county files | Private-sector average annual pay per job, Davidson | 2019, 2023 | |
 
@@ -130,13 +130,13 @@ return. Uniqueness and identity are asserted at build time.
    rows in finding 1 are TY2023.
 2. **TY2023 coverage differs between sources.** The two sources date
    returns differently. The e-file release and this memo use the IRS form
-   year, the year the accounting period begins. The SOI extract files a
+   year, the year the accounting period begins. The CORE files a
    return under the year its accounting period ends, so a fiscal year
    running July 2022 to June 2023 is a 2022 return in one and a 2023
    return in the other. Dated the same way, the two hold about the same
    Davidson filings for 2020 to 2022. For 2023 the e-file release holds
-   234 more Davidson full-990 filings than the SOI extract, because most
-   of those are fiscal-year returns that fall in the SOI file for 2024,
+   234 more Davidson full-990 filings than CORE, because most
+   of those are fiscal-year returns that fall in CORE's file for 2024,
    which is still incomplete. The e-file release is itself not complete
    for TY2023, so every 2019-2023 ranking is shown with its 2019-2022
    version.
@@ -150,7 +150,7 @@ return. Uniqueness and identity are asserted at build time.
    stops appearing may have merged, shrunk enough to file the shorter form,
    filed late, or filed a return the IRS has not released yet. Every
    organization that dropped out was checked against the shorter 990-EZ
-   returns and the registry through 2024 (finding 5). Most simply have not
+   returns and the BMF through 2024 (finding 5). Most simply have not
    filed since 2022. Whether the ones with no return closed or merged is
    not known.
 5. **Current address and classification applied to history.** The BMF
@@ -343,9 +343,9 @@ Tracing the 128 metro leavers through CORE and the BMF
 | No return since TY2020, still registered | 5 | $24,900 |
 
 Correction (2026-10-29). An earlier version of this table said 58 of the
-128 had filed a full 990 for TY2023 that was in the SOI extract but not
+128 had filed a full 990 for TY2023 that was in CORE but not
 the e-file release, and called nearly half the exits a coverage artifact.
-That was wrong: the SOI extract labels a return by the year its accounting
+That was wrong: CORE labels a return by the year its accounting
 period ends, so those 58 June-year returns were the TY2022 form, not
 TY2023. No leaver is in one release and missing from the other. Most
 leavers simply last filed for TY2022; whether they are late or have
@@ -396,10 +396,10 @@ This section answers the requester's second ask: a profile of the
 Davidson County (Metro Nashville) nonprofit and philanthropic sector, and
 a filled spreadsheet for the 141 organizations on the team's Ecosystem
 Map. It also carries the changes the senior researcher asked for on round
-1. Every table names its filing population, because the registry, the full
+1. Every table names its filing population, because the BMF, the full
 Form 990, the Form 990-EZ, the Form 990-PF and the 990-N postcard describe
 different sets of organizations. "Tax year" means the IRS form year, the
-year the accounting period begins; the SOI extract labels returns by the
+year the accounting period begins; CORE labels returns by the
 year the period ends and has been relabeled throughout (see Corrections).
 
 ### Corrections to round 1
@@ -408,8 +408,8 @@ Three statements in the round 1 findings are withdrawn or changed.
 
 1. **Exit artifact.** Round 1 said nearly half of the organizations that
    appeared to stop filing a full 990 after 2019 had filed for 2023 and
-   were missing from the e-file release. That rested on reading the SOI
-   extract's period-end year as the tax year. Relabeled, those returns are
+   were missing from the e-file release. That rested on reading CORE's
+   period-end year as the IRS tax year. Converted, those returns are
    for 2022. No metro leaver is in one release and missing from the other.
    Of the 128 metro leavers, 76 last filed for 2022, 17 for 2021, 13 moved
    to the 990-EZ and 22 have no return in either release since 2020. The
@@ -417,12 +417,12 @@ Three statements in the round 1 findings are withdrawn or changed.
    release and stayers is about $9,600 per head on 102 organizations
    (interval -$14,000 to -$3,800), not $17,200 on 42, and the peer metros
    show no gap (finding 5).
-2. **Release coverage.** Round 1 said the e-file and SOI releases each miss
+2. **Release coverage.** Round 1 said the e-file release and CORE each miss
    5 to 6 percent of the other's 2023 filings. Relabeled, every Davidson
-   SOI filing for 2023 is also in the e-file release; for Davidson the gap
-   is one way, and it is the SOI 2024 file being partial for fiscal-year
+   CORE filing for 2023 is also in the e-file release; for Davidson the gap
+   is one way, and it is CORE's 2024 file being partial for fiscal-year
    filers. A small number of returns with short accounting periods can
-   still be assigned to the wrong year where only the SOI extract holds
+   still be assigned to the wrong year where only CORE holds
    them, because that extract does not carry the period start.
 3. **Hospitals and universities.** They are identified by the NTEE-V2
    subsector code, not by name. Two Davidson universities carry an
@@ -434,14 +434,14 @@ Three statements in the round 1 findings are withdrawn or changed.
    turns every aggregate into a statement about those institutions. The
    coverage table shows both populations.
 
-### Who is actually observed: the registry against returns filed
+### Who is actually observed: the BMF against returns filed
 
-The registry (IRS Business Master File) lists every organization currently
+The BMF (IRS Business Master File) lists every organization currently
 recognized. Most of them file no return with financial information. For
 tax year 2023, counting the full 990 from the e-file release and the 990
-and 990-EZ from the SOI extract together:
+and 990-EZ from CORE together:
 
-| Davidson County, on the 2026 registry | Registered | Full 990 | 990-EZ | 990-PF | No return seen |
+| Davidson County, in the 2026 BMF | Registered | Full 990 | 990-EZ | 990-PF | No return seen |
 |---|---|---|---|---|---|
 | All registered organizations | 5,146 | 1,151 (22%) | 382 (7%) | 307 (6%) | 3,306 (64%) |
 | 501(c)(3), all | 4,472 | 887 (20%) | 311 (7%) | 304 (7%) | 2,970 (66%) |
@@ -457,8 +457,8 @@ figure below.
 
 ### Age, starts and filing gaps
 
-**Recognitions by year** (registry ruling year, organizations still on the
-registry in 2026; recognition, not founding).
+**Recognitions by year** (BMF ruling year, organizations still on the
+BMF in 2026; recognition, not founding).
 
 ![Davidson County recognitions by ruling year](output/chart_b_starts.png)
 
@@ -468,19 +468,24 @@ services charities followed the same path (45 a year to 2021, 79 to 95 a
 year since). Private foundations peaked at 26 in 2023. The recent rise is
 partly real and partly survival: older cohorts have had time to lapse.
 
-**Filing gaps.** The registry does
+**Filing gaps.** The BMF does
 not record when an organization leaves, so two series are kept separate
 and never summed. (1) Stopped filing: of Davidson organizations that filed
 a 990 or 990-EZ for a given year, the share with no return of either type
-in the following two years ran between 3.5 and 6 percent a year from 2016
-to 2022, with 2021 (the year after 2020 returns) at 5.8 percent. This is a
-two-year filing gap, not a confirmed closure; some file again later. The
-figure for 2023 (12 percent) is provisional because the SOI 2024 file is
-partial and is not charted. (2) Left the registry: for each year, the share of
-Davidson organizations on the registry the year before that are absent
+in the following two years. CORE runs from 1989, so the series runs from
+1991 to 2022. It stayed between 3 and 7 percent in most years, with higher
+years in the late 1990s (12 percent in 1998) and around 2008 to 2010 (7 to
+8 percent), when the IRS introduced the 990-N postcard for organizations
+under $25,000, so some of those gaps are moves to the postcard. From 2016
+to 2022 it ran between 3.5 and 6 percent, with 2021 at 5.8 percent. This
+is a two-year filing gap, not a confirmed closure; some file again later.
+The figure for 2023 (12 percent) is provisional because CORE's 2024 file
+is partial and is not charted. Filer counts before 2000 are lower because
+the legacy Core files cover fewer organizations. (2) Left the BMF: for each year, the share of
+Davidson organizations in the BMF the year before that are absent
 from that year on. It ran at 3 to 6 percent a year with two spikes (7.9
 percent in 2017, 5.9 percent in 2021) and two zero years (2018, 2022),
-because the registry is updated in batches and reflects revocation lists
+because the BMF is updated in batches and reflects revocation lists
 as much as closures.
 
 ![Share of Davidson 990 and 990-EZ filers with a two-year filing gap](output/chart_c_stopped_filing.png)
@@ -558,9 +563,9 @@ the figure for the same organizations is the one to cite.
 ### The listed organizations
 
 The team's list names 141 organizations with addresses and no
-identifiers. Each was matched by hand to the registry (131 matched; the
+identifiers. Each was matched by hand to the BMF (131 matched; the
 10 unmatched are companies, church-run bodies, units covered by a
-national group exemption, and organizations with no registry record under
+national group exemption, and organizations with no BMF record under
 their names; the detail is in the private deliverable). The
 spreadsheet returned to the team carries, for each matched organization,
 tax year 2023 total expenses from the return it filed, with the form and
@@ -577,7 +582,7 @@ not the sector.
 
 | Measure | Listed, registered in Davidson | All Davidson public charities excl. hospitals and universities |
 |---|---|---|
-| Organizations on the registry | 105 | 4,046 |
+| Organizations in the BMF | 105 | 4,046 |
 | Median age (years since recognition) | 23 | 11 |
 | Recognized 2020 or later | 12% | 36% |
 | Full-990 filers, tax year 2023 | 81 | 872 |
@@ -588,7 +593,7 @@ not the sector.
 
 ### Who funded whom, 2019 to 2023
 
-Source: grants reported by funders whose registry address is in Davidson
+Source: grants reported by funders whose BMF address is in Davidson
 County, on their own returns: Schedule I of the full 990 (recipients over
 $5,000 in aggregate, with the recipient EIN) and the 990-PF grants paid
 schedule (recipient name and city only, matched by cleaned name and
@@ -625,9 +630,9 @@ funder's itemized COVID-19 relief grants.
 ### Questions for the reviewer
 
 1. Exits: the two-series treatment above (filing gap through 2022 as the
-   primary series, registry vintages as the check), with 2023 withheld.
+   primary series, BMF vintages as the check), with 2023 withheld.
    Is the two-year rule acceptable, and should the filing-gap chart carry
-   the registry series beside it?
+   the BMF series beside it?
 2. Comparator for the list: all Davidson public charities as the
    headline, with full-990 filers of similar size as a second column if
    wanted. The list is older and larger on every measure; is the second
