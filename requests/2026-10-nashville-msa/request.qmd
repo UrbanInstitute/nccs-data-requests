@@ -40,8 +40,11 @@ Two units are reported throughout.
   Wilson, Maury, Robertson, Dickson, Cheatham, Hickman, Macon, Smith, Cannon,
   Trousdale), 2023 delineation, held fixed across years.
 
-Geography is composed by joining the published `county-fips` and `cbsa`
-crosswalks onto the geocoded Unified BMF. Location is the organization's
+Geography is composed by joining two published crosswalks onto the
+geocoded Unified BMF: the [county FIPS crosswalk](https://nccsdata.s3.amazonaws.com/crosswalks/county-fips/county_fips_crosswalk.parquet)
+(county name to FIPS code, TIGER 2023) and the [CBSA crosswalk](https://nccsdata.s3.amazonaws.com/crosswalks/cbsa/cbsa_crosswalk.parquet)
+(county to metro area, OMB 2023 delineation), both described on the
+[BMF catalog page](https://nccs.urban.org/nccs/catalogs/catalog-bmf.html). Location is the organization's
 **current** filing address as carried in the BMF, applied to every year of
 its history. Organizations headquartered in Davidson (Second Harvest, United
 Way, the community action agencies) serve the region, so any per-resident
@@ -76,7 +79,9 @@ four groups partition every filer.
 **Main population for the financial and workforce tables:** organizations
 with current BMF subsection 501(c)(3) that filed the full Form 990,
 excluding hospitals and universities (NTEE v2 subsectors HOS and UNI).
-Form 990-PF filers are absent because only return type 990 is read. Two
+Private foundations, which file the Form 990-PF, are outside this
+population; the 990-PF is read in round 2 for the coverage table, for the
+listed foundations' expenses, and for the grants they paid. Two
 Nashville filers carry a private-foundation code in the current BMF
 (Gibson Foundation, Dr Lynn Hicks Foundation); they are kept and noted.
 Rows without a BMF match (about 1% of full-990 returns) are dropped.
