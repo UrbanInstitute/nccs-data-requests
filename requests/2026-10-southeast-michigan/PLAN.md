@@ -10,7 +10,7 @@ A fact sheet on nonprofits in seven Michigan counties: St. Clair,
 Livingston, Oakland, Macomb, Washtenaw, Wayne, and Monroe. Every measure
 is reported for the seven-county region in aggregate and for each county
 on its own. The deliverable is the requester's Excel template, filled in
-(in `template/`), with a short methods note so the
+(in `template/`), with a short methods note (Word document) so the
 requester can write the source lines and caveats. Requester identity and
 the full email thread are in `_private.md` (gitignored).
 
@@ -163,10 +163,12 @@ it.
    checked against an external published figure; three EINs checked by
    hand against ProPublica Nonprofit Explorer. Print pass or fail per
    check.
-6. `docs/methods-note.md`: sample rule, reads and vintages from
-   `_pins.csv`, the PZ/PC name mapping, who each sheet covers with n,
-   missing ruling dates, employee zeros, negative revenue, no
-   suppression, data dictionary.
+6. `docs/methods-note.docx` (a Word document, as every NCCS
+   deliverable is unless the requester asks otherwise): sample rule,
+   reads and vintages from `_pins.csv`, the PZ/PC name mapping, who
+   each sheet covers with n, missing ruling dates, employee zeros,
+   negative revenue, no suppression, data dictionary. Write it in
+   Markdown and convert with pandoc, or write it in Word directly.
 
 ## Timeline
 
