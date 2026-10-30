@@ -1,6 +1,14 @@
 library(dplyr)
 library(tidyr)
 library(openxlsx2)
+
+# This request's folders (same as the other steps).
+req <- here::here("requests", "2026-10-southeast-michigan")
+out_dir <- file.path(req, "data", "output")
+template_dir <- file.path(req, "template")
+
+core_tax_year <- "2023"
+
 #### Copy the template (the original is never written over) ####
 template_name <- "CFSEM Census Fact Sheet Figures.xlsx"
 template_path <- file.path(template_dir, template_name)
