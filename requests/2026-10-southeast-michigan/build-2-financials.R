@@ -19,10 +19,13 @@ core_combined <- read_core(req, tier = "soi", tax_year = 2023, form = "990combin
 employee_core <- read_core(req, tier = "soi", tax_year = 2023, form = "990",
   columns = c("ein", "tax_period", "n_employees_w3", "other_salaries_wages"))
 
-core <- dplyr::left_join(core_combined, employee_core, by= "ein")
-EIN_core <- dplyr::inner_join(bmf_cfsem_universe, core, by= "ein")
-#verify tax year
-table(EIN_core$tax_year)
+core <- dplyr::left_join(core_combined, employee_core, by = c("ein", "tax_period"))
+core_universe <- dplyr::inner_join(bmf_cfsem_universe, core, by = "ein")
+
+# Verify the tax year on every row.
+core_universe_2023 <- core_universe |>
+  dplyr::filter(tax_year == 2023)
+message("Rows dropped because tax_year is not 2023: ", nrow(core_universe) - nrow(core_universe_2023))
 
 #keep latest tax period per EIN
 #order tax_period to prep to remove duplicates
