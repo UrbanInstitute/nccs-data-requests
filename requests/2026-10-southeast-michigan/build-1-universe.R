@@ -31,9 +31,7 @@ message("Rows kept(latest vintage):", nrow(bmf_latest))
 
 #### Join the county crosswalk and keep the seven counties ####
 xwalk_county <- read_crosswalk(req, "county-fips")
-#pinned: crosswalk-county-fips [tiger-2023] (3635 rows)
 xwalk_cbsa   <- read_crosswalk(req, "cbsa")
-#pinned: crosswalk-cbsa [tiger-2023] (3228 rows)
 
 #####Join geography onto the raw labels / coordinates #####
 #Join the county-fips crosswalk; 
