@@ -201,7 +201,7 @@ message(
 surplus_data <- surplus_data |>
   dplyr::mutate(band = dplyr::case_when(
     pct <= -20 ~ "-20% or lower",
-    pct < -5 ~ "-19.99 to -5",
+    pct <= -5 ~ "-19.99 to -5",
     pct < 0 ~ "-4.99 to -0.01",
     pct == 0 ~ "0",
     pct < 5 ~ "0.1 to 4.99",
