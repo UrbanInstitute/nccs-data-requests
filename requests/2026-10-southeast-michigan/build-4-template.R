@@ -132,11 +132,17 @@ for (sheet_name in names(banded_sheets)) {
   message(sheet_name, ": done")
 }
 
-#### Fill the [Date] placeholder in the source lines (cell A11) ####
-pz_text <- paste0("Source: ", core_tax_year,
-                  " National Center for Charitable Statistics Core PZ file")
-pc_text <- paste0("Source: ", core_tax_year,
-                  " National Center for Charitable Statistics Core PC file")
+#### Source lines: fill the [Date] placeholder and name today's data products ####
+bmf_text <- paste0("Source: National Center for Charitable Statistics Unified Business Master File, ",
+                   bmf_vintage, " vintage")
+pz_text <- paste0("Source: National Center for Charitable Statistics CORE series, tax year ",
+                  core_tax_year, ", Form 990 and 990-EZ filers")
+pc_text <- paste0("Source: National Center for Charitable Statistics CORE series, tax year ",
+                  core_tax_year, ", Form 990 filers")
+
+wb <- openxlsx2::wb_add_data(wb, "Number", x = bmf_text, start_row = 10, start_col = 1, col_names = FALSE)
+wb <- openxlsx2::wb_add_data(wb, "Subsector", x = bmf_text, start_row = 13, start_col = 1, col_names = FALSE)
+wb <- openxlsx2::wb_add_data(wb, "Age", x = bmf_text, start_row = 11, start_col = 1, col_names = FALSE)
 
 for (sheet_name in c("Revenue", "Expenses", "Operating Surplus", "Assets", "Liabilities")) {
   wb <- openxlsx2::wb_add_data(wb, sheet_name, x = pz_text,
