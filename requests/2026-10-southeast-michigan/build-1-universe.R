@@ -122,6 +122,7 @@ write.csv(bmf_cfsem_universe, file.path(out_dir, "universe.csv"), row.names = FA
 # filers that are no longer in the current registry.
 bmf_seven_all_vintages <- bmf |>
   dplyr::left_join(xwalk_county, by = c("geo_state_abbr", "geo_county" = "geo_county_raw")) |>
+  dplyr::left_join(xwalk_cbsa,   by = c("geo_county_fips" = "county_fips")) |>
   dplyr::filter(county_name %in% counties) |>
   dplyr::filter(as.integer(subsection_code) %in% 3L, !as.integer(foundation_code) %in% c(2L, 3L, 4L)) |>
   dplyr::select(ein, county_name, last_vintage_ym)
