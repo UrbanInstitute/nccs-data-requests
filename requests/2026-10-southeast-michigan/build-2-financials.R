@@ -52,13 +52,13 @@ eins_none <- bmf_cfsem_universe |>
 
 message("Universe EINs with no 990 or 990-EZ row (mostly 990-N filers): ", nrow(eins_none))
 
-# tax year 2023 Filers not in the current registry
+# Tax year 2023 filers that were seven-county public charities in an earlier
+# BMF vintage but are not in the current registry.
 eins_not_in_registry <- core |>
-  dplyr::filter(!ein %in% bmf_cfsem_universe$ein)
+  dplyr::filter(ein %in% bmf_seven_all_vintages$ein, !ein %in% bmf_cfsem_universe$ein) |>
+  dplyr::distinct(ein)
 
-message("202 Filers not in the registry:"); print(eins_not_in_registry$ein)
-
-#511885 filers not in the current registry
+message("Tax year 2023 filers no longer in the current registry: ", nrow(eins_not_in_registry))
 
 #full-990 rows with zero employees but positive wages
 
