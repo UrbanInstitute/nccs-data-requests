@@ -1,13 +1,13 @@
-# I want to make it read the other scrips
-source(here::here("requests", "2026-10-southeast-michigan/build-universe.R"))
-bmf_cfsem_universe <- source(here::here("requests", "2026-10-southeast-michigan/data/output/universe.csv"))
+library(dplyr)
+source(here::here("R", "request_read.R"))
 
 # This request's folder (used to write _pins.csv).
-source(here::here("R", "request_read.R"))
 req <- here::here("requests", "2026-10-southeast-michigan")
-
 out_dir <- file.path(req, "data", "output")
 dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
+
+bmf_cfsem_universe <- read.csv(file.path(out_dir, "universe.csv"))
+bmf_seven_all_vintages <- read.csv(file.path(out_dir, "universe-all-vintages.csv"))
 
 # For EINS in universe. Read CORE Processed 
 
