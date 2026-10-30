@@ -22,6 +22,17 @@ region_label <- "Seven-county region"
 counties <- sort(unique(bmf_cfsem_universe$county_name))
 geos <- c(region_label, counties)
 
+#' Share of organizations in each band, for the region and each county
+#'
+#' @param data A data frame with one row per organization, a `county_name`
+#'   column, and a `band` column holding the template category each
+#'   organization falls in.
+#' @param sheet The template sheet name, written into the output.
+#' @param band_levels The template's categories in display order. Bands
+#'   with no organizations still appear, with a share of zero.
+#' @return A data frame with one row per geography and band: `geography`,
+#'   `sheet`, `band`, `share` (percent of that geography's organizations)
+#'   and `n` (the denominator, all organizations in that geography).
 make_distribution <- function(data, sheet, band_levels) {
   both <- dplyr::bind_rows(
     dplyr::mutate(data, geography = region_label),
