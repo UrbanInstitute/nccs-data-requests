@@ -1,24 +1,50 @@
-# request_read.R — read canonical NCCS artifacts and pin what was read.
+# request_read.R: the helper functions every request uses to read NCCS data.
 #
-# Every read appends a provenance row to the request folder's `_pins.csv`
-# (timestamp, dataset, vintage, source URI, n_rows, note) so a deliverable
-# is reproducible from its folder alone (ADR 0024). Reads go through
-# `nccsdata`; geography is composed by joining the published crosswalks
-# downstream — do NOT re-derive county/CBSA identity here.
+# What they do: each helper reads one dataset from the NCCS files on S3 and
+# at the same time writes one line to the request folder's `_pins.csv`
+# saying what was read, when, and how many rows came back. That line is the
+# record of which data a deliverable was built from. Read data only through
+# these helpers so that record is complete.
 #
-# Usage (inside a request.qmd):
+# What they do not do: they do not change the data. Filtering, joining and
+# counting happen in your own script after the read.
+#
+# How to use them (from a script inside a request folder):
+#
 #   source(here::here("R", "request_read.R"))
-#   req <- "requests/2026-06-ct-pri"        # this request's folder
-#   bmf  <- read_bmf_master(req, state = "CT")
-#   pri  <- read_core(req, tier = "merged")
+#   req <- here::here("requests", "2026-10-southeast-michigan")   # this request's folder
+#
+#   bmf  <- read_bmf_master(req, state = "MI",
+#                           columns = c("ein", "org_name_display", "subsection_code"))
+#   core <- read_core(req, tier = "soi", tax_year = 2023, form = "990combined",
+#                     columns = c("ein", "tax_period", "total_revenue"))
+#   xw   <- read_crosswalk(req, "county-fips")
+#
+# Each helper's arguments are listed in the comment block above it. Where a
+# helper passes arguments through to the `nccsdata` package, the comment
+# names the most useful ones and tells you where the full list is.
 
 # --- provenance log ----------------------------------------------------------
 
-#' Path to a request's pins log.
+#' Path to a request's provenance file
+#'
+#' @param request_dir The request folder (for example from `here::here("requests", "...")`).
+#' @return The path to `_pins.csv` inside that folder. The file is created on the first read.
 pins_path <- function(request_dir) file.path(request_dir, "_pins.csv")
 
-#' Append one provenance record to the request's `_pins.csv`.
-#' @return `data` unchanged (so calls can be piped/wrapped).
+#' Add one line to the request's provenance file
+#'
+#' Called by every read helper; you will not normally call it yourself.
+#'
+#' @param request_dir The request folder.
+#' @param dataset Short name of what was read, for example "bmf-master-geocoded".
+#' @param vintage Which version of the data: a date, a tax year, or a tier name.
+#' @param source Where it was read from (a URL or S3 path).
+#' @param n_rows How many rows came back.
+#' @param note Optional free text, for example why this read was needed.
+#' @param data The data that was read. Returned unchanged so the helpers can
+#'   hand it straight back to you.
+#' @return `data`, unchanged.
 record_pin <- function(request_dir, dataset, vintage, source, n_rows = NA_integer_,
                        note = "", data = NULL) {
   row <- data.frame(
@@ -43,9 +69,31 @@ record_pin <- function(request_dir, dataset, vintage, source, n_rows = NA_intege
 
 # --- canonical reads (thin wrappers over nccsdata) ---------------------------
 
-#' Rolling geocoded BMF master. Not vintage-pinned — `nccs_read()` reads the
-#' rolling master — so the pin records the read date, not a fixed vintage.
-#' For a fixed snapshot use `read_bmf_vintage()` instead.
+#' Read the current Business Master File (one row per organization)
+#'
+#' Reads the geocoded "master" BMF: every organization the IRS has ever listed,
+#' with the month it was last seen in `last_vintage_ym`. To work with the
+#' current registry only, filter on the latest `last_vintage_ym` after reading.
+#' The file is updated monthly, so the provenance line records the date read.
+#' For a fixed monthly snapshot use `read_bmf_vintage()` instead.
+#'
+#' @param request_dir The request folder.
+#' @param ... Filters and options passed to `nccsdata::nccs_read()`. The
+#'   useful ones:
+#'   * `state`: two-letter state code or codes, for example `"MI"`.
+#'   * `county`: county name or names.
+#'   * `columns`: which columns to return. Leave out for all of them (slow);
+#'     naming the columns you need is much faster.
+#'   * `org_type`: `"501c3"`, `"public_charity"`, `"private_foundation"`, or
+#'     `"all"` (the default).
+#'   * `ntee_subsector`, `ntee_major_group`, `ntee_code`: subject filters.
+#'   The full list is in R under `?nccsdata::nccs_read`.
+#' @param note Optional text written to the provenance file.
+#' @return A data frame with one row per organization.
+#' @examples
+#' bmf <- read_bmf_master(req, state = "MI",
+#'                        columns = c("ein", "subsection_code", "foundation_code",
+#'                                    "geo_county", "last_vintage_ym"))
 read_bmf_master <- function(request_dir, ..., note = "") {
   stopifnot(requireNamespace("nccsdata", quietly = TRUE))
   out <- nccsdata::nccs_read(...)
@@ -55,7 +103,19 @@ read_bmf_master <- function(request_dir, ..., note = "") {
              n_rows  = .n_rows(out), note = note, data = out)
 }
 
-#' A specific dated BMF snapshot (CSV). `vintage` is `"YYYY_MM"`.
+#' Read one monthly snapshot of the Business Master File
+#'
+#' Use this instead of `read_bmf_master()` when the deliverable must be tied to
+#' a fixed month.
+#'
+#' @param request_dir The request folder.
+#' @param vintage The month, written as `"YYYY_MM"`, for example `"2026_07"`.
+#' @param kind `"data"` (default) for the organizations, or `"dictionary"` for
+#'   the file describing the columns.
+#' @param legacy `FALSE` (default) for the current monthly files; `TRUE` for
+#'   the older yearly files.
+#' @param note Optional text written to the provenance file.
+#' @return A data frame with one row per organization in that month's file.
 read_bmf_vintage <- function(request_dir, vintage, kind = "data", legacy = FALSE, note = "") {
   stopifnot(requireNamespace("nccsdata", quietly = TRUE),
             requireNamespace("arrow", quietly = TRUE))
@@ -66,7 +126,34 @@ read_bmf_vintage <- function(request_dir, vintage, kind = "data", legacy = FALSE
              n_rows  = .n_rows(out), note = note, data = out)
 }
 
-#' Core 990 (one row per filing). `tier` is "merged" | "soi" | "legacy".
+#' Read the CORE financial files (one row per Form 990 filing)
+#'
+#' @param request_dir The request folder.
+#' @param tier Which set of CORE files:
+#'   * `"soi"`: the files built from the IRS Statistics of Income extracts,
+#'     tax year 2012 onward. Use this for a single recent tax year.
+#'   * `"merged"` (default): the same, joined with the older NCCS files so
+#'     the series runs from 1989. Use this for long time series.
+#'   * `"legacy"`: the older NCCS files only (before 2012).
+#' @param ... Passed to `nccsdata::nccs_read_core()`. Required:
+#'   * `tax_year`: one tax year, for example `2023`, or several, `2019:2023`.
+#'   * `form`: which filers. `"990"` (full Form 990 only; has employee counts),
+#'     `"990ez"` (short form only), `"990combined"` (990 and 990-EZ stacked,
+#'     with a `source_form` column saying which), or `"990pf"` (private
+#'     foundations).
+#'   Optional:
+#'   * `columns`: which columns to return. Column names are listed in the
+#'     dictionary file next to each data file on S3; the first line of the
+#'     CSV at `nccsdata::nccs_core_url(tier, tax_year, form, format = "csv")`
+#'     is the quickest way to see them.
+#' @param note Optional text written to the provenance file.
+#' @return A data frame with one row per filing. An organization can have
+#'   more than one filing in a tax year; keep the latest `tax_period` if you
+#'   need one row per organization.
+#' @examples
+#' fin <- read_core(req, tier = "soi", tax_year = 2023, form = "990combined",
+#'                  columns = c("ein", "tax_period", "source_form",
+#'                              "total_revenue", "total_expenses"))
 read_core <- function(request_dir, tier = c("merged", "soi", "legacy"), ..., note = "") {
   stopifnot(requireNamespace("nccsdata", quietly = TRUE))
   tier <- match.arg(tier)
@@ -121,11 +208,23 @@ read_efile_header <- function(request_dir, years, columns, note = "") {
              n_rows  = .n_rows(out), note = note, data = out)
 }
 
-# Geography: read the crosswalks straight from the flat S3 prefix, then join
-# onto raw geo labels (county-fips / cbsa) or coordinates (ct-planning-region,
-# Connecticut). Paths per the nccs-contracts crosswalk contracts. Pin what you
-# read. The `vintage` is the tiger_year / delineation_year carried in-column
-# and in each crosswalk's _manifest.json (currently 2023).
+#' Read a geography lookup table
+#'
+#' The BMF carries county names as free text. These tables turn them into
+#' standard codes, which you join onto the BMF in your script.
+#'
+#' @param request_dir The request folder.
+#' @param which Which table:
+#'   * `"county-fips"`: county name and state to the five-digit county FIPS
+#'     code. Join on `geo_state_abbr` and `geo_county` = `geo_county_raw`;
+#'     gives `geo_county_fips` and a clean `county_name`.
+#'   * `"cbsa"`: county FIPS to metropolitan area. Join on
+#'     `geo_county_fips` = `county_fips`.
+#'   * `"ct-planning-region"`: Connecticut's planning regions, joined on
+#'     coordinates (Connecticut only).
+#' @param note Optional text written to the provenance file.
+#' @return A data frame with one row per county (or region). Based on the
+#'   2023 Census geography.
 read_crosswalk <- function(request_dir, which = c("county-fips", "cbsa", "ct-planning-region"),
                            note = "") {
   stopifnot(requireNamespace("arrow", quietly = TRUE))
