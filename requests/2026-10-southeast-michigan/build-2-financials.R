@@ -18,7 +18,7 @@ columns = c("ein", "total_expenses","total_revenue","total_net_assets_eoy",
             "tax_period", "tax_year"))
 
 employee_core <- read_core(req,tier = "soi", tax_year= 2023, form = "990",
-                     columns = c("ein", "n_employees_w3"))
+                     columns = c("ein", "n_employees_w3","other_salaries_wages"))
 
 core <- dplyr::left_join(core_combined, employee_core, by= "ein")
 EIN_core <- dplyr::inner_join(bmf_cfsem_universe, core, by= "ein")
@@ -26,7 +26,7 @@ EIN_core <- dplyr::inner_join(bmf_cfsem_universe, core, by= "ein")
 table(EIN_core$tax_year)
 
 #keep latest tax period per EIN
-#order tax_period 
+#order tax_period to prep to remove duplicates
 EIN_core_sorted <- EIN_core[order(EIN_core$tax_period, decreasing = TRUE),]
 
 #duplicated flags if there is a duplicate with TRUE
@@ -34,11 +34,39 @@ core_latest <- EIN_core_sorted [!duplicated(EIN_core_sorted$ein),]
 
 # Print how many duplicates were removed
 message("Duplicates resolved:", nrow(EIN_core) - nrow(core_latest))
-# Duplicates resolved:1781
+# Duplicates resolved:23
 
 #Print: EINs with a 990 row, an EZ row, or no row; 2023 filers not in the current registry; 
 #full-990 rows with zero employees but positive wages.
 
-print(core_latest |>
-        dplyr::count())
-#2023 filers not in the current registry; full-990 rows with zero employees but positive wages.
+eins_990 <- core_latest |>
+  dplyr::filter(source_form == "990")
+
+message("EINs with a 990 row:"); print(eins_990$ein)
+
+eins_990ez <- core_latest |>
+  dplyr::filter(source_form == "990ez")
+
+message("EINs with a 990EZ row:"); print(eins_990ez$ein)
+
+eins_none <- bmf_cfsem_universe |>
+  dplyr::filter(!ein %in% core_latest$ein)
+
+message("EINs with no row:"); print(eins_none$ein)
+#15164 filers not in the current registry
+
+# tax year 2023 Filers not in the current registry
+eins_not_in_registry <- core |>
+  dplyr::filter(!ein %in% bmf_cfsem_universe$ein)
+
+message("202 Filers not in the registry:"); print(eins_not_in_registry$ein)
+
+#511885 filers not in the current registry
+
+#full-990 rows with zero employees but positive wages
+
+positive_wage <- eins_990 |>
+  dplyr::filter(n_employees_w3 == 0,other_salaries_wages > 0 )
+#216 EINS
+
+message("Full EIN rows with 0 employees and positive wages:"); print(positive_wage)
