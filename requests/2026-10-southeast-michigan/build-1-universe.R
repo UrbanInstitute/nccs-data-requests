@@ -111,7 +111,8 @@ bmf_cfsem_universe <- bmf_mi_ntee |>
 universe_count <- bmf_cfsem_universe|>
   dplyr::count(county_name)
 
-message("Rows Per County):", (universe_count))
+message("Public charities per county (fills the Number sheet):")
+print(universe_count)
 
 #county_name           n
 #<chr>             <int>
