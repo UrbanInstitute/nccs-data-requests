@@ -106,7 +106,7 @@ bmf_mi_ntee <- bmf_mi_rule |>
 
 #### Flag ruling dates stored as 1900-01-01 as missing#####
 bmf_cfsem_universe <- bmf_mi_ntee |>
-  dplyr::mutate(ruling_date = na_if(ruling_date, as.Date("1900-01-01")))
+  dplyr::mutate(ruling_date = dplyr::na_if(ruling_date, as.Date("1900-01-01")))
 
 universe_count <- bmf_cfsem_universe|>
   dplyr::count(county_name)
