@@ -49,7 +49,7 @@ message("EINs with a 990 row: ", nrow(eins_990))
 eins_990ez <- core_latest |>
   dplyr::filter(source_form == "990ez")
 
-message("EINs with a 990EZ row:"); print(eins_990ez$ein)
+message("EINs with a 990-EZ row: ", nrow(eins_990ez))
 
 eins_none <- bmf_cfsem_universe |>
   dplyr::filter(!ein %in% core_latest$ein)
