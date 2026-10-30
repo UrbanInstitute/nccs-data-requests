@@ -80,7 +80,8 @@ bmf_mi_foundation <- bmf_mi_pc |>
   dplyr::count(county_name) 
 
 
-message("Rows removed by Foundation Rule (Per County):", (bmf_mi_foundation))
+message("Rows removed by the foundation rule, per county:")
+print(bmf_mi_foundation)
 
 bmf_mi_rule <- bmf_mi_pc |>
   dplyr::filter(foundation_rule & subsection_rule) 
