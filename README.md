@@ -75,3 +75,10 @@ pak::local_install_deps()   # reads DESCRIPTION
 
 S3 reads use the `nccsdata` defaults; for the `nccs-data-*` buckets set your
 AWS profile as usual.
+
+`openxlsx2` is an R package for reading, creating, and editing Excel(.xlsx) files without needing Excel installed. It’s a rewrite of the older `openxlsx` package.
+
+```r
+install.packages("openxlsx2")
+library(openxlsx2)
+```
