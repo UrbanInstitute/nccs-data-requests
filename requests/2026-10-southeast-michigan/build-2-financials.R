@@ -11,13 +11,13 @@ bmf_seven_all_vintages <- read.csv(file.path(out_dir, "universe-all-vintages.csv
 
 # For EINS in universe. Read CORE Processed 
 
-core_combined <- read_core(req,tier = "soi", tax_year= 2023, form = "990combined",
-columns = c("ein", "total_expenses","total_revenue","total_net_assets_eoy", 
-            "total_liabilities_eoy","source_form","tax_month",
-            "tax_period", "tax_year"))
+core_combined <- read_core(req, tier = "soi", tax_year = 2023, form = "990combined",
+  columns = c("ein", "total_revenue", "total_expenses", "net_income",
+              "total_assets_eoy", "total_liabilities_eoy", "source_form",
+              "tax_period", "tax_year"))
 
-employee_core <- read_core(req,tier = "soi", tax_year= 2023, form = "990",
-                     columns = c("ein", "n_employees_w3","other_salaries_wages"))
+employee_core <- read_core(req, tier = "soi", tax_year = 2023, form = "990",
+  columns = c("ein", "tax_period", "n_employees_w3", "other_salaries_wages"))
 
 core <- dplyr::left_join(core_combined, employee_core, by= "ein")
 EIN_core <- dplyr::inner_join(bmf_cfsem_universe, core, by= "ein")
