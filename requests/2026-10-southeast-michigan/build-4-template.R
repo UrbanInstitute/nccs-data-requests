@@ -154,3 +154,13 @@ wb <- openxlsx2::wb_add_data(wb, "Employees", x = pc_text,
 #### Save the copy ####
 openxlsx2::wb_save(wb, new_path, overwrite = TRUE)
 message("Saved: ", new_path)
+
+#### Read the saved file back and check every row adds to 100% ####
+saved <- openxlsx2::wb_load(new_path)
+for (sheet_name in names(banded_sheets)) {
+  cells <- openxlsx2::wb_to_df(saved, sheet_name, col_names = FALSE,
+                               dims = paste0("B2:", LETTERS[1 + banded_sheets[[sheet_name]]], "9"))
+  row_sums <- rowSums(cells)
+  ok <- if (sheet_name == "Age") all(row_sums <= 1 + 1e-6) else all(abs(row_sums - 1) < 1e-6)
+  message(sheet_name, " rows add to 100%: ", ok)
+}
