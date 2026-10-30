@@ -71,7 +71,8 @@ bmf_mi_subsection <- bmf_mi_pc |>
   dplyr::filter(!subsection_rule) |>
   dplyr::count(county_name) 
 
-message("Rows removed by Subsection Rule (Per County):", (bmf_mi_subsection))
+message("Rows removed by the subsection rule, per county:")
+print(bmf_mi_subsection)
 
 # county_name           n
 # 1 Livingston County   146
