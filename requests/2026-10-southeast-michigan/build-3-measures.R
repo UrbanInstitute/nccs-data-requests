@@ -93,17 +93,12 @@ subsector_levels <- c(
 )
 
 subsector_data <- bmf_cfsem_universe |>
-  dplyr::mutate(band = ifelse(is.na(subsector) | subsector == "Unknown",
-    "Unclassified", subsector
-  ))
+  dplyr::mutate(band = ifelse(subsector %in% subsector_levels, subsector, "Unclassified"))
 
 message(
-  "Subsector values outside the template list (dropped): ",
-  sum(!subsector_data$band %in% subsector_levels)
+  "Subsector values outside the template list (counted as Unclassified): ",
+  sum(!bmf_cfsem_universe$subsector %in% subsector_levels)
 )
-
-subsector_data <- subsector_data |>
-  dplyr::filter(band %in% subsector_levels)
 
 subsector <- make_distribution(subsector_data, "Subsector", subsector_levels)
 
