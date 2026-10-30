@@ -49,10 +49,15 @@ xwalk_mi <- bmf_latest |>
   dplyr::left_join(xwalk_county, by = c("geo_state_abbr", "geo_county" = "geo_county_raw")) |>
   dplyr::left_join(xwalk_cbsa,   by = c("geo_county_fips" = "county_fips"))
 
-merged_mi <- xwalk_mi |>
-  dplyr::filter(county_name %in% counties) 
+unresolved_mi <- xwalk_mi |>
+  dplyr::filter(is.na(county_name))
+message("Michigan rows whose county did not resolve (dropped): ", nrow(unresolved_mi))
 
-message("Rows dropped:", nrow(xwalk_mi) - nrow(merged_mi))
+merged_mi <- xwalk_mi |>
+  dplyr::filter(county_name %in% counties)
+
+message("Rows in other Michigan counties (dropped): ", nrow(xwalk_mi) - nrow(unresolved_mi) - nrow(merged_mi))
+message("Rows kept in the seven counties: ", nrow(merged_mi))
 
 #apply public charity rule  subsection code 3 and foundation code not in 2, 3, 4, 
 #compared as integers; print what each condition removes per county. 
