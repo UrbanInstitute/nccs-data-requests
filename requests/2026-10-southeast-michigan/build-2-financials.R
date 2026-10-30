@@ -44,7 +44,7 @@ message("Duplicates resolved:", nrow(EIN_core) - nrow(core_latest))
 eins_990 <- core_latest |>
   dplyr::filter(source_form == "990")
 
-message("EINs with a 990 row:"); print(eins_990$ein)
+message("EINs with a 990 row: ", nrow(eins_990))
 
 eins_990ez <- core_latest |>
   dplyr::filter(source_form == "990ez")
