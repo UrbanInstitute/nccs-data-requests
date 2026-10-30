@@ -74,14 +74,6 @@ bmf_mi_subsection <- bmf_mi_pc |>
 message("Rows removed by the subsection rule, per county:")
 print(bmf_mi_subsection)
 
-# county_name           n
-# 1 Livingston County   146
-# 2 Macomb County       729
-# 3 Monroe County       146
-# 4 Oakland County     1167
-# 5 St. Clair County    169
-# 6 Washtenaw County    384
-# 7 Wayne County       1118
 
 bmf_mi_foundation <- bmf_mi_pc |>
   dplyr::filter(!foundation_rule) |>
