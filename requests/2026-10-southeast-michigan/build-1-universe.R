@@ -114,15 +114,6 @@ universe_count <- bmf_cfsem_universe|>
 message("Public charities per county (fills the Number sheet):")
 print(universe_count)
 
-#county_name           n
-#<chr>             <int>
-#1 Livingston County   642
-#2 Macomb County      2160
-#3 Monroe County       505
-#4 Oakland County     5840
-#5 St. Clair County    566
-#6 Washtenaw County   2098
-#7 Wayne County       8066
 
 #Write output/universe.csv and print the count per county
 write.csv(bmf_cfsem_universe, file.path(out_dir,"universe.csv"), row.names = FALSE)
