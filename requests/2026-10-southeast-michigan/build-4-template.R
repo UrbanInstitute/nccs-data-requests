@@ -8,6 +8,9 @@ out_dir <- file.path(req, "data", "output")
 template_dir <- file.path(req, "template")
 
 core_tax_year <- "2023"
+bmf_vintage <- unique(read.csv(file.path(out_dir, "universe.csv"))$last_vintage_ym)
+stopifnot("universe.csv should hold exactly one BMF vintage" = length(bmf_vintage) == 1)
+message("BMF vintage: ", bmf_vintage)
 
 #### Copy the template (the original is never written over) ####
 template_name <- "CFSEM Census Fact Sheet Figures.xlsx"
