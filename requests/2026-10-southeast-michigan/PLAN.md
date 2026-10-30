@@ -103,7 +103,7 @@ registered organization; the financial sheets cover 990 and 990-EZ
 filers for the tax year; employees cover full-990 filers only. Each
 sheet's denominator differs and must be stated.
 
-## Settled after review (2026-10-20, see REVIEW.md and RESPONSE-TO-REVIEW.md; requester approved these treatments 2026-10-21)
+## Settled decisions (requester approved 2026-10-21)
 
 - Reads: BMF geocoded master filtered to the latest `last_vintage_ym`;
   CORE processed tier, tax year 2023, `990combined` partition for the
@@ -131,8 +131,8 @@ Each step is one script in this folder, tracked as a GitHub issue.
 Reads go through `R/request_read.R` so every artifact is pinned in
 `_pins.csv`. Code is tidyverse style with full roxygen comments on any
 function. The reviewer checks each script before the next starts.
-Every count listed in RESPONSE-TO-REVIEW.md as reviewer-verified is
-printed by the script that produces it.
+Every count the plan relies on is printed by the script that produces
+it.
 
 1. `build-1-universe.R`: read the geocoded BMF master, filter to the
    latest `last_vintage_ym` (print it and the rows dropped), join the
