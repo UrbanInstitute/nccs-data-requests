@@ -59,6 +59,12 @@ make_distribution <- function(data, sheet, band_levels) {
     )
 }
 
+#' Assign a dollar amount to one of the template's five bands
+#'
+#' @param x A numeric vector of dollar amounts.
+#' @return A character vector of band labels. The lower bound of each band
+#'   is inclusive, so exactly $100,000 is "$100K-499K". Negative amounts
+#'   fall in the lowest band. Missing amounts return NA.
 dollar_band <- function(x) {
   dplyr::case_when(
     is.na(x) ~ NA_character_,
