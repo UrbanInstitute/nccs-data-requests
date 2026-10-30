@@ -27,16 +27,12 @@ core_universe_2023 <- core_universe |>
   dplyr::filter(tax_year == 2023)
 message("Rows dropped because tax_year is not 2023: ", nrow(core_universe) - nrow(core_universe_2023))
 
-#keep latest tax period per EIN
-#order tax_period to prep to remove duplicates
-EIN_core_sorted <- EIN_core[order(EIN_core$tax_period, decreasing = TRUE),]
+# Keep the latest tax period per EIN.
+core_latest <- core_universe_2023 |>
+  dplyr::arrange(ein, dplyr::desc(tax_period)) |>
+  dplyr::distinct(ein, .keep_all = TRUE)
 
-#duplicated flags if there is a duplicate with TRUE
-core_latest <- EIN_core_sorted [!duplicated(EIN_core_sorted$ein),]
-
-# Print how many duplicates were removed
-message("Duplicates resolved:", nrow(EIN_core) - nrow(core_latest))
-# Duplicates resolved:23
+message("Duplicate EIN rows resolved (kept latest tax period): ", nrow(core_universe_2023) - nrow(core_latest))
 
 #Print: EINs with a 990 row, an EZ row, or no row; 2023 filers not in the current registry; 
 #full-990 rows with zero employees but positive wages.
