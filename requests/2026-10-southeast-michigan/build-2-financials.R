@@ -50,8 +50,7 @@ message("EINs with a 990-EZ row: ", nrow(eins_990ez))
 eins_none <- bmf_cfsem_universe |>
   dplyr::filter(!ein %in% core_latest$ein)
 
-message("EINs with no row:"); print(eins_none$ein)
-#15164 filers not in the current registry
+message("Universe EINs with no 990 or 990-EZ row (mostly 990-N filers): ", nrow(eins_none))
 
 # tax year 2023 Filers not in the current registry
 eins_not_in_registry <- core |>
