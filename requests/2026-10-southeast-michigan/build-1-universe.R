@@ -29,7 +29,7 @@ bmf_latest <- bmf |>
 message("Rows dropped (not in latest vintage):", nrow(bmf) - nrow(bmf_latest))
 message("Rows kept(latest vintage):", nrow(bmf_latest))
 
-#### Geography: label join for most states; coordinate join for Michigan ####
+#### Join the county crosswalk and keep the seven counties ####
 xwalk_county <- read_crosswalk(req, "county-fips")
 #pinned: crosswalk-county-fips [tiger-2023] (3635 rows)
 xwalk_cbsa   <- read_crosswalk(req, "cbsa")
