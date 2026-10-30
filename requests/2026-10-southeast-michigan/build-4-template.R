@@ -94,6 +94,12 @@ for (sheet_name in names(banded_sheets)) {
     tidyr::pivot_wider(names_from = band, values_from = share)
   wide <- wide[match(geo_order, wide$geography), ]
   
+  # Print which band fills which template column, so the pairing can be eyeballed.
+  header <- openxlsx2::wb_to_df(wb, sheet_name, col_names = FALSE,
+                                dims = paste0("B1:", LETTERS[1 + length(template_bands)], "1"))
+  message(sheet_name, " columns (template <- band): ",
+          paste(unlist(header), "<-", template_bands, collapse = "; "))
+
   # The bands go in B2 and across (the cells are already formatted as percent).
   wb <- openxlsx2::wb_add_data(wb, sheet_name, x = wide[, template_bands],
                                start_row = 2, start_col = 2, col_names = FALSE)
