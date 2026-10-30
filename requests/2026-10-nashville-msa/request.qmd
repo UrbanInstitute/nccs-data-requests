@@ -20,12 +20,16 @@ Revised 2026-10-12 after the second-analyst review in `reviews/REVIEW.md` and it
 follow-up `REVIEWS.md`; the point-by-point response is in
 `REVIEWS.md`.
 
-## The ask
+## Task
 
-Do the IRS data show any patterns in nonprofit locations and finances for
-Nashville, alongside recent survey work on the Tennessee nonprofit workforce
-(see `docs/`)? Exploratory only, five hours, no committed product.
-Requester specifics are in the gitignored `_private.md`.
+The Research to Action Lab, working with Metro Nashville and the Community
+Foundation of Middle Tennessee, asked what the IRS data show about
+nonprofit locations, finances and workforce in Nashville, as a companion
+to a recent survey of the Tennessee nonprofit workforce. Round 1 (October
+12) was a first look, exploratory and uncommitted. Round 2 answers the
+follow-up: a health profile of the Davidson County nonprofit and
+philanthropic sector, and a spreadsheet of tax year 2023 operating
+expenses for the 141 organizations on the team's Ecosystem Map.
 
 ## Geography
 
@@ -40,8 +44,8 @@ Two units are reported throughout.
   Wilson, Maury, Robertson, Dickson, Cheatham, Hickman, Macon, Smith, Cannon,
   Trousdale), 2023 delineation, held fixed across years.
 
-Geography is composed by joining two published crosswalks onto the
-geocoded Unified BMF: the [county FIPS crosswalk](https://nccsdata.s3.amazonaws.com/crosswalks/county-fips/county_fips_crosswalk.parquet)
+Geography is composed by joining two published crosswalks onto
+September's geocoded Unified BMF: the [county FIPS crosswalk](https://nccsdata.s3.amazonaws.com/crosswalks/county-fips/county_fips_crosswalk.parquet)
 (county name to FIPS code, TIGER 2023) and the [CBSA crosswalk](https://nccsdata.s3.amazonaws.com/crosswalks/cbsa/cbsa_crosswalk.parquet)
 (county to metro area, OMB 2023 delineation), both described on the
 [BMF catalog page](https://nccs.urban.org/nccs/catalogs/catalog-bmf.html). Location is the organization's
@@ -124,28 +128,31 @@ return. Uniqueness and identity are asserted at build time.
    2025. Only the BMF-based counts (density, formation, attrition,
    foundations, zip codes) are current to 2026; the spending and employee
    rows in finding 1 are TY2023.
-2. **TY2023 coverage differs between sources** (restated 2026-10-29). The
-   SOI extract (CORE merged tier) labels a return by the year its accounting
-   period ends; the e-file release and this memo use the IRS form year.
-   Once the two are aligned, the e-file release holds every Davidson
-   full-990 filing that the SOI extract holds for TY2023, plus 234 more,
-   most of them fiscal-year filers whose return falls in the SOI 2024 file,
-   which is partial. Outside Davidson some SOI-only filings remain. The
-   earlier statement that each source misses 5-6% of the other's filings
-   is withdrawn. The e-file release is still not complete for TY2023, so
-   every 2019-2023 ranking is shown with its 2019-2022 version.
+2. **TY2023 coverage differs between sources.** The two sources date
+   returns differently. The e-file release and this memo use the IRS form
+   year, the year the accounting period begins. The SOI extract files a
+   return under the year its accounting period ends, so a fiscal year
+   running July 2022 to June 2023 is a 2022 return in one and a 2023
+   return in the other. Dated the same way, the two hold about the same
+   Davidson filings for 2020 to 2022. For 2023 the e-file release holds
+   234 more Davidson full-990 filings than the SOI extract, because most
+   of those are fiscal-year returns that fall in the SOI file for 2024,
+   which is still incomplete. The e-file release is itself not complete
+   for TY2023, so every 2019-2023 ranking is shown with its 2019-2022
+   version.
    (`output/analysis-round1.txt (pass 12)`)
 3. **Full Form 990 only.** The 990-EZ (gross receipts under $200,000 and
    assets under $500,000) has no employee count, no compensation breakdown
    and no line 1e, and the 990-N has no financials. The financial tables
    cover a minority of organizations but most of the money. Pre-2021 years
    cover only organizations that e-filed voluntarily.
-4. **Leaving the full-990 panel** can mean closure, merger, falling under
-   the 990-EZ threshold, late filing, or absence from the e-file release
-   alone. The exit cohort was traced through CORE (full 990 and 990-EZ,
-   TY2021-2024) and the BMF; the result is in finding 5 and
-   `output/exit_cohort_trace.csv`. Whether the organizations with no return
-   closed or merged is still not known.
+4. **Leaving the full-990 returns is not closure.** An organization that
+   stops appearing may have merged, shrunk enough to file the shorter form,
+   filed late, or filed a return the IRS has not released yet. Every
+   organization that dropped out was checked against the shorter 990-EZ
+   returns and the registry through 2024 (finding 5). Most simply have not
+   filed since 2022. Whether the ones with no return closed or merged is
+   not known.
 5. **Current address and classification applied to history.** The BMF
    carries one address, subsection and NTEE code per organization. Movers
    and reclassifications are not recoverable. Ruling date is the date of
@@ -409,7 +416,7 @@ Three statements in the round 1 findings are withdrawn or changed.
    pay gap between leavers with no TY2023 or TY2024 return in either
    release and stayers is about $9,600 per head on 102 organizations
    (interval -$14,000 to -$3,800), not $17,200 on 42, and the peer metros
-   show no gap (finding 5, corrected in place).
+   show no gap (finding 5).
 2. **Release coverage.** Round 1 said the e-file and SOI releases each miss
    5 to 6 percent of the other's 2023 filings. Relabeled, every Davidson
    SOI filing for 2023 is also in the e-file release; for Davidson the gap
@@ -469,10 +476,12 @@ in the following two years ran between 3.5 and 6 percent a year from 2016
 to 2022, with 2021 (the year after 2020 returns) at 5.8 percent. This is a
 two-year filing gap, not a confirmed closure; some file again later. The
 figure for 2023 (12 percent) is provisional because the SOI 2024 file is
-partial and is not charted. (2) Left the registry: the first registry
-vintage in which an organization present by 2018 is absent. The series
-steps with the vintages (236 charities in 2017, 116 in 2021, 83 in 2023)
-and reflects revocation lists as much as closures.
+partial and is not charted. (2) Left the registry: for each year, the share of
+Davidson organizations on the registry the year before that are absent
+from that year on. It ran at 3 to 6 percent a year with two spikes (7.9
+percent in 2017, 5.9 percent in 2021) and two zero years (2018, 2022),
+because the registry is updated in batches and reflects revocation lists
+as much as closures.
 
 ![Share of Davidson 990 and 990-EZ filers with a two-year filing gap](output/chart_c_stopped_filing.png)
 
@@ -531,7 +540,7 @@ release. Employee counts on the 990 are noisy and are shown two ways.
 
 | Davidson County | 2019 | 2023 | Change | Same organizations in both years | Change |
 |---|---|---|---|---|---|
-| Filers | 757 | 881 | +16% | 625 | |
+| Filers | 757 | 881 | +16% | 625 in both years | |
 | Spending, 2023 dollars | $4.15bn | $4.39bn | +6% | | +9% |
 | Reported employees | 47,861 | 44,948 | -6% | | -0.6% |
 
@@ -541,7 +550,7 @@ percent decline in the full population comes from the organizations that
 left or joined it. Through 2022 the same comparison gives -2.8 percent
 and +4.5 percent. The round 1
 claim that part of the employee decline was a release artifact is
-withdrawn (Corrections, 1).
+the figure for the same organizations is the one to cite.
 
 ![Davidson full-990 charities: filers, spending and employees, index 2019 = 100](output/chart_f_filers_spending_employees.png)
 
@@ -637,10 +646,10 @@ funder's itemized COVID-19 relief grants.
   survey work, with line 1e named for what it is. The TY2024 Phase 0 file
   (partial, early filers) could extend it by a year; no TY2024 result exists
   yet.
-- The pay and exit pattern (finding 5, as corrected) rests on 102
-  organizations with no TY2023 or TY2024 return in either release. Before
-  it is cited, a sample should be looked at by name (closure, merger,
-  delinquency) in `output/exit_cohort_trace.csv`.
+- The pay and exit pattern (finding 5) rests on 102 organizations with no
+  2023 or 2024 return in either source. Before it is cited, a sample should
+  be checked by name to see whether they closed, merged, or are simply
+  behind on filing (the list is in `output/exit_cohort_trace.csv`).
 
 ## Reproducibility
 

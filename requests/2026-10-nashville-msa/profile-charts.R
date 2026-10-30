@@ -212,22 +212,29 @@ cat("\n== C1. Stopped filing: Davidson 990/990-EZ filers (not private foundation
 print(as.data.frame(stopped))
 write.csv(stopped, file.path(output_dir, "chart_c1_stopped_filing.csv"), row.names = FALSE)
 
-# (2) Left the registry: last BMF vintage seen. Registry vintages step, and
-# revocation lists lag, so the series is lumpy (round 1 caveat 6).
-left_registry <- davidson_registry |>
-  filter(first_year_in_bmf <= 2018) |>
-  mutate(left_year = if_else(last_year_in_bmf < 2026, last_year_in_bmf + 1L, NA_integer_)) |>
-  filter(!is.na(left_year), left_year >= 2015) |>
-  count(left_year, is_charity) |>
-  tidyr::pivot_wider(names_from = is_charity, values_from = n, values_fill = 0,
-                     names_prefix = "charity_")
+# (2) Left the registry. For each year, every Davidson organization on the
+# registry the year before, and the share of them absent from that year on
+# (last registry year seen is the year before). All organizations, new ones
+# entering as they are recognized. Registry vintages step and revocation
+# lists lag, so the series is lumpy (round 1 caveat 6).
+left_registry <- bind_rows(lapply(2015:2026, function(year) {
+  on_registry_prior <- davidson_registry |>
+    filter(first_year_in_bmf <= year - 1L, last_year_in_bmf >= year - 1L)
+  tibble(
+    left_year = year,
+    on_registry_prior_year = nrow(on_registry_prior),
+    left = sum(on_registry_prior$last_year_in_bmf == year - 1L),
+    charities_on_registry_prior_year = sum(on_registry_prior$is_charity),
+    charities_left = sum(on_registry_prior$is_charity & on_registry_prior$last_year_in_bmf == year - 1L)
+  )
+})) |>
+  mutate(share_pct = round(100 * left / on_registry_prior_year, 1),
+         charities_share_pct = round(100 * charities_left / charities_on_registry_prior_year, 1))
 
-cat("\n== C2. Left the registry: Davidson organizations on the registry by 2018, by first vintage year absent ==\n")
+cat("\n== C2. Left the registry: Davidson organizations on the registry the year before, share absent from that year on ==\n")
 print(as.data.frame(left_registry))
 write.csv(left_registry, file.path(output_dir, "chart_c2_left_registry.csv"), row.names = FALSE)
 
-# Chart shows judged years only. "Stopped filing" is a two-year filing
-# interruption, not a confirmed closure: some organizations file again later.
 chart_c <- ggplot(stopped |> filter(status == "judged"), aes(exit_year, share_pct)) +
   geom_col(fill = "#F8766D") +
   scale_x_continuous(breaks = 2016:2022) +

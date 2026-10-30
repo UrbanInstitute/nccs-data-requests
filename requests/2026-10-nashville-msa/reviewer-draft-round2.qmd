@@ -6,7 +6,7 @@ format:
     toc: false
 ---
 
-## The ask
+## Task
 
 The Research to Action Lab, working with Metro Nashville and the Community Foundation of Middle Tennessee, asked what the IRS data show about nonprofit locations, finances and workforce in Nashville, as a companion to a recent survey of the Tennessee nonprofit workforce. The first memo (October 12) was a first look. This draft answers the follow-up: a health profile of the Davidson County (Metro Nashville) nonprofit and philanthropic sector, and a spreadsheet of 2023 operating expenses for the 141 organizations on the team's Ecosystem Map. The spreadsheet has gone to the team; this draft covers the profile.
 
@@ -24,7 +24,7 @@ Three things in the first memo have changed.
 
 Three sources, each named in every table.
 
-- **The IRS registry** (Business Master File): every organization currently recognized, with its address, type and year of recognition. Current to 2026.
+- **The IRS registry** (Business Master File): every organization currently recognized, with its address, type and year of recognition. The September 2026 registry is used.
 - **The 990 returns as e-filed**: the full Form 990, the shorter 990-EZ, and the 990-PF that private foundations file. Finances and workforce come from the full 990; the 990-EZ carries total expenses but no employee count or government grant line; the 990-PF carries expenses and grants paid. Returns end at tax year 2023.
 - **The IRS statistical extract** of the same returns, used to check what the e-file release holds and to find organizations that moved to the shorter form.
 
@@ -57,7 +57,7 @@ The registry does not record when an organization leaves, so two series are kept
 
 ![Share of Davidson 990 and 990-EZ filers with a two-year filing gap](output/chart_c_stopped_filing.png)
 
-**Left the registry.** The first year an organization present on the registry by 2018 is absent from it. This series moves in steps (236 charities in 2017, 116 in 2021, 83 in 2023) because the registry is updated in batches and reflects revocation lists as much as closures.
+**Left the registry.** For each year, we take every Davidson organization on the registry the year before and count the share that is absent from that year on. It ran at 3 to 6 percent a year, with two spikes (7.9 percent in 2017, 5.9 percent in 2021) and two years with no exits at all (2018, 2022), because the registry is updated in batches and reflects revocation lists as much as closures.
 
 When an organization stops appearing in the full 990 returns, that does not mean it closed. It may have merged, shrunk enough to file the shorter form, filed late, or filed a return the IRS has not released yet. Whether the ones with no return closed or merged is not known.
 
@@ -107,9 +107,9 @@ Davidson's human services charities reported a smaller share than the peer metro
 
 Full-990 public charities excluding hospitals and universities, Davidson County.
 
-| | 2019 | 2023 | Change, all filers | Change, same 625 organizations in both years |
+| | 2019 | 2023 | Change, all filers | Same organizations in both years |
 |---|---|---|---|---|
-| Filers | 757 | 881 | +16% | |
+| Filers | 757 | 881 | +16% | 625 in both years |
 | Spending, 2023 dollars | $4.15bn | $4.39bn | +6% | +9% |
 | Reported employees | 47,861 | 44,948 | -6% | -0.6% |
 
