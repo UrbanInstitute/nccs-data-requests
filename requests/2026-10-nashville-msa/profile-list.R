@@ -64,8 +64,8 @@ matched <- listed |>
   ) |>
   select(-top1_ein)
 
-stopifnot(nrow(matched) == 141, all(matched$decision %in% c("top1", "ein", "none")))
-stopifnot(all(!is.na(matched$ein[matched$decision != "none"])))
+stopifnot(nrow(matched) == 141, all(matched$decision %in% c("top1", "ein", "none", "removed")))
+stopifnot(all(!is.na(matched$ein[!matched$decision %in% c("none", "removed")])))
 
 
 # --- 2. Registry fields for the matched EINs ---------------------------------
@@ -199,6 +199,7 @@ filled <- matched |>
       NA_character_
     ),
     status_ty2023 = case_when(
+      decision == "removed" ~ "Removed from the list at the requester's request (see match note)",
       decision == "none" ~ "Not matched to the IRS registry",
       !is.na(full_990_expenses) ~ "Full Form 990 filed",
       !is.na(ez_total_expenses) ~ "Form 990-EZ filed",

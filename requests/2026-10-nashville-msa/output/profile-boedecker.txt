@@ -1,0 +1,22 @@
+pinned: efilepf-v2_3-grants-paid-boedecker [PF-P15-T01-SUPPLEMENTARY-INFO-GRANT-PAID-2020.parquet] (41 rows)
+pinned: efilepf-v2_3-grants-paid-boedecker [PF-P15-T01-SUPPLEMENTARY-INFO-GRANT-PAID-2021.parquet] (40 rows)
+pinned: efilepf-v2_3-grants-paid-boedecker [PF-P15-T01-SUPPLEMENTARY-INFO-GRANT-PAID-2022.parquet] (48 rows)
+pinned: efilepf-v2_3-grants-paid-boedecker [PF-P15-T01-SUPPLEMENTARY-INFO-GRANT-PAID-2023.parquet] (46 rows)
+pinned: efilepf-v2_3-grants-paid-boedecker [PF-P15-T01-SUPPLEMENTARY-INFO-GRANT-PAID-2024.parquet] (60 rows)
+grant rows kept: 235 across tax years 2020, 2021, 2022, 2023, 2024 
+Tennessee cities not on the metro list (check by hand):
+[1] recipient_city n             
+<0 rows> (or 0-length row.names)
+
+== Boedecker Foundation grants paid by tax year and recipient region ==
+   tax_year                             region grants dollars share_of_dollars
+1      2020 Middle Tennessee (Nashville metro)     21  655864            0.271
+2      2020                  Outside Tennessee     20 1767489            0.729
+3      2021 Middle Tennessee (Nashville metro)     26  672690            0.426
+4      2021                  Outside Tennessee     14  904977            0.574
+5      2022 Middle Tennessee (Nashville metro)     29  934100            0.555
+6      2022                  Outside Tennessee     19  748983            0.445
+7      2023 Middle Tennessee (Nashville metro)     28  988694            0.657
+8      2023                  Outside Tennessee     18  515974            0.343
+9      2024 Middle Tennessee (Nashville metro)     31  751000            0.513
+10     2024                  Outside Tennessee     29  711970            0.487

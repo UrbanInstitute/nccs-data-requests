@@ -9,27 +9,27 @@ The following objects are masked from ‘package:base’:
 
     intersect, setdiff, setequal, union
 
-listed organizations matched to an EIN: 131 ; registered in Davidson County and in scope: 116 
+listed organizations matched to an EIN: 129 ; registered in Davidson County and in scope: 118 
 == Grant rows from Davidson-based funders to listed organizations, TY2019-2023 ==
                                         match_route 2019 2020 2021 2022 2023
-1     990-PF, recipient name (exact after cleaning)  448  617  611  624  605
-2                Schedule I, recipient EIN as filed  916 1482  415  341  332
+1     990-PF, recipient name (exact after cleaning)  448  619  614  626  609
+2                Schedule I, recipient EIN as filed  919 1492  417  344  337
 3 Schedule I, recipient name and city (provisional)   15   17   15   13   14
-PF name pairs written for hand check: 213 
+PF name pairs written for hand check: 214 
 
 == Totals by year ($ millions; Schedule I cash and noncash separate, 990-PF a single amount) ==
   tax_year grant_rows funders recipients total_m schedule_i_cash_m
-1     2019       1379     120         82   30.93             19.29
-2     2020       2116     159         89   56.10             34.62
-3     2021       1041     159         89   43.67             23.03
-4     2022        978     154         88   52.66             32.17
-5     2023        951     154        101   58.57             32.26
+1     2019       1382     120         83   30.95             19.30
+2     2020       2128     160         90   56.22             34.72
+3     2021       1046     159         90   43.72             23.07
+4     2022        983     155         89   52.70             32.21
+5     2023        960     154        102   59.72             32.42
   schedule_i_noncash_m pf_amount_m
 1                 0.69       10.96
-2                 2.75       18.73
-3                 1.74       18.89
-4                 1.38       19.10
-5                 4.79       21.52
+2                 2.75       18.75
+3                 1.74       18.91
+4                 1.38       19.11
+5                 5.74       21.56
 
 == Listed organizations reached, by the requester's type ==
                              org_type TRUE FALSE
@@ -39,22 +39,22 @@ PF name pairs written for hand check: 213
 4                 Health organization    9     2
 5           Intermediary organization    1     0
 6                           Nonprofit    1     0
-7              Nonprofit organization   78     5
+7              Nonprofit organization   79     5
 8                               Other    1     0
-9          Philanthropic organization    5     3
+9          Philanthropic organization    5     4
 10 Workforce development organization    1     1
-listed organizations registered in Davidson: 116 ; with at least one matched grant: 104 
-listed organizations registered outside Davidson (out of scope, not searched): 15 
+listed organizations registered in Davidson: 118 ; with at least one matched grant: 105 
+listed organizations registered outside Davidson (out of scope, not searched): 11 
 
 == Funders per recipient (five-year, distinct funders) ==
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   1.00    4.00   10.00   12.21   15.00   77.00 
+    1.0     4.0    10.0    12.2    15.0    77.0 
   funders_band  n
 1            1 11
 2            2  7
 3          3-5 18
 4         6-10 21
-5        11-20 32
+5        11-20 33
 6          21+ 15
 
 == Recipients per funder (five-year, among listed recipients) ==
@@ -73,21 +73,22 @@ listed organizations registered outside Davidson (out of scope, not searched): 1
 12                        FALSE             TRUE             21+  2
 13                         TRUE            FALSE               1 52
 14                         TRUE            FALSE               2 27
-15                         TRUE            FALSE             3-5 39
-16                         TRUE            FALSE            6-10 18
+15                         TRUE            FALSE             3-5 37
+16                         TRUE            FALSE            6-10 19
 17                         TRUE            FALSE           11-20 16
 18                         TRUE            FALSE             21+  2
-19                         TRUE             TRUE           11-20  1
-20                         TRUE             TRUE             21+  3
-funders giving to at least one listed organization: 234 ; of which listed themselves: 21 
+19                         TRUE             TRUE             3-5  1
+20                         TRUE             TRUE           11-20  1
+21                         TRUE             TRUE             21+  3
+funders giving to at least one listed organization: 234 ; of which listed themselves: 22 
 
 == Concentration: share of matched grant dollars from the top funders ==
 top 1: 25 %  top 3: 47 %  top 5: 56 %  top 10: 70 %
 
 == Listed-to-listed giving (both funder and recipient on the list) ==
   tax_year rows funders recipients total_m
-1     2019  921      16         76   19.57
-2     2020 1553      15         87   39.55
-3     2021  483      14         83   25.51
-4     2022  392      13         79   31.37
-5     2023  365      14         83   38.20
+1     2019  928      17         78   19.73
+2     2020 1565      16         89   39.80
+3     2021  489      15         85   25.72
+4     2022  396      14         81   31.57
+5     2023  372      15         85   39.48

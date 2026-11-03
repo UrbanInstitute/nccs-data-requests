@@ -125,32 +125,32 @@ Davidson recognitions ran at 130 to 200 a year from 2014 to 2021, then rose to 2
 
 ### The listed organizations
 
-The team's list names 141 organizations; 131 were matched to the BMF by hand, and the 10 unmatched are companies, church-run bodies and organizations with no BMF record under their names. Against all Davidson public charities, the listed organizations are older, larger, more often staffed, and more often government funded. The list is the team's selection, so this describes the list, not the sector.
+The team's list names 141 organizations. After the team's answers on 3 November, 129 are matched to the BMF by hand, 4 were removed at the team's request (two national organizations whose figures would not be Nashville-only, one initiative of a national foundation, one membership body with no IRS record), and the 8 unmatched are companies, church-run bodies and organizations with no BMF record under their names. Against all Davidson public charities, the listed organizations are older, larger, more often staffed, and more often government funded. The list is the team's selection, so this describes the list, not the sector.
 
 | Measure | Listed, registered in Davidson | All Davidson public charities excl. hospitals and universities |
 |---|---|---|
-| Organizations in the BMF | 105 | 4,046 |
+| Organizations in the BMF | 106 | 4,046 |
 | Median age (years since recognition) | 23 | 11 |
 | Recognized 2020 or later | 12% | 36% |
-| Full-990 filers, 2023 | 81 | 872 |
-| Median total expenses (full 990) | $1.78M | $627k |
+| Full-990 filers, 2023 | 82 | 872 |
+| Median total expenses (full 990) | $1.79M | $627k |
 | Median reported employees (full 990) | 20 | 4 |
 | Reporting any government grants (full 990) | 60% | 35% |
 | Government grant share of revenue (full 990) | 17.0% | 15.6% |
 
 ### Who funded whom, 2019 to 2023
 
-Grants reported by Davidson-based funders on their own returns: the full 990's grants schedule (recipients over $5,000 in aggregate, with the recipient's EIN) and the 990-PF's list of grants paid (name and city only, matched by name and checked by hand). Recipients are the 116 listed organizations registered in Davidson. Grants to individuals are excluded. Funders based outside Davidson are not in the data, so an organization with no matched grant is not unfunded.
+Grants reported by Davidson-based funders on their own returns: the full 990's grants schedule (recipients over $5,000 in aggregate, with the recipient's EIN) and the 990-PF's list of grants paid (name and city only, matched by name and checked by hand). Recipients are the 118 listed organizations registered in Davidson. Grants to individuals are excluded. Funders based outside Davidson are not in the data, so an organization with no matched grant is not unfunded.
 
 | Year | Grants | Funders | Listed recipients reached | Total ($M) |
 |---|---|---|---|---|
-| 2019 | 1,379 | 120 | 82 | 30.9 |
-| 2020 | 2,116 | 159 | 89 | 56.1 |
-| 2021 | 1,041 | 159 | 89 | 43.7 |
-| 2022 | 978 | 154 | 88 | 52.7 |
-| 2023 | 951 | 154 | 101 | 58.6 |
+| 2019 | 1,382 | 120 | 83 | 31.0 |
+| 2020 | 2,128 | 160 | 90 | 56.2 |
+| 2021 | 1,046 | 159 | 90 | 43.7 |
+| 2022 | 983 | 155 | 89 | 52.7 |
+| 2023 | 960 | 154 | 102 | 59.7 |
 
-Over the five years, 104 of the 116 listed organizations received at least one grant from one of 234 Davidson-based funders. The median listed organization had 10 Davidson funders. The largest funder supplied 25 percent of the dollars, the top three 47 percent and the top ten 70 percent. Twenty-one funders are themselves on the list, and grants between listed organizations ran from $20 million in 2019 to $38 million in 2023; where a listed intermediary passes money on, the same dollar can appear twice. A shared funder is a shared funder, not duplication, and no matched grant is not a gap. The 2020 spike is one funder's itemized COVID-19 relief grants.
+Over the five years, 105 of the 118 listed organizations received at least one grant from one of 234 Davidson-based funders. The median listed organization had 10 Davidson funders. The largest funder supplied 25 percent of the dollars, the top three 47 percent and the top ten 70 percent. Twenty-two funders are themselves on the list, and grants between listed organizations ran from $20 million in 2019 to $39 million in 2023; where a listed intermediary passes money on, the same dollar can appear twice. A shared funder is a shared funder, not duplication, and no matched grant is not a gap. The 2020 spike is one funder's itemized COVID-19 relief grants.
 
 ## Three questions for you
 
