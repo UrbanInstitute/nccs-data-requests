@@ -19,6 +19,7 @@
 # Outputs:
 #   output/boedecker_grants_by_region.csv   tax year x region: grants, dollars, share
 #   output/boedecker_grants_rows.csv        one row per grant, with the region label
+#   output/boedecker_grants.xlsx            the same two tables as an Excel file for the requester
 #   output/profile-boedecker.txt            console log (via run-all.R)
 
 suppressPackageStartupMessages(library(dplyr))
@@ -126,3 +127,9 @@ print(as.data.frame(by_region))
 write.csv(by_region, file.path(output_dir, "boedecker_grants_by_region.csv"), row.names = FALSE)
 write.csv(grants |> arrange(tax_year, region, desc(amount)),
           file.path(output_dir, "boedecker_grants_rows.csv"), row.names = FALSE)
+
+writexl::write_xlsx(
+  list(`By year and region` = by_region,
+       `Grant by grant` = grants |> arrange(tax_year, region, desc(amount))),
+  file.path(output_dir, "boedecker_grants.xlsx")
+)
