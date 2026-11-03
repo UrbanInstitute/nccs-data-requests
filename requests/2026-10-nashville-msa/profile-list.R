@@ -1,5 +1,6 @@
-# Pass 14: match the requester's list of 141 Nashville organizations (names
-# and addresses, no EINs) to the IRS registry, then fill in each
+# Pass 14: match the requester's list of 159 Nashville organizations (141
+# sent 2026-10-23 plus 18 she added on 2026-11-03; names and addresses, no
+# EINs) to the IRS registry, then fill in each
 # organization's tax year 2023 total expenses from whichever return it
 # filed: full Form 990 Part I line 18, Form 990-EZ line 17, or Form 990-PF
 # Part I line 26 (total expenses and disbursements, which for a foundation
@@ -8,7 +9,9 @@
 # the sheet says why.
 #
 # Inputs (all gitignored under data/ or docs/):
-#   docs/List of Nonprofits and Philanthropies for Thiya.xlsx  the list
+#   docs/List of Nonprofits and Philanthropies for Thiya.xlsx  the original list (rows 1-141)
+#   docs/List of Nonprofits and Philanthropies - Filled by Thiya (2026-11-03 additions).xlsx
+#                                    her copy of the filled sheet with 18 added rows (142-159)
 #   data/list_match_candidates.csv   top-3 Jaro-Winkler candidates per row
 #   data/list_match_decisions.csv    hand-checked decision per row
 #   data/universe_tn.parquet         Tennessee registry extract (build-panel.R)
@@ -29,17 +32,40 @@ data_dir <- file.path(request_dir, "data")
 
 # --- 1. The list and the hand-checked match decisions ----------------------
 
-list_raw <- readxl::read_excel(
+# Row ids 1-141 follow the original list, so the hand-checked decisions keep
+# their keys. The requester then returned the filled sheet with 18 new rows
+# inserted among the old ones; those get ids 142-159 in the order they
+# appear, and the output sheet follows her new order.
+list_original <- readxl::read_excel(
   file.path(request_dir, "docs", "List of Nonprofits and Philanthropies for Thiya.xlsx")
-)
+) |>
+  transmute(row_id = row_number(), name = trimws(Name))
+
+list_raw <- readxl::read_excel(
+  file.path(request_dir, "docs",
+            "List of Nonprofits and Philanthropies - Filled by Thiya (2026-11-03 additions).xlsx"),
+  sheet = "List with expenses"
+) |>
+  select(Name, `Organization Type`, Address)
+
+stopifnot(nrow(list_original) == 141, nrow(list_raw) == 159,
+          all(list_original$name %in% trimws(list_raw$Name)))
 
 listed <- list_raw |>
+  mutate(name = trimws(Name)) |>
+  left_join(list_original, by = "name") |>
+  mutate(
+    is_added = is.na(row_id),
+    row_id = coalesce(row_id, 141L + cumsum(is_added))
+  ) |>
   transmute(
-    row_id = row_number(),
+    row_id,
     name = Name,
     org_type = trimws(gsub(" ", " ", `Organization Type`)),
     address = Address
   )
+
+stopifnot(!any(duplicated(listed$row_id)), max(listed$row_id) == 159L)
 
 candidates <- read.csv(file.path(data_dir, "list_match_candidates.csv"),
                        colClasses = "character")
@@ -64,7 +90,7 @@ matched <- listed |>
   ) |>
   select(-top1_ein)
 
-stopifnot(nrow(matched) == 141, all(matched$decision %in% c("top1", "ein", "none", "removed")))
+stopifnot(nrow(matched) == 159, all(matched$decision %in% c("top1", "ein", "none", "removed")))
 stopifnot(all(!is.na(matched$ein[!matched$decision %in% c("none", "removed")])))
 
 
@@ -247,7 +273,7 @@ write.csv(filled, file.path(data_dir, "list_matched.csv"), row.names = FALSE, na
 
 # --- 6. Counts only for the captured output ----------------------------------
 
-cat("\n== Match outcome (141 listed organizations) ==\n")
+cat("\n== Match outcome (159 listed organizations) ==\n")
 print(filled |> count(decision, confidence) |> as.data.frame())
 
 cat("\n== Tax year 2023 status ==\n")

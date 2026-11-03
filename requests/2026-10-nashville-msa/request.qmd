@@ -29,7 +29,7 @@ to a recent survey of the Tennessee nonprofit workforce. Round 1 (October
 12) was a first look, exploratory and uncommitted. Round 2 answers the
 follow-up: a health profile of the Davidson County nonprofit and
 philanthropic sector, and a spreadsheet of tax year 2023 operating
-expenses for the 141 organizations on the team's Ecosystem Map.
+expenses for the 159 organizations on the team's Ecosystem Map.
 
 ## Geography
 
@@ -394,7 +394,7 @@ retained returns, not a measured change in distinct volunteers or hours.
 
 This section answers the requester's second ask: a profile of the
 Davidson County (Metro Nashville) nonprofit and philanthropic sector, and
-a filled spreadsheet for the 141 organizations on the team's Ecosystem
+a filled spreadsheet for the 159 organizations on the team's Ecosystem
 Map. It also carries the changes the senior researcher asked for on round
 1. Every table names its filing population, because the BMF, the full
 Form 990, the Form 990-EZ, the Form 990-PF and the 990-N postcard describe
@@ -562,18 +562,19 @@ the figure for the same organizations is the one to cite.
 
 ### The listed organizations
 
-The team's list names 141 organizations with addresses and no
-identifiers. Each was matched by hand to the BMF (129 matched after
-the team's answers of 3 November; 4 removed at the team's request as
+The team's list names 159 organizations with addresses and no
+identifiers: 141 sent in October and 18 added on 3 November. Each was
+matched by hand to the BMF (147 matched after the team's answers of 3
+November, all 18 additions among them; 4 removed at the team's request as
 national organizations, a foundation initiative, or a membership body
 with no IRS record; the 8 unmatched are companies, church-run bodies,
 units covered by a national group exemption, and organizations with no
 BMF record under their names; the detail is in the private deliverable). The
 spreadsheet returned to the team carries, for each matched organization,
 tax year 2023 total expenses from the return it filed, with the form and
-line named: 90 from the full 990 (line 18), 6 from the 990-EZ (line 17)
-and 9 from the 990-PF (line 26, total expenses and disbursements, with
-operating expenses and grants paid beside it). Eleven organizations show
+line named: 104 from the full 990 (line 18), 6 from the 990-EZ (line 17)
+and 10 from the 990-PF (line 26, total expenses and disbursements, with
+operating expenses and grants paid beside it). Twelve organizations show
 only a 2022 full 990 so far; their 2022 figure is given in the status
 column. Two matches are flagged low confidence and are with the team.
 
@@ -584,14 +585,14 @@ not the sector.
 
 | Measure | Listed, registered in Davidson | All Davidson public charities excl. hospitals and universities |
 |---|---|---|
-| Organizations in the BMF | 106 | 4,046 |
+| Organizations in the BMF | 123 | 4,046 |
 | Median age (years since recognition) | 23 | 11 |
-| Recognized 2020 or later | 12% | 36% |
-| Full-990 filers, tax year 2023 | 82 | 872 |
-| Median total expenses (full 990) | $1.79M | $627k |
+| Recognized 2020 or later | 14% | 36% |
+| Full-990 filers, tax year 2023 | 96 | 872 |
+| Median total expenses (full 990) | $1.77M | $627k |
 | Median reported employees (full 990) | 20 | 4 |
-| Reporting any line 1e grants (full 990) | 60% | 35% |
-| Line 1e share of revenue, dollar-weighted (full 990) | 17.0% | 15.6% |
+| Reporting any line 1e grants (full 990) | 62% | 35% |
+| Line 1e share of revenue, dollar-weighted (full 990) | 17.2% | 15.6% |
 
 ### Who funded whom, 2019 to 2023
 
@@ -599,27 +600,27 @@ Source: grants reported by funders whose BMF address is in Davidson
 County, on their own returns: Schedule I of the full 990 (recipients over
 $5,000 in aggregate, with the recipient EIN) and the 990-PF grants paid
 schedule (recipient name and city only, matched by cleaned name and
-hand-checked). Recipients are the 118 listed organizations registered in
+hand-checked). Recipients are the 136 listed organizations registered in
 Davidson; the 11 registered elsewhere are out of scope. Grants to
 individuals are excluded. Funders based outside Davidson are absent by
 construction, so an organization with no matched grant is not unfunded.
 
 | Tax year | Grant rows | Funders | Listed recipients reached | Total ($M) | of which Schedule I cash | Schedule I noncash | 990-PF |
 |---|---|---|---|---|---|---|---|
-| 2019 | 1,382 | 120 | 83 | 30.9 | 19.3 | 0.7 | 11.0 |
-| 2020 | 2,128 | 160 | 90 | 56.2 | 34.7 | 2.7 | 18.8 |
-| 2021 | 1,046 | 159 | 90 | 43.7 | 23.1 | 1.7 | 18.9 |
-| 2022 | 983 | 155 | 89 | 52.7 | 32.2 | 1.4 | 19.1 |
-| 2023 | 960 | 154 | 102 | 59.7 | 32.4 | 5.7 | 21.6 |
+| 2019 | 1,521 | 125 | 96 | 34.0 | 21.4 | 0.7 | 11.9 |
+| 2020 | 2,282 | 164 | 103 | 59.8 | 37.1 | 2.7 | 20.0 |
+| 2021 | 1,134 | 163 | 103 | 47.3 | 25.1 | 1.7 | 20.4 |
+| 2022 | 1,076 | 161 | 104 | 56.1 | 34.3 | 1.4 | 20.5 |
+| 2023 | 1,041 | 159 | 117 | 63.0 | 34.4 | 5.7 | 22.8 |
 
-Over the five years, 105 of the 118 listed organizations received at least
-one matched grant from one of 234 Davidson-based funders. Among those
-reached, the median recipient had 10 distinct Davidson funders; 48 had more than ten
-and 11 had one. Funding is concentrated: the largest funder supplied 25
-percent of matched dollars, the top three 47 percent and the top ten 70
-percent. Twenty-two of the funders are themselves on the list, and
-grants between listed organizations ran from $20 million in 2019 to
-$39 million in 2023; where a listed intermediary regrants, the same
+Over the five years, 121 of the 136 listed organizations received at least
+one matched grant from one of 238 Davidson-based funders. Among those
+reached, the median recipient had 9 distinct Davidson funders; 52 had more than ten
+and 13 had one. Funding is concentrated: the largest funder supplied 25
+percent of matched dollars, the top three 46 percent and the top ten 68
+percent. Twenty-four of the funders are themselves on the list, and
+grants between listed organizations ran from $21 million in 2019 to
+$41 million in 2023; where a listed intermediary regrants, the same
 dollar can appear twice. Funder and recipient names are in the private
 deliverable only.
 
