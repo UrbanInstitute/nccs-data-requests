@@ -252,3 +252,19 @@ Seven findings on the round 2 section of `request.qmd`. All accepted.
 | 5 | Institution count is 13, not 11; PF dollars $18.9M (2021) and $19.1M (2022) | Confirmed from the outputs | Fixed. |
 | 6 | Grant-share series cannot establish when the gap began; changing membership explains about 91%, not all, of the employee decrease | True | Reworded both. |
 | 7 | Chart paths displayed as filenames | True | Five charts embedded as images; the Word render carries them. |
+
+## 2026-11-03: second-analyst (Codex) review of the requester's match answers and the Boedecker split
+
+Seven findings on commits 4254e06 and 4d52ce5. All accepted. The revised EINs, the removed-row handling, the headline figures and the private reply's other numbers all passed. The reviewer also found that the cached CORE 990-PF file carries the foundation's own grants-paid line, which now checks the itemized grants every run.
+
+| # | Finding | Checked | Disposition |
+|---|---|---|---|
+| 1 | `request.qmd` still said 92 full 990s, 8 PFs and three low-confidence matches; the counts are 90, 9 and two | Confirmed from `data/list_matched.csv` | Fixed. |
+| 2 | Private reply said the Middle Tennessee share "rose each year" (it fell in 2024) and "all but three" in Nashville (24 of 28) | Confirmed from `output/boedecker_grants_rows.csv` | Reworded; address-based proxy stated. |
+| 3 | Median of 10 funders is among reached recipients only; across all 118 it is 9 | True | Both memos now say "among those reached". |
+| 4 | $31.0M (2019) and $2.8M (2020 noncash) were double-rounded from the log; direct rounding gives $30.9M and $2.7M | Confirmed from the grant-level CSV | Fixed in both memos. |
+| 5 | Metro city list omitted Hickman County and silently labelled unlisted Tennessee cities as outside the metro | True; no grant affected | Hickman added; the script now stops on an unlisted Tennessee city; reply says the split is by mailing address. |
+| 6 | Individual-recipient rule narrower than `build.R` | True; zero rows affected | Same rule as `build.R` now. |
+| 7 | Filing selection with `max()` drops a year if a key is missing | True; no missing keys here | Same sort-and-slice rule as `build.R` now. |
+
+Reconciliation added: itemized grants equal the CORE grants-paid line for 2020-2023 to the dollar; 2024 is not in CORE yet (`output/boedecker_reconciliation.csv`).

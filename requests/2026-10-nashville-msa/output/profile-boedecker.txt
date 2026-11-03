@@ -4,9 +4,51 @@ pinned: efilepf-v2_3-grants-paid-boedecker [PF-P15-T01-SUPPLEMENTARY-INFO-GRANT-
 pinned: efilepf-v2_3-grants-paid-boedecker [PF-P15-T01-SUPPLEMENTARY-INFO-GRANT-PAID-2023.parquet] (46 rows)
 pinned: efilepf-v2_3-grants-paid-boedecker [PF-P15-T01-SUPPLEMENTARY-INFO-GRANT-PAID-2024.parquet] (60 rows)
 grant rows kept: 235 across tax years 2020, 2021, 2022, 2023, 2024 
-Tennessee cities not on the metro list (check by hand):
-[1] recipient_city n             
-<0 rows> (or 0-length row.names)
+pinned: core-merged [merged] (111765 rows)
+pinned: core-merged [merged] (113804 rows)
+pinned: core-merged [merged] (116138 rows)
+pinned: core-merged [merged] (114199 rows)
+pinned: core-merged [merged] (10391 rows)
+Warning messages:
+1: Potentially unsafe or invalid elements have been discarded from R metadata.
+ℹ Type: "externalptr"
+→ If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
+2: Potentially unsafe or invalid elements have been discarded from R metadata.
+ℹ Type: "externalptr"
+→ If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
+3: Potentially unsafe or invalid elements have been discarded from R metadata.
+ℹ Type: "externalptr"
+→ If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
+4: Potentially unsafe or invalid elements have been discarded from R metadata.
+ℹ Type: "externalptr"
+→ If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
+5: Potentially unsafe or invalid elements have been discarded from R metadata.
+ℹ Type: "externalptr"
+→ If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
+6: Potentially unsafe or invalid elements have been discarded from R metadata.
+ℹ Type: "externalptr"
+→ If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
+7: Potentially unsafe or invalid elements have been discarded from R metadata.
+ℹ Type: "externalptr"
+→ If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
+8: Potentially unsafe or invalid elements have been discarded from R metadata.
+ℹ Type: "externalptr"
+→ If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
+9: Potentially unsafe or invalid elements have been discarded from R metadata.
+ℹ Type: "externalptr"
+→ If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
+10: Potentially unsafe or invalid elements have been discarded from R metadata.
+ℹ Type: "externalptr"
+→ If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
+
+== Itemized grants against the return's grants-paid line (CORE) ==
+  tax_year itemized_total tax_period core_grants_paid difference
+1     2020        2423353     202012          2423353          0
+2     2021        1577667     202112          1577667          0
+3     2022        1683083     202212          1683083          0
+4     2023        1504668     202312          1504668          0
+5     2024        1462970         NA               NA         NA
+years checked against the return: 2020, 2021, 2022, 2023 ; not in CORE yet: 2024 
 
 == Boedecker Foundation grants paid by tax year and recipient region ==
    tax_year                             region grants dollars share_of_dollars

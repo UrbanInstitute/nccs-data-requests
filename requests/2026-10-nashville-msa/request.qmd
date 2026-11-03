@@ -571,11 +571,11 @@ units covered by a national group exemption, and organizations with no
 BMF record under their names; the detail is in the private deliverable). The
 spreadsheet returned to the team carries, for each matched organization,
 tax year 2023 total expenses from the return it filed, with the form and
-line named: 92 from the full 990 (line 18), 6 from the 990-EZ (line 17)
-and 8 from the 990-PF (line 26, total expenses and disbursements, with
+line named: 90 from the full 990 (line 18), 6 from the 990-EZ (line 17)
+and 9 from the 990-PF (line 26, total expenses and disbursements, with
 operating expenses and grants paid beside it). Eleven organizations show
 only a 2022 full 990 so far; their 2022 figure is given in the status
-column. Three matches are flagged low confidence and are with the team.
+column. Two matches are flagged low confidence and are with the team.
 
 Against all Davidson public charities, the listed organizations are
 older, larger, more often staffed, and more often government funded. The
@@ -606,15 +606,15 @@ construction, so an organization with no matched grant is not unfunded.
 
 | Tax year | Grant rows | Funders | Listed recipients reached | Total ($M) | of which Schedule I cash | Schedule I noncash | 990-PF |
 |---|---|---|---|---|---|---|---|
-| 2019 | 1,382 | 120 | 83 | 31.0 | 19.3 | 0.7 | 11.0 |
-| 2020 | 2,128 | 160 | 90 | 56.2 | 34.7 | 2.8 | 18.8 |
+| 2019 | 1,382 | 120 | 83 | 30.9 | 19.3 | 0.7 | 11.0 |
+| 2020 | 2,128 | 160 | 90 | 56.2 | 34.7 | 2.7 | 18.8 |
 | 2021 | 1,046 | 159 | 90 | 43.7 | 23.1 | 1.7 | 18.9 |
 | 2022 | 983 | 155 | 89 | 52.7 | 32.2 | 1.4 | 19.1 |
 | 2023 | 960 | 154 | 102 | 59.7 | 32.4 | 5.7 | 21.6 |
 
 Over the five years, 105 of the 118 listed organizations received at least
-one matched grant from one of 234 Davidson-based funders. The median
-listed recipient had 10 distinct Davidson funders; 48 had more than ten
+one matched grant from one of 234 Davidson-based funders. Among those
+reached, the median recipient had 10 distinct Davidson funders; 48 had more than ten
 and 11 had one. Funding is concentrated: the largest funder supplied 25
 percent of matched dollars, the top three 47 percent and the top ten 70
 percent. Twenty-two of the funders are themselves on the list, and

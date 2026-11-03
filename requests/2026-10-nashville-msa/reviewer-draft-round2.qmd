@@ -144,13 +144,13 @@ Grants reported by Davidson-based funders on their own returns: the full 990's g
 
 | Year | Grants | Funders | Listed recipients reached | Total ($M) |
 |---|---|---|---|---|
-| 2019 | 1,382 | 120 | 83 | 31.0 |
+| 2019 | 1,382 | 120 | 83 | 30.9 |
 | 2020 | 2,128 | 160 | 90 | 56.2 |
 | 2021 | 1,046 | 159 | 90 | 43.7 |
 | 2022 | 983 | 155 | 89 | 52.7 |
 | 2023 | 960 | 154 | 102 | 59.7 |
 
-Over the five years, 105 of the 118 listed organizations received at least one grant from one of 234 Davidson-based funders. The median listed organization had 10 Davidson funders. The largest funder supplied 25 percent of the dollars, the top three 47 percent and the top ten 70 percent. Twenty-two funders are themselves on the list, and grants between listed organizations ran from $20 million in 2019 to $39 million in 2023; where a listed intermediary passes money on, the same dollar can appear twice. A shared funder is a shared funder, not duplication, and no matched grant is not a gap. The 2020 spike is one funder's itemized COVID-19 relief grants.
+Over the five years, 105 of the 118 listed organizations received at least one grant from one of 234 Davidson-based funders. Among those reached, the median organization had 10 Davidson funders. The largest funder supplied 25 percent of the dollars, the top three 47 percent and the top ten 70 percent. Twenty-two funders are themselves on the list, and grants between listed organizations ran from $20 million in 2019 to $39 million in 2023; where a listed intermediary passes money on, the same dollar can appear twice. A shared funder is a shared funder, not duplication, and no matched grant is not a gap. The 2020 spike is one funder's itemized COVID-19 relief grants.
 
 ## Three questions for you
 
