@@ -227,3 +227,8 @@
 "2026-11-03T14:05:49-0500","core-merged","merged","core:merged",74678,"full 990 and 990-EZ for the listed organizations; relabeled to form year"
 "2026-11-03T14:05:50-0500","core-merged","merged","core:merged",114199,"990-PF total expenses, operating expenses and grants paid for listed foundations; relabeled to form year"
 "2026-11-03T14:05:50-0500","core-merged","merged","core:merged",10391,"990-PF total expenses, operating expenses and grants paid for listed foundations; relabeled to form year"
+"2026-11-03T14:18:06-0500","bmf-master-geocoded","rolling@2026-11-03","nccsdata::nccs_read (rolling geocoded master)",3698197,"national lookup for listed organizations not in the TN extract"
+"2026-11-03T14:18:09-0500","core-merged","merged","core:merged",515769,"full 990 and 990-EZ for the listed organizations; relabeled to form year"
+"2026-11-03T14:18:09-0500","core-merged","merged","core:merged",74678,"full 990 and 990-EZ for the listed organizations; relabeled to form year"
+"2026-11-03T14:18:10-0500","core-merged","merged","core:merged",114199,"990-PF total expenses, operating expenses and grants paid for listed foundations; relabeled to form year"
+"2026-11-03T14:18:10-0500","core-merged","merged","core:merged",10391,"990-PF total expenses, operating expenses and grants paid for listed foundations; relabeled to form year"

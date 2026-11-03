@@ -27,6 +27,7 @@ library(dplyr)
 
 request_dir <- here::here("requests", "2026-10-nashville-msa")
 source(here::here("R", "request_read.R"))
+source(file.path(request_dir, "list-rows.R"))
 data_dir <- file.path(request_dir, "data")
 
 
@@ -48,16 +49,10 @@ list_raw <- readxl::read_excel(
 ) |>
   select(Name, `Organization Type`, Address)
 
-stopifnot(nrow(list_original) == 141, nrow(list_raw) == 159,
-          all(list_original$name %in% trimws(list_raw$Name)))
+stopifnot(nrow(list_original) == 141, nrow(list_raw) == 159)
 
 listed <- list_raw |>
-  mutate(name = trimws(Name)) |>
-  left_join(list_original, by = "name") |>
-  mutate(
-    is_added = is.na(row_id),
-    row_id = coalesce(row_id, 141L + cumsum(is_added))
-  ) |>
+  mutate(row_id = assign_list_row_ids(list_original$name, Name)) |>
   transmute(
     row_id,
     name = Name,
@@ -65,7 +60,7 @@ listed <- list_raw |>
     address = Address
   )
 
-stopifnot(!any(duplicated(listed$row_id)), max(listed$row_id) == 159L)
+stopifnot(max(listed$row_id) == 159L)
 
 candidates <- read.csv(file.path(data_dir, "list_match_candidates.csv"),
                        colClasses = "character")
