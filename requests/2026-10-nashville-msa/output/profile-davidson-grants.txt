@@ -1,0 +1,79 @@
+listed funders with itemized 2023 grants: 29 ; grant rows: 2740 
+== How recipients were located ==
+          located_by in_davidson   n
+1     EIN on the BMF       FALSE 412
+2     EIN on the BMF        TRUE 834
+3 Tennessee ZIP code       FALSE 384
+4 Tennessee ZIP code        TRUE 674
+5  outside Tennessee       FALSE 436
+== Funders whose itemized grants do not reconcile to the return (or have no CORE line) ==
+  row_id       source_table itemized return_line
+1     41 990-PF grants paid 21832616    18941403
+2     34 990-PF grants paid 18211653    18115653
+3     48 990-PF grants paid  7090000          NA
+                                        check
+1 DIFFERS from 990-PF line 25 by $  2,891,213
+2 DIFFERS from 990-PF line 25 by $     96,000
+3     no 2023 990-PF in CORE to check against
+== Listed funders, tax year 2023: grants to all recipients and to Davidson County recipients ==
+   row_id     source grant_rows      all davidson share
+1      38 Schedule I          3 75408898 75403898 1.000
+2     103 Schedule I        281 66541674 12737377 0.191
+3      19 Schedule I       1263 59735389 27065181 0.453
+4     128 Schedule I        313 26933228 18810820 0.698
+5      41 990-PF gra        294 21832616  5925598 0.271
+6      34 990-PF gra        171 18211653 17432653 0.957
+7      93 Schedule I          1  9388257  9388257 1.000
+8      26 990-PF gra         76  8573833  6854833 0.800
+9      12 Schedule I         11  7121101  3164260 0.444
+10     48 990-PF gra        107  7090000  4197500 0.592
+11     31 Schedule I          9  5249564  4678253 0.891
+12    132 Schedule I         19  3967211  2493007 0.628
+13    144 Schedule I          4  3509342  3000000 0.855
+14     79 Schedule I          1  1965118  1965118 1.000
+15     15 990-PF gra         47  1800500   615500 0.342
+16    159 990-PF gra         73  1751413  1544553 0.882
+17     47 Schedule I         23  1036859   801188 0.773
+18    139 Schedule I          8   488675   196000 0.401
+19     22 Schedule I          1   215579   215579 1.000
+20     27 Schedule I          1   209657   209657 1.000
+21    118 Schedule I          9   195997   190997 0.974
+22     39 Schedule I          1    99761        0 0.000
+23     85 Schedule I          6    76174        0 0.000
+24     91 Schedule I          2    25000        0 0.000
+25    111 Schedule I          1    19589    19589 1.000
+26     53 Schedule I          1    10000    10000 1.000
+27    112 Schedule I         12     8000        0 0.000
+28    155 Schedule I          1     5000     5000 1.000
+29    119 990-PF gra          1     1000     1000 1.000
+                                         check
+1                     within Part IX lines 1-3
+2                     within Part IX lines 1-3
+3                     within Part IX lines 1-3
+4                     within Part IX lines 1-3
+5  DIFFERS from 990-PF line 25 by $  2,891,213
+6  DIFFERS from 990-PF line 25 by $     96,000
+7                     within Part IX lines 1-3
+8                        equals 990-PF line 25
+9                     within Part IX lines 1-3
+10     no 2023 990-PF in CORE to check against
+11                    within Part IX lines 1-3
+12                    within Part IX lines 1-3
+13                    within Part IX lines 1-3
+14                    within Part IX lines 1-3
+15                       equals 990-PF line 25
+16                       equals 990-PF line 25
+17                    within Part IX lines 1-3
+18                    within Part IX lines 1-3
+19                    within Part IX lines 1-3
+20                    within Part IX lines 1-3
+21                    within Part IX lines 1-3
+22                    within Part IX lines 1-3
+23                    within Part IX lines 1-3
+24                    within Part IX lines 1-3
+25                    within Part IX lines 1-3
+26                    within Part IX lines 1-3
+27                    within Part IX lines 1-3
+28                    within Part IX lines 1-3
+29                       equals 990-PF line 25
+sheet rows: 159 ; rows with grant columns filled: 30 

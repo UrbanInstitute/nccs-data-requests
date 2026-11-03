@@ -9,38 +9,7 @@ pinned: core-merged [merged] (113804 rows)
 pinned: core-merged [merged] (116138 rows)
 pinned: core-merged [merged] (114199 rows)
 pinned: core-merged [merged] (10391 rows)
-Warning messages:
-1: Potentially unsafe or invalid elements have been discarded from R metadata.
-ℹ Type: "externalptr"
-→ If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
-2: Potentially unsafe or invalid elements have been discarded from R metadata.
-ℹ Type: "externalptr"
-→ If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
-3: Potentially unsafe or invalid elements have been discarded from R metadata.
-ℹ Type: "externalptr"
-→ If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
-4: Potentially unsafe or invalid elements have been discarded from R metadata.
-ℹ Type: "externalptr"
-→ If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
-5: Potentially unsafe or invalid elements have been discarded from R metadata.
-ℹ Type: "externalptr"
-→ If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
-6: Potentially unsafe or invalid elements have been discarded from R metadata.
-ℹ Type: "externalptr"
-→ If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
-7: Potentially unsafe or invalid elements have been discarded from R metadata.
-ℹ Type: "externalptr"
-→ If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
-8: Potentially unsafe or invalid elements have been discarded from R metadata.
-ℹ Type: "externalptr"
-→ If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
-9: Potentially unsafe or invalid elements have been discarded from R metadata.
-ℹ Type: "externalptr"
-→ If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
 10: Potentially unsafe or invalid elements have been discarded from R metadata.
-ℹ Type: "externalptr"
-→ If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
-
 == Itemized grants against the return's grants-paid line (CORE) ==
   tax_year itemized_total tax_period core_grants_paid difference
 1     2020        2423353     202012          2423353          0
@@ -49,7 +18,6 @@ Warning messages:
 4     2023        1504668     202312          1504668          0
 5     2024        1462970         NA               NA         NA
 years checked against the return: 2020, 2021, 2022, 2023 ; not in CORE yet: 2024 
-
 == Boedecker Foundation grants paid by tax year and recipient region ==
    tax_year                             region grants dollars share_of_dollars
 1      2020 Middle Tennessee (Nashville metro)     21  655864            0.271
@@ -62,3 +30,16 @@ years checked against the return: 2020, 2021, 2022, 2023 ; not in CORE yet: 2024
 8      2023                  Outside Tennessee     18  515974            0.343
 9      2024 Middle Tennessee (Nashville metro)     31  751000            0.513
 10     2024                  Outside Tennessee     29  711970            0.487
+== Boedecker Foundation grants paid to Davidson County recipients, by tax year ==
+  tax_year grants_all dollars_all grants_davidson dollars_davidson
+1     2020         41     2423353              17           630864
+2     2021         40     1577667              23           650000
+3     2022         48     1683083              27           889100
+4     2023         46     1504668              25           978357
+5     2024         60     1462970              30           701000
+  davidson_share_of_dollars
+1                     0.260
+2                     0.412
+3                     0.528
+4                     0.650
+5                     0.479

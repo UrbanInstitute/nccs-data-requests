@@ -18,6 +18,7 @@
 #
 # Outputs:
 #   output/boedecker_grants_by_region.csv   tax year x region: grants, dollars, share
+#   output/boedecker_grants_davidson.csv    tax year: grants and dollars to Davidson County recipients
 #   output/boedecker_grants_rows.csv        one row per grant, with the region label
 #   output/boedecker_reconciliation.csv     itemized total per year against the return's grants-paid line
 #   output/boedecker_grants.xlsx            the same two tables as an Excel file for the requester
@@ -27,6 +28,8 @@ suppressPackageStartupMessages(library(dplyr))
 
 request_dir <- here::here("requests", "2026-10-nashville-msa")
 source(here::here("R", "request_read.R"))
+source(file.path(request_dir, "davidson-rule.R"))
+source(file.path(request_dir, "grant-rules.R"))
 data_dir <- file.path(request_dir, "data")
 output_dir <- file.path(request_dir, "output")
 scratch_dir <- file.path(data_dir, "funders-raw")
@@ -107,13 +110,13 @@ grants <- one_filing_per_year |>
   transmute(
     tax_year,
     recipient_name = coalesce(na_if(PF_15_G_PAID_RECIP_NAME_ORG_L1, ""), PF_15_G_PAID_RECIP_NAME_PERS),
-    # Same rule as build.R: a personal name, or an individual status code with
-    # no organization name.
-    recipient_is_individual = !is.na(PF_15_G_PAID_RECIP_NAME_PERS) & nzchar(PF_15_G_PAID_RECIP_NAME_PERS) |
-      grepl("^(I|INDIVIDUAL|INDIVIDUALS|N/?A|NONE)$", toupper(trimws(coalesce(PF_15_G_PAID_RECIP_STAT, "")))) &
-      (is.na(PF_15_G_PAID_RECIP_NAME_ORG_L1) | !nzchar(PF_15_G_PAID_RECIP_NAME_ORG_L1)),
+    # Same rule as build.R (grant-rules.R).
+    recipient_is_individual = pf_recipient_is_individual(
+      PF_15_G_PAID_RECIP_STAT, PF_15_G_PAID_RECIP_NAME_ORG_L1, PF_15_G_PAID_RECIP_NAME_PERS
+    ),
     recipient_city = toupper(trimws(PF_15_G_PAID_RECIP_ADDR_CITY)),
     recipient_state = toupper(trimws(PF_15_G_PAID_RECIP_ADDR_STATE)),
+    recipient_zip5 = substr(PF_15_G_PAID_RECIP_ADDR_ZIP, 1, 5),
     amount = as.numeric(PF_15_G_PAID_AMT),
     purpose = PF_15_G_PAID_PURPOSE,
     region = case_when(
@@ -123,6 +126,17 @@ grants <- one_filing_per_year |>
     )
   ) |>
   filter(!recipient_is_individual)
+
+# Davidson County alone (the requester asked for Nashville/Davidson, not the
+# metro): the shared rule in davidson-rule.R, by ZIP then city, since the
+# 990-PF carries no recipient EIN.
+davidson_lookup <- davidson_lookups(arrow::read_parquet(file.path(data_dir, "universe_tn.parquet")))
+davidson_flag <- recipient_in_davidson(
+  recipient_ein9 = NA_character_, grants$recipient_state, grants$recipient_city,
+  grants$recipient_zip5, davidson_lookup$county_by_ein, davidson_lookup$davidson_zips
+)
+grants <- grants |>
+  mutate(in_davidson = davidson_flag$in_davidson, davidson_located_by = davidson_flag$located_by)
 
 unlisted_tennessee <- grants |>
   filter(region == "Tennessee, outside the Nashville metro") |>
@@ -178,13 +192,37 @@ by_region <- grants |>
 cat("\n== Boedecker Foundation grants paid by tax year and recipient region ==\n")
 print(as.data.frame(by_region))
 
+by_davidson <- grants |>
+  group_by(tax_year) |>
+  summarise(
+    grants_all = n(), dollars_all = sum(amount, na.rm = TRUE),
+    grants_davidson = sum(in_davidson), dollars_davidson = sum(amount[in_davidson], na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  mutate(davidson_share_of_dollars = round(dollars_davidson / dollars_all, 3))
+
+cat("\n== Boedecker Foundation grants paid to Davidson County recipients, by tax year ==\n")
+print(as.data.frame(by_davidson))
+write.csv(by_davidson, file.path(output_dir, "boedecker_grants_davidson.csv"), row.names = FALSE)
+
 write.csv(by_region, file.path(output_dir, "boedecker_grants_by_region.csv"), row.names = FALSE)
 write.csv(reconciliation, file.path(output_dir, "boedecker_reconciliation.csv"), row.names = FALSE)
 write.csv(grants |> arrange(tax_year, region, desc(amount)),
           file.path(output_dir, "boedecker_grants_rows.csv"), row.names = FALSE)
 
+notes <- tibble(Note = c(
+  "Source: the Boedecker Foundation's own Form 990-PF, the list of grants paid (Part XV), one filing per tax year, from the IRS e-file releases.",
+  "Grants to individuals are excluded. Amounts are as filed; no inflation adjustment.",
+  "Region is by the recipient's mailing address on the return (city and ZIP code): it says where the recipient is based, not where its work reaches.",
+  "Nashville metro = the fourteen counties of the Nashville-Davidson-Murfreesboro-Franklin metropolitan area. Davidson County only = Nashville-Davidson and its satellite cities; where a ZIP code straddles the county line, the whole ZIP is placed with the county that holds most of its organizations.",
+  "Check: each year's itemized total equals the grants-paid line (Part I line 25) on the same return for 2020 to 2023. The 2024 return is not yet in the IRS extract that carries that line, so 2024 is unchecked.",
+  "Tax year = the year the accounting period began. The foundation files on a calendar year."
+))
+
 writexl::write_xlsx(
   list(`By year and region` = by_region,
-       `Grant by grant` = grants |> arrange(tax_year, region, desc(amount))),
+       `Davidson County only` = by_davidson,
+       `Grant by grant` = grants |> arrange(tax_year, region, desc(amount)),
+       `Notes` = notes),
   file.path(output_dir, "boedecker_grants.xlsx")
 )

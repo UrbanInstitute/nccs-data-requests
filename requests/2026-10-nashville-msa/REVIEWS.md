@@ -268,3 +268,12 @@ Seven findings on commits 4254e06 and 4d52ce5. All accepted. The revised EINs, t
 | 7 | Filing selection with `max()` drops a year if a key is missing | True; no missing keys here | Same sort-and-slice rule as `build.R` now. |
 
 Reconciliation added: itemized grants equal the CORE grants-paid line for 2020-2023 to the dollar; 2024 is not in CORE yet (`output/boedecker_reconciliation.csv`).
+
+## 2026-11-03 (evening): own finding while splitting grants by county
+
+While adding the Davidson-only grant columns the requester asked for, the 990-PF reconciliation showed the Maddox fund's itemized grants at $366k against a grants-paid line of $1.75M. Cause: the rule for "grant to an individual" flagged every row with an entry in the person-name field, and some filers put the organization's name there while giving it an organization status code (PC, PUBLIC, NC, 501(c)(3)). Across the Davidson funders this had dropped 1,780 organization rows and $40.2 million over 2019-2023 (44 funders; Maddox $7.1M, Envision $5.9M, Hays $5.1M).
+
+| Finding | Checked | Disposition |
+|---|---|---|
+| Organization grants flagged as individual when the name sits in the person field | Maddox 2023: with the rows restored the itemized total equals line 25 to the dollar; status values of the flagged rows tabulated across all funders | Rule rewritten as `pf_recipient_is_individual()` in `grant-rules.R` (status decides; name fields only when the status says nothing), with tests; `build.R` and `profile-boedecker.R` both call it; funder extract rebuilt and `profile-funders.R` rerun. Reached 122 of 136 (was 121), 247 funders (was 238), top ten 67% (was 68%). Blank or N/A status with a person-name entry (258 rows, $2.9M) stays excluded because the return gives nothing to decide by. |
+| HCA Healthcare Foundation itemizes $2.9M more than its line 25; Frist $96k more | Return lines read from CORE; no row-level marker explains the gap | Reported on the sheet and in the memos as not reconciled; Davidson figure still taken from the itemized rows. |

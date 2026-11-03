@@ -426,6 +426,7 @@ library(dplyr)
 
 request_dir <- here::here("requests", "2026-10-nashville-msa")
 source(here::here("R", "request_read.R"))
+source(file.path(request_dir, "grant-rules.R"))
 data_dir <- file.path(request_dir, "data")
 output_dir <- file.path(request_dir, "output")
 scratch_dir <- file.path(data_dir, "funders-raw")
@@ -600,9 +601,9 @@ pf_grants <- pf_grants_raw |>
     recipient_state = PF_15_G_PAID_RECIP_ADDR_STATE,
     recipient_zip5 = substr(PF_15_G_PAID_RECIP_ADDR_ZIP, 1, 5),
     recipient_status = PF_15_G_PAID_RECIP_STAT,
-    recipient_is_individual = !is.na(PF_15_G_PAID_RECIP_NAME_PERS) & nzchar(PF_15_G_PAID_RECIP_NAME_PERS) |
-      grepl("^(I|INDIVIDUAL|INDIVIDUALS|N/?A|NONE)$", toupper(trimws(coalesce(PF_15_G_PAID_RECIP_STAT, "")))) &
-      (is.na(PF_15_G_PAID_RECIP_NAME_ORG_L1) | !nzchar(PF_15_G_PAID_RECIP_NAME_ORG_L1)),
+    recipient_is_individual = pf_recipient_is_individual(
+      PF_15_G_PAID_RECIP_STAT, PF_15_G_PAID_RECIP_NAME_ORG_L1, PF_15_G_PAID_RECIP_NAME_PERS
+    ),
     amount_cash = as.numeric(PF_15_G_PAID_AMT),
     amount_noncash = NA_real_,
     purpose = PF_15_G_PAID_PURPOSE

@@ -607,22 +607,38 @@ construction, so an organization with no matched grant is not unfunded.
 
 | Tax year | Grant rows | Funders | Listed recipients reached | Total ($M) | of which Schedule I cash | Schedule I noncash | 990-PF |
 |---|---|---|---|---|---|---|---|
-| 2019 | 1,521 | 125 | 96 | 34.0 | 21.4 | 0.7 | 11.9 |
-| 2020 | 2,282 | 164 | 103 | 59.8 | 37.1 | 2.7 | 20.0 |
-| 2021 | 1,134 | 163 | 103 | 47.3 | 25.1 | 1.7 | 20.4 |
-| 2022 | 1,076 | 161 | 104 | 56.1 | 34.3 | 1.4 | 20.5 |
-| 2023 | 1,041 | 159 | 117 | 63.0 | 34.4 | 5.7 | 22.8 |
+| 2019 | 1,539 | 130 | 96 | 34.6 | 21.4 | 0.7 | 12.6 |
+| 2020 | 2,312 | 170 | 103 | 60.3 | 37.1 | 2.7 | 20.5 |
+| 2021 | 1,170 | 172 | 103 | 47.8 | 25.1 | 1.7 | 21.0 |
+| 2022 | 1,124 | 170 | 104 | 56.7 | 34.3 | 1.4 | 21.1 |
+| 2023 | 1,074 | 167 | 118 | 63.4 | 34.4 | 5.7 | 23.2 |
 
-Over the five years, 121 of the 136 listed organizations received at least
-one matched grant from one of 238 Davidson-based funders. Among those
-reached, the median recipient had 9 distinct Davidson funders; 52 had more than ten
-and 13 had one. Funding is concentrated: the largest funder supplied 25
-percent of matched dollars, the top three 46 percent and the top ten 68
+Over the five years, 122 of the 136 listed organizations received at least
+one matched grant from one of 247 Davidson-based funders. Among those
+reached, the median recipient had 9 distinct Davidson funders; 54 had more than ten
+and 14 had one. Funding is concentrated: the largest funder supplied 25
+percent of matched dollars, the top three 46 percent and the top ten 67
 percent. Twenty-four of the funders are themselves on the list, and
 grants between listed organizations ran from $21 million in 2019 to
-$41 million in 2023; where a listed intermediary regrants, the same
+$42 million in 2023; where a listed intermediary regrants, the same
 dollar can appear twice. Funder and recipient names are in the private
 deliverable only.
+
+### Grants that stay in Davidson County
+
+The team asked that funders which give beyond Nashville show only their Davidson grants. A funder's operating expenses cannot be split by place, so the expense column stays as filed. Instead the sheet carries two further columns for every listed organization that itemizes grants on its 2023 return: grants paid to all recipients, and the part paid to recipients based in Davidson County. A recipient is placed in Davidson by its EIN on the BMF where the return gives one (the full 990's grants schedule), otherwise by its Tennessee ZIP code, otherwise by its city; this says where the recipient is based, not where its work reaches. Thirty listed organizations have such a column, 29 Davidson-based funders plus the Boedecker Foundation. Examples: the Community Foundation of Middle Tennessee paid $59.7 million in itemized grants, $27.1 million (45 percent) to Davidson recipients; United Way of Middle Tennessee $26.9 million, $18.8 million (70 percent). Each foundation's itemized list was checked against the grants-paid line on its own return; two list more than the line (HCA Healthcare Foundation by $2.9 million, the Frist Foundation by $96,000), and one has no 2023 return in CORE to check against. Those three are marked on the sheet.
+
+The Boedecker Foundation is registered in Colorado, so its expense figure is foundation-wide. From its own grants list:
+
+| Tax year | Grants paid | To the Nashville metro | To Davidson County |
+|---|---|---|---|
+| 2020 | $2.42M | 27% | 26% |
+| 2021 | $1.58M | 43% | 41% |
+| 2022 | $1.68M | 56% | 53% |
+| 2023 | $1.50M | 66% | 65% |
+| 2024 | $1.46M | 51% | 48% |
+
+The 2023 Davidson figure, $978,000 across 25 grants, is what the sheet shows. The yearly totals equal the grants-paid line on the foundation's own returns for 2020 to 2023; 2024 is not yet in CORE.
 
 On "duplication" and "gaps": a shared funder is a shared funder, not
 duplication, and no matched grant is not a gap, because the table sees
