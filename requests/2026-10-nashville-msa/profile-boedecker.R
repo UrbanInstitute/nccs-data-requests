@@ -133,7 +133,8 @@ grants <- one_filing_per_year |>
 davidson_lookup <- davidson_lookups(arrow::read_parquet(file.path(data_dir, "universe_tn.parquet")))
 davidson_flag <- recipient_in_davidson(
   recipient_ein9 = NA_character_, grants$recipient_state, grants$recipient_city,
-  grants$recipient_zip5, davidson_lookup$county_by_ein, davidson_lookup$davidson_zips
+  grants$recipient_zip5, davidson_lookup$county_by_ein, davidson_lookup$davidson_zips,
+  davidson_lookup$known_zips
 )
 grants <- grants |>
   mutate(in_davidson = davidson_flag$in_davidson, davidson_located_by = davidson_flag$located_by)

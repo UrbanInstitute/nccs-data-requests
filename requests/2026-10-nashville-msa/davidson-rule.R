@@ -30,6 +30,10 @@ davidson_cities <- c(
 #'   on the Tennessee BMF extract, names are nine-digit EINs.
 #' @param davidson_zips Character vector of five-digit ZIP codes that belong
 #'   to Davidson County.
+#' @param known_zips Character vector of every five-digit Tennessee ZIP the
+#'   BMF places in some county. A ZIP outside this set (for example a
+#'   post-office box range with no organizations on the BMF) cannot decide,
+#'   so the city decides instead.
 #' @return A list of two vectors the length of the inputs: `in_davidson`
 #'   (logical) and `located_by` ("EIN on the BMF", "Tennessee ZIP code",
 #'   "city name", or "outside Tennessee").
@@ -38,7 +42,8 @@ davidson_cities <- c(
 #'   definition the rest of this request uses. An EIN not found there falls
 #'   through to the address.
 recipient_in_davidson <- function(recipient_ein9, recipient_state, recipient_city,
-                                  recipient_zip5, bmf_county_by_ein, davidson_zips) {
+                                  recipient_zip5, bmf_county_by_ein, davidson_zips,
+                                  known_zips = davidson_zips) {
   ein_clean <- gsub("[^0-9]", "", ifelse(is.na(recipient_ein9), "", recipient_ein9))
   ein_county <- unname(bmf_county_by_ein[ein_clean])
   ein_known <- !is.na(ein_county)
@@ -48,7 +53,7 @@ recipient_in_davidson <- function(recipient_ein9, recipient_state, recipient_cit
   zip_clean <- substr(gsub("[^0-9]", "", ifelse(is.na(recipient_zip5), "", recipient_zip5)), 1, 5)
 
   in_tennessee <- state_clean == "TN"
-  zip_known <- in_tennessee & nchar(zip_clean) == 5
+  zip_known <- in_tennessee & zip_clean %in% known_zips
 
   located_by <- dplyr::case_when(
     ein_known ~ "EIN on the BMF",
@@ -71,9 +76,10 @@ recipient_in_davidson <- function(recipient_ein9, recipient_state, recipient_cit
 #' @param universe_tn Data frame of the Tennessee BMF extract with columns
 #'   `ein9`, `geo_county_fips` and `org_addr_zip5`.
 #' @return A list: `county_by_ein`, a named character vector of county FIPS
-#'   by nine-digit EIN; and `davidson_zips`, the ZIP codes where more than
-#'   half of the Tennessee organizations with that ZIP are placed in
-#'   Davidson County by the BMF geocoding.
+#'   by nine-digit EIN; `known_zips`, every ZIP the BMF places in a county;
+#'   and `davidson_zips`, the ZIP codes where more than half of the
+#'   Tennessee organizations with that ZIP are placed in Davidson County by
+#'   the BMF geocoding.
 #' @details A few ZIPs straddle the county line (Goodlettsville, Old
 #'   Hickory, Joelton); the majority rule assigns each whole ZIP one way,
 #'   which is the limit of an address-based proxy.
@@ -87,5 +93,6 @@ davidson_lookups <- function(universe_tn) {
     dplyr::summarise(davidson_share = mean(geo_county_fips == "47037"), .groups = "drop")
   davidson_zips <- zip_shares$org_addr_zip5[zip_shares$davidson_share > 0.5]
 
-  list(county_by_ein = county_by_ein, davidson_zips = davidson_zips)
+  list(county_by_ein = county_by_ein, known_zips = zip_shares$org_addr_zip5,
+       davidson_zips = davidson_zips)
 }

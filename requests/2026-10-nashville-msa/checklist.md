@@ -66,3 +66,7 @@ and cite pinned vintages in the front matter from `_pins.csv`.
   missed several of the largest organizations; a second pass searching the
   e-file filing names caught them. Any promoted name-match helper should
   search both name sources.
+
+## Upstream issue to raise (found 2026-11-03)
+
+- [ ] `nccs-data-bmf`: the geocoded BMF places the Memorial Foundation (EIN 62-1202302, "MADISON, TN 37115") in Madison County (47113, coordinates 35.64, -88.84, near Jackson), while 203 other resolved organizations in ZIP 37115 are in Davidson County. Looks like the city name "Madison" matched the county seat of Madison County. Worth a check for every Tennessee row whose city is also a county name (Madison, Dickson, Franklin, Jackson, Smith, Lincoln, Clay, Grundy, Lawrenceburg is fine). Not overridden locally; Memorial is treated as registered outside Davidson in this request until the BMF is fixed.

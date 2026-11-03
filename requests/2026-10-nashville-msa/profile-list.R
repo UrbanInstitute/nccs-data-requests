@@ -193,9 +193,15 @@ filled <- matched |>
   left_join(latest_full_990, by = "ein9") |>
   left_join(core_pf_2023, by = "ein9") |>
   mutate(
+    # CORE first: it carries the accounting period, so amount and period come
+    # from the same return. The e-file panel fills in where CORE has no 990.
+    # When both hold a full 990 for the year and disagree, the organization
+    # filed two returns labelled 2023 (a fiscal-year change produces a
+    # twelve-month return and a short one); CORE's twelve-month return is used
+    # and the status column says so.
     full_990_expenses = coalesce(
-      efile_total_expenses,
-      if_else(core_form %in% "990", core_total_expenses, NA_real_)
+      if_else(core_form %in% "990", core_total_expenses, NA_real_),
+      efile_total_expenses
     ),
     expenses_source = case_when(
       core_form %in% "990" & !is.na(efile_total_expenses) ~ "e-file and CORE (SOI) both hold the full 990",
@@ -222,6 +228,9 @@ filled <- matched |>
     status_ty2023 = case_when(
       decision == "removed" ~ "Removed from the list at the requester's request (see match note)",
       decision == "none" ~ "Not matched to the IRS registry",
+      sources_disagree ~ paste0("Full Form 990 filed; two returns carry tax year 2023 (a change of fiscal year). ",
+                                "The twelve-month return ending ", fiscal_year_end, " is used; the other, a short period, reports $",
+                                trimws(format(efile_total_expenses, big.mark = ",")), " in total expenses"),
       !is.na(full_990_expenses) ~ "Full Form 990 filed",
       !is.na(ez_total_expenses) ~ "Form 990-EZ filed",
       !is.na(pf_total_expenses) ~ "Form 990-PF filed (private foundation)",

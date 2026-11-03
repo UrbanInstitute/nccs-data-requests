@@ -277,3 +277,18 @@ While adding the Davidson-only grant columns the requester asked for, the 990-PF
 |---|---|---|
 | Organization grants flagged as individual when the name sits in the person field | Maddox 2023: with the rows restored the itemized total equals line 25 to the dollar; status values of the flagged rows tabulated across all funders | Rule rewritten as `pf_recipient_is_individual()` in `grant-rules.R` (status decides; name fields only when the status says nothing), with tests; `build.R` and `profile-boedecker.R` both call it; funder extract rebuilt and `profile-funders.R` rerun. Reached 122 of 136 (was 121), 247 funders (was 238), top ten 67% (was 68%). Blank or N/A status with a person-name entry (258 rows, $2.9M) stays excluded because the return gives nothing to decide by. |
 | HCA Healthcare Foundation itemizes $2.9M more than its line 25; Frist $96k more | Return lines read from CORE; no row-level marker explains the gap | Reported on the sheet and in the memos as not reconciled; Davidson figure still taken from the itemized rows. |
+
+## 2026-11-03 (late): second-analyst (Codex) review of the Davidson-only grant columns
+
+Six findings on commits 7903e90 through f1dfe2f. All accepted.
+
+| # | Finding | Checked | Disposition |
+|---|---|---|---|
+| 1 | A Tennessee ZIP the BMF does not know (37244, a post-office range) counted as "known" and so as outside Davidson, instead of falling back to the city; Dettwiller lost $1.1M of Nashville grants | Confirmed; Dettwiller's Davidson total rose from $6,854,833 to $7,954,833 with the fix | `davidson_lookups()` now returns the set of ZIPs the BMF places in any county; `recipient_in_davidson()` takes it and lets a ZIP decide only when it is in that set. Test added. |
+| 2 | The columns covered only Davidson-based funders plus Boedecker, so listed foundations registered elsewhere (Carolyn Smith, Memorial, Yarbrough) had none, against the memos' "every listed organization" claim | Confirmed | 990-PF grants are now pulled from the public release by EIN for every listed private foundation (12, Joe C. Davis and Speer among them, whose 2023 returns are not yet in CORE); Schedule I still from the extract. 34 funders covered. Memos reworded to say exactly what is and is not covered. |
+| 3 | The reconciliation text never reached the sheet, so "marked on the sheet" was untrue | Confirmed | A third column, "Grants paid: check against the return", carries the full check text for every funder. |
+| 4 | Persist's amount came from the e-file return (six months to June 2024) but its period from CORE (December 2023) | Confirmed: a fiscal-year change produced two returns labelled 2023 | `profile-list.R` now takes CORE's full-990 amount first, so amount and period come from one return (the twelve-month one, $1,167,969), and the status column explains the second return. |
+| 5 | Boedecker's 2022 metro share double-rounded to 56%; direct rounding gives 55% | Confirmed | Fixed in both memos. |
+| 6 | Private reply: six not five additions without an address; $569,000 not $568,000; the metro-minus-Davidson difference includes Rutherford; the expense column is the return's total expenses line, not operating cost; the 990-N claim for Nashville Book Connection was unsupported | Confirmed | All reworded. |
+
+Upstream finding from item 2: the BMF geocodes the Memorial Foundation (62-1202302, Madison TN 37115) to Madison County in West Tennessee (coordinates near Jackson), while the other 203 resolved organizations in ZIP 37115 sit in Davidson County. That is a geocoder error in `nccs-data-bmf`, not something to override here; it is logged in `checklist.md` to raise upstream. Its effect here: Memorial is counted as registered outside Davidson in the list comparison and the funder-reach scope.

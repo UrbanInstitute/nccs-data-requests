@@ -626,7 +626,7 @@ deliverable only.
 
 ### Grants that stay in Davidson County
 
-The team asked that funders which give beyond Nashville show only their Davidson grants. A funder's operating expenses cannot be split by place, so the expense column stays as filed. Instead the sheet carries two further columns for every listed organization that itemizes grants on its 2023 return: grants paid to all recipients, and the part paid to recipients based in Davidson County. A recipient is placed in Davidson by its EIN on the BMF where the return gives one (the full 990's grants schedule), otherwise by its Tennessee ZIP code, otherwise by its city; this says where the recipient is based, not where its work reaches. Thirty listed organizations have such a column, 29 Davidson-based funders plus the Boedecker Foundation. Examples: the Community Foundation of Middle Tennessee paid $59.7 million in itemized grants, $27.1 million (45 percent) to Davidson recipients; United Way of Middle Tennessee $26.9 million, $18.8 million (70 percent). Each foundation's itemized list was checked against the grants-paid line on its own return; two list more than the line (HCA Healthcare Foundation by $2.9 million, the Frist Foundation by $96,000), and one has no 2023 return in CORE to check against. Those three are marked on the sheet.
+The team asked that funders which give beyond Nashville show only their Davidson grants. A funder's operating expenses cannot be split by place, so the expense column stays as filed. Instead the sheet carries three further columns for every listed organization that itemizes grants on its 2023 return: grants paid to all recipients, the part paid to recipients based in Davidson County, and a check of the itemized total against the return's own grants-paid line. A recipient is placed in Davidson by its EIN on the BMF where the return gives one (the full 990's grants schedule), otherwise by its Tennessee ZIP code where the BMF knows that ZIP, otherwise by its city; this says where the recipient is based, not where its work reaches. Thirty-four listed organizations have the columns: all twelve listed private foundations with a 2023 990-PF in the e-file release, wherever registered, and the 22 Davidson-based full-990 filers with grants on Schedule I. Listed full-990 filers registered outside Davidson are not in that extract and are not covered; only one of them reports any grants (Legacy Mission Village, Williamson County, $53,000 on Part IX). Examples: the Community Foundation of Middle Tennessee paid $59.7 million in itemized grants, $27.1 million (45 percent) to Davidson recipients; United Way of Middle Tennessee $26.9 million, $18.8 million (70 percent). For two foundations the itemized list adds to more than the grants-paid line on the return (HCA Healthcare Foundation by $2.9 million, the Frist Foundation by $96,000), and one (Joe C. Davis, year ending September 2024) has no return in CORE yet to check against; the check column on the sheet says so for each.
 
 The Boedecker Foundation is registered in Colorado, so its expense figure is foundation-wide. From its own grants list:
 
@@ -634,7 +634,7 @@ The Boedecker Foundation is registered in Colorado, so its expense figure is fou
 |---|---|---|---|
 | 2020 | $2.42M | 27% | 26% |
 | 2021 | $1.58M | 43% | 41% |
-| 2022 | $1.68M | 56% | 53% |
+| 2022 | $1.68M | 55% | 53% |
 | 2023 | $1.50M | 66% | 65% |
 | 2024 | $1.46M | 51% | 48% |
 
