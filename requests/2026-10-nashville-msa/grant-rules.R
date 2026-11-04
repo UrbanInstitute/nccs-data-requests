@@ -27,3 +27,26 @@ pf_recipient_is_individual <- function(status, org_name, person_name) {
 
   says_individual | (says_nothing & org_blank)
 }
+
+
+#' Choose which tax year's itemized grants a funder's sheet columns use
+#'
+#' @param years_with_rows Integer vector: the tax years for which the funder
+#'   has itemized grant rows (any order, duplicates allowed).
+#' @param has_2023_return TRUE if the funder filed any tax year 2023 return
+#'   in the releases, whether or not it itemized grants on it.
+#' @return 2023 if the funder has 2023 rows; 2022 only if it has 2022 rows
+#'   and no 2023 return at all; otherwise NA.
+#' @details A funder that filed for 2023 but listed no grants is reported
+#'   as having none for 2023, not carried back to 2022: missing itemized
+#'   rows are not missing data. The fallback is for funders whose 2023
+#'   return is not in the releases yet (requester's instruction, 2026-11-04).
+grant_year_to_use <- function(years_with_rows, has_2023_return) {
+  if (2023L %in% years_with_rows) {
+    return(2023L)
+  }
+  if (2022L %in% years_with_rows && !isTRUE(has_2023_return)) {
+    return(2022L)
+  }
+  NA_integer_
+}

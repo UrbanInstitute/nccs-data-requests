@@ -11,9 +11,10 @@
 # the BMF, else Tennessee ZIP, else city), and the check of the itemized
 # total against the return's own grants-paid line.
 #
-# A funder with no tax year 2023 itemized grants in the releases gets its
+# A funder with no tax year 2023 return in the releases at all gets its
 # tax year 2022 grants instead, and the sheet says which year each figure
-# is (requester's instruction, 2026-11-04).
+# is (requester's instruction, 2026-11-04). A funder that filed for 2023
+# but itemized nothing is not carried back: the rule is in grant-rules.R.
 #
 # Coverage: every listed private foundation with a 2023 or 2022 990-PF in the
 # e-file release, wherever it is registered (the grants-paid rows are pulled from the public release by
@@ -55,7 +56,8 @@ pf_release_years <- 2023:2024
 
 listed <- read.csv(file.path(data_dir, "list_matched.csv"), colClasses = "character") |>
   filter(nzchar(ein9)) |>
-  select(row_id, name, ein, ein9, foundation_code, source_form_line, pf_grants_paid, pf_grants_paid_ty2022)
+  select(row_id, name, ein, ein9, foundation_code, source_form_line, pf_grants_paid, pf_grants_paid_ty2022,
+         operating_expenses_ty2023, figure_tax_year)
 
 # Every listed private foundation by BMF foundation code, not only those
 # with a 2023 990-PF in CORE: a fiscal-year filer's 2023 return can sit in
@@ -133,11 +135,21 @@ schedule_i_rows <- arrow::read_parquet(file.path(data_dir, "funders_davidson_201
             recipient_state, recipient_zip5, recipient_is_individual,
             amount = coalesce(amount_cash, 0) + coalesce(amount_noncash, 0))
 
-# Each funder keeps its latest year with itemized grants: 2023, else 2022.
-grant_rows <- bind_rows(pf_rows, schedule_i_rows) |>
+# Each funder keeps one year: 2023 if it itemized grants for 2023, else
+# 2022 only if no 2023 return of its own is in the releases (an expense
+# figure for 2023 on the matched list, or 2023 grant rows here).
+has_2023_return <- listed |>
+  transmute(funder_ein9 = ein9, has_2023_return = nzchar(operating_expenses_ty2023))
+all_rows <- bind_rows(pf_rows, schedule_i_rows)
+year_to_use <- all_rows |>
+  distinct(funder_ein9, tax_year) |>
+  left_join(has_2023_return, by = "funder_ein9") |>
   group_by(funder_ein9) |>
-  filter(tax_year == max(tax_year)) |>
-  ungroup()
+  summarise(tax_year = grant_year_to_use(tax_year, first(has_2023_return)), .groups = "drop") |>
+  filter(!is.na(tax_year))
+grant_rows <- all_rows |> semi_join(year_to_use, by = c("funder_ein9", "tax_year"))
+cat("funders with itemized rows for 2022 only but a 2023 return, so not carried back:",
+    n_distinct(all_rows$funder_ein9) - nrow(year_to_use), "\n")
 
 located <- recipient_in_davidson(
   grant_rows$recipient_ein9, grant_rows$recipient_state, grant_rows$recipient_city,
@@ -259,7 +271,16 @@ sheet_out <- sheet |>
   left_join(row_order, by = ".row") |>
   left_join(per_funder |> select(row_id, grants_all_recipients, grants_davidson_recipients, tax_year, check),
             by = "row_id") |>
-  mutate(tax_year = as.character(tax_year)) |>
+  mutate(
+    tax_year = as.character(tax_year),
+    # A foundation whose expenses fall back to 2022 (no 2023 990-PF in CORE)
+    # can still have its 2023 grants list in the e-file release: say so.
+    `Figure note` = if_else(
+      `Tax year` %in% "2022" & tax_year %in% "2023",
+      paste0(`Figure note`, ". Its tax year 2023 Form 990-PF grants list is in the e-file release and feeds the grant columns"),
+      `Figure note`
+    )
+  ) |>
   select(-.row, -row_id)
 names(sheet_out)[names(sheet_out) == "grants_all_recipients"] <- grant_columns[1]
 names(sheet_out)[names(sheet_out) == "grants_davidson_recipients"] <- grant_columns[2]

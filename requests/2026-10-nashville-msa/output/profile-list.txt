@@ -76,7 +76,7 @@ Warning messages:
 6                                                                                                                                    Removed from the list at the requester's request (see match note)
 7                                                                                                                                                    Church or church-affiliated: not required to file
 8                                                                                                                                            Recognized in 2024 or later; no tax year 2023 return seen
-9                                                                                                                             Private foundation; no tax year 2023 Form 990-PF in the IRS releases yet
+9                                                                                                               Private foundation; no tax year 2023 Form 990-PF in CORE (the source for expenses) yet
 10 Full Form 990 filed; two returns carry tax year 2023 (a change of fiscal year). The twelve-month return ending December 2023 is used; the other, a short period, reports $583,789 in total expenses
 11                                                                                                                                                    No longer on the IRS registry (last listed 2010)
 12                                                                                                 No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year 2022 ($1,472,424)

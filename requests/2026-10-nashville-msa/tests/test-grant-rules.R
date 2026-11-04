@@ -27,3 +27,11 @@ test_that("it is vectorised and keeps order", {
   out <- pf_recipient_is_individual(c("I", "PC", ""), c("", "", "Org"), c("A", "B", ""))
   expect_equal(out, c(TRUE, FALSE, FALSE))
 })
+
+
+test_that("2022 grants are used only when the funder has no 2023 return at all", {
+  expect_equal(grant_year_to_use(c(2022L, 2023L), has_2023_return = TRUE), 2023L)
+  expect_equal(grant_year_to_use(2022L, has_2023_return = FALSE), 2022L)
+  expect_equal(grant_year_to_use(2022L, has_2023_return = TRUE), NA_integer_)
+  expect_equal(grant_year_to_use(integer(0), has_2023_return = FALSE), NA_integer_)
+})

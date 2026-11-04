@@ -13,14 +13,16 @@
 1                     Grants paid to recipients in Davidson County, tax year 2022
 2                     Grants paid to recipients in Davidson County, tax year 2023
 3 No tax year 2023 or 2022 return in the IRS releases (see the IRS status column)
-4                                                   Total expenses, tax year 2022
-5                                                   Total expenses, tax year 2023
+4                                Removed from the list at the requester's request
+5                                                   Total expenses, tax year 2022
+6                                                   Total expenses, tax year 2023
     n
 1   1
 2  14
-3  25
-4  11
-5 108
+3  21
+4   4
+5  11
+6 108
 
 == Philanthropic organizations ==
                                           Name davidson_grants year_for_size

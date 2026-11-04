@@ -41,6 +41,7 @@ sized <- sheet |>
       is_philanthropic & !is.na(Size) ~
         paste0("Grants paid to recipients in Davidson County, tax year ", year_for_size),
       !is.na(Size) ~ paste0("Total expenses, tax year ", year_for_size),
+      grepl("^Removed from the list", `IRS status for tax year 2023`) ~ "Removed from the list at the requester's request",
       is_philanthropic ~ "No itemized grants for tax year 2023 or 2022 in the IRS releases",
       TRUE ~ "No tax year 2023 or 2022 return in the IRS releases (see the IRS status column)"
     )

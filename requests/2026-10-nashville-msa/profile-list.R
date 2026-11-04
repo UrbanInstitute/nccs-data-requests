@@ -262,7 +262,7 @@ filled <- matched |>
       !is.na(full_990_expenses) ~ "Full Form 990 filed",
       !is.na(ez_total_expenses) ~ "Form 990-EZ filed",
       !is.na(pf_total_expenses) ~ "Form 990-PF filed (private foundation)",
-      foundation_code %in% private_foundation_codes ~ "Private foundation; no tax year 2023 Form 990-PF in the IRS releases yet",
+      foundation_code %in% private_foundation_codes ~ "Private foundation; no tax year 2023 Form 990-PF in CORE (the source for expenses) yet",
       foundation_code %in% church_codes ~ "Church or church-affiliated: not required to file",
       !is.na(last_year_in_bmf) & as.integer(last_year_in_bmf) < 2023L ~
         paste0("No longer on the IRS registry (last listed ", last_year_in_bmf, ")"),
@@ -290,8 +290,16 @@ filled <- matched |>
     fiscal_year_end_on_sheet = if_else(use_2022, fiscal_year_end_ty2022, fiscal_year_end),
     pf_operating_admin_on_sheet = if_else(use_2022, pf_operating_admin_expenses_ty2022, pf_operating_admin_expenses),
     pf_grants_paid_on_sheet = if_else(use_2022, pf_grants_paid_ty2022, pf_grants_paid),
+    # The note says why 2022 is used and, where CORE and the e-file release
+    # carry different totals for that year, gives both.
     figure_note = case_when(
-      use_2022 ~ "Tax year 2022 figure: no tax year 2023 return in the IRS releases (see the IRS status column)",
+      use_2022 & sources_disagree_ty2022 ~ paste0(
+        "Tax year 2022 figure: no tax year 2023 return in the source used for expenses (see the IRS status column). ",
+        "CORE (SOI) reports $", trimws(format(core_total_expenses_ty2022, big.mark = ",")),
+        " for the year ending ", fiscal_year_end_ty2022, " and the e-file release reports $",
+        trimws(format(efile_total_expenses_ty2022, big.mark = ",")),
+        " for the same tax year; the CORE figure is used and the IRS status column quotes the e-file one"),
+      use_2022 ~ "Tax year 2022 figure: no tax year 2023 return in the source used for expenses (see the IRS status column)",
       TRUE ~ NA_character_
     )
   )

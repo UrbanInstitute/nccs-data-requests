@@ -292,3 +292,12 @@ Six findings on commits 7903e90 through f1dfe2f. All accepted.
 | 6 | Private reply: six not five additions without an address; $569,000 not $568,000; the metro-minus-Davidson difference includes Rutherford; the expense column is the return's total expenses line, not operating cost; the 990-N claim for Nashville Book Connection was unsupported | Confirmed | All reworded. |
 
 Upstream finding from item 2: the BMF geocodes the Memorial Foundation (62-1202302, Madison TN 37115) to Madison County in West Tennessee (coordinates near Jackson), while the other 203 resolved organizations in ZIP 37115 sit in Davidson County. That is a geocoder error in `nccs-data-bmf`, not something to override here; it is logged in `checklist.md` to raise upstream. Its effect here: Memorial is counted as registered outside Davidson in the list comparison and the funder-reach scope.
+
+## 2026-11-04, size bands and 2022 fallback (second-analyst review of commit 0192fb3)
+
+Four findings, all fixed in the next commit.
+
+1. Grant fallback carried funders back to 2022 when they merely itemized nothing for 2023 (FiftyForward, Music City PrEP Clinic, Rotary Club). Rule now in grant-rules.R `grant_year_to_use()`: 2022 only when the funder has no 2023 return at all. One funder falls back (Chamber Public Benefit Foundation).
+2. Figure note said "no 2023 return" for Joe C. Davis and Speer, whose 2023 990-PF grants list is in the e-file release. The IRS status now says CORE lacks the 2023 990-PF, and the grants script appends to the note that the 2023 grants list feeds the grant columns.
+3. Moves and Grooves: CORE $547,120 and the e-file release $568,604 for the same 2022 year. The Figure note now gives both; the CORE figure stays (same rule as 2023). Which filing version is the later one could not be told from the local records.
+4. Removed rows' Size basis now says removed, not "no return".
