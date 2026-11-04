@@ -7,7 +7,7 @@ if (file.exists(pins)) file.rename(pins, file.path(req, "data", paste0("_pins-",
 dir.create(file.path(req, "output"), showWarnings = FALSE)
 scripts <- c("build.R", "analysis-round1.R", "profile-charts.R", "profile-list.R",
              "profile-funders.R", "profile-boedecker.R", "profile-davidson-grants.R",
-             "validate-build.R")
+             "profile-size.R", "validate-build.R")
 for (s in scripts) {
   out <- file.path(req, "output", sub("\\.R$", ".txt", s))
   cat("==", s, "==\n")

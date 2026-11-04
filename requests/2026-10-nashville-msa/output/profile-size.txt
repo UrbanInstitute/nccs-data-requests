@@ -1,0 +1,57 @@
+== Size bands ==
+  is_philanthropic   Size  n
+1            FALSE  Large 25
+2            FALSE Medium 48
+3            FALSE  Small 46
+4            FALSE   <NA> 25
+5             TRUE  Large  3
+6             TRUE Medium  8
+7             TRUE  Small  4
+
+== Size basis ==
+                                                                       Size basis
+1                     Grants paid to recipients in Davidson County, tax year 2022
+2                     Grants paid to recipients in Davidson County, tax year 2023
+3 No tax year 2023 or 2022 return in the IRS releases (see the IRS status column)
+4                                                   Total expenses, tax year 2022
+5                                                   Total expenses, tax year 2023
+    n
+1   1
+2  14
+3  25
+4  11
+5 108
+
+== Philanthropic organizations ==
+                                          Name davidson_grants year_for_size
+1                         Boedecker Foundation          978357          2023
+2                     Carolyn Smith Foundation         1650000          2023
+3                            Charis Foundation          615500          2023
+4     Community Foundation of Middle Tennessee        27065181          2023
+5                        Dettwiller Foundation         7954833          2023
+6                             Frist Foundation        17432653          2023
+7                    HCA Healthcare Foundation         5935598          2023
+8                      Joe C. Davis Foundation         4252500          2023
+9                          Memorial Foundation         4625500          2023
+10 Nashville Chamber Public Benefit Foundation         1241362          2022
+11                            Speer Foundation         2887030          2023
+12              The Dan & Margaret Maddox Fund         1544553          2023
+13                       The Martin Foundation            1000          2023
+14             The Yarbrough Family Foundation          925368          2023
+15             United Way of Greater Nashville        18810820          2023
+     Size
+1   Small
+2  Medium
+3   Small
+4   Large
+5  Medium
+6   Large
+7  Medium
+8  Medium
+9  Medium
+10 Medium
+11 Medium
+12 Medium
+13  Small
+14  Small
+15  Large

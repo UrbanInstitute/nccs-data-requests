@@ -11,7 +11,11 @@
 # the BMF, else Tennessee ZIP, else city), and the check of the itemized
 # total against the return's own grants-paid line.
 #
-# Coverage: every listed private foundation with a 2023 990-PF in the
+# A funder with no tax year 2023 itemized grants in the releases gets its
+# tax year 2022 grants instead, and the sheet says which year each figure
+# is (requester's instruction, 2026-11-04).
+#
+# Coverage: every listed private foundation with a 2023 or 2022 990-PF in the
 # e-file release, wherever it is registered (the grants-paid rows are pulled from the public release by
 # EIN), and every listed Davidson-based full-990 filer with Schedule I rows
 # in the funder extract. Listed full-990 filers registered outside Davidson
@@ -27,7 +31,7 @@
 #   data/list_filled.xlsx                     the requester's filled sheet (profile-list.R)
 #
 # Outputs:
-#   output/listed_funders_davidson_grants_2023.csv   one row per listed funder: totals, Davidson part, check
+#   output/listed_funders_davidson_grants.csv   one row per listed funder: tax year, totals, Davidson part, check
 #   data/list_filled.xlsx                            the sheet with the grant columns added
 #   output/profile-davidson-grants.txt               console log (via run-all.R)
 
@@ -51,7 +55,7 @@ pf_release_years <- 2023:2024
 
 listed <- read.csv(file.path(data_dir, "list_matched.csv"), colClasses = "character") |>
   filter(nzchar(ein9)) |>
-  select(row_id, name, ein, ein9, foundation_code, source_form_line, pf_grants_paid)
+  select(row_id, name, ein, ein9, foundation_code, source_form_line, pf_grants_paid, pf_grants_paid_ty2022)
 
 # Every listed private foundation by BMF foundation code, not only those
 # with a 2023 990-PF in CORE: a fiscal-year filer's 2023 return can sit in
@@ -81,19 +85,19 @@ pf_raw <- purrr::map_dfr(pf_release_years, function(release_year) {
   raw_hash <- sha256_file(local_path)
   kept <- arrow::read_parquet(local_path) |>
     mutate(across(everything(), as.character)) |>
-    filter(ORG_EIN %in% listed_pf$ein9, RETURN_TYPE == "990PF", TAX_YEAR == "2023")
+    filter(ORG_EIN %in% listed_pf$ein9, RETURN_TYPE == "990PF", TAX_YEAR %in% c("2022", "2023"))
   record_pin(request_dir, "efilepf-v2_3-grants-paid-listed-foundations",
              vintage = basename(url), source = url, n_rows = nrow(kept),
-             note = paste("sha256 of raw file", raw_hash, "; tax year 2023 rows kept for the listed foundations"))
+             note = paste("sha256 of raw file", raw_hash, "; tax year 2022 and 2023 rows kept for the listed foundations"))
   unlink(local_path)
   kept
 })
 
-# One filing per foundation: latest timestamp, then the larger OBJECTID
-# (the rule in build.R).
+# One filing per foundation: the latest tax year it has (2023, else 2022),
+# then the latest timestamp, then the larger OBJECTID (the rule in build.R).
 pf_chosen <- pf_raw |>
-  distinct(ORG_EIN, RETURN_TIME_STAMP, OBJECTID) |>
-  arrange(ORG_EIN, desc(RETURN_TIME_STAMP), desc(OBJECTID)) |>
+  distinct(ORG_EIN, TAX_YEAR, RETURN_TIME_STAMP, OBJECTID) |>
+  arrange(ORG_EIN, desc(TAX_YEAR), desc(RETURN_TIME_STAMP), desc(OBJECTID)) |>
   group_by(ORG_EIN) |>
   slice(1) |>
   ungroup()
@@ -102,6 +106,7 @@ pf_rows <- pf_raw |>
   semi_join(pf_chosen, by = c("ORG_EIN", "OBJECTID")) |>
   transmute(
     source_table = "990-PF grants paid",
+    tax_year = as.integer(TAX_YEAR),
     funder_ein9 = ORG_EIN,
     recipient_ein9 = NA_character_,
     recipient_name = coalesce(na_if(PF_15_G_PAID_RECIP_NAME_ORG_L1, ""), PF_15_G_PAID_RECIP_NAME_PERS),
@@ -115,20 +120,24 @@ pf_rows <- pf_raw |>
   ) |>
   filter(!recipient_is_individual)
 
-cat("foundations with 2023 grant rows in the release:", n_distinct(pf_rows$funder_ein9), "of", nrow(listed_pf), "\n")
-cat("listed foundations with no 2023 grants-paid rows in the release (rows):",
+cat("foundations with grant rows in the release:", n_distinct(pf_rows$funder_ein9), "of", nrow(listed_pf), "\n")
+cat("listed foundations with no 2022 or 2023 grants-paid rows in the release (rows):",
     paste(listed_pf$row_id[!listed_pf$ein9 %in% pf_rows$funder_ein9], collapse = ", "), "\n")
 
 
 # --- 3. Schedule I rows for listed full-990 filers, from the funder extract ----
 
 schedule_i_rows <- arrow::read_parquet(file.path(data_dir, "funders_davidson_2019_2023.parquet")) |>
-  filter(tax_year == 2023, source_table != "990-PF grants paid", funder_ein9 %in% listed$ein9) |>
-  transmute(source_table, funder_ein9, recipient_ein9, recipient_name, recipient_city,
+  filter(tax_year %in% 2022:2023, source_table != "990-PF grants paid", funder_ein9 %in% listed$ein9) |>
+  transmute(source_table, tax_year, funder_ein9, recipient_ein9, recipient_name, recipient_city,
             recipient_state, recipient_zip5, recipient_is_individual,
             amount = coalesce(amount_cash, 0) + coalesce(amount_noncash, 0))
 
-grant_rows <- bind_rows(pf_rows, schedule_i_rows)
+# Each funder keeps its latest year with itemized grants: 2023, else 2022.
+grant_rows <- bind_rows(pf_rows, schedule_i_rows) |>
+  group_by(funder_ein9) |>
+  filter(tax_year == max(tax_year)) |>
+  ungroup()
 
 located <- recipient_in_davidson(
   grant_rows$recipient_ein9, grant_rows$recipient_state, grant_rows$recipient_city,
@@ -138,8 +147,10 @@ located <- recipient_in_davidson(
 grant_rows <- grant_rows |>
   mutate(in_davidson = located$in_davidson, located_by = located$located_by)
 
-cat("listed funders with itemized 2023 grants:", n_distinct(grant_rows$funder_ein9),
+cat("listed funders with itemized grants:", n_distinct(grant_rows$funder_ein9),
     "; grant rows:", nrow(grant_rows), "\n")
+cat("funders by the tax year used:\n")
+print(grant_rows |> distinct(funder_ein9, tax_year) |> count(tax_year) |> as.data.frame())
 cat("\n== How recipients were located ==\n")
 print(grant_rows |> count(located_by, in_davidson) |> as.data.frame())
 
@@ -154,13 +165,13 @@ print(grant_rows |> count(located_by, in_davidson) |> as.data.frame())
 # return cannot say which rows are the extra ones. The check text goes on
 # the sheet.
 panel_grants_line <- arrow::read_parquet(file.path(data_dir, "panel_990_national.parquet")) |>
-  filter(tax_year == 2023, ein9 %in% listed$ein9) |>
-  transmute(funder_ein9 = ein9, part_ix_grants_paid = exp_grants_paid)
+  filter(tax_year %in% 2022:2023, ein9 %in% listed$ein9) |>
+  transmute(funder_ein9 = ein9, tax_year, part_ix_grants_paid = exp_grants_paid)
 
 dollars <- function(x) paste0("$", format(round(x), big.mark = ",", trim = TRUE))
 
 per_funder <- grant_rows |>
-  group_by(funder_ein9, source_table) |>
+  group_by(funder_ein9, source_table, tax_year) |>
   summarise(
     grant_rows = n(),
     grants_all_recipients = sum(amount),
@@ -168,15 +179,16 @@ per_funder <- grant_rows |>
     grant_rows_davidson = sum(in_davidson),
     .groups = "drop"
   ) |>
-  left_join(listed |> select(ein9, row_id, name, ein, pf_grants_paid), by = c("funder_ein9" = "ein9")) |>
-  left_join(panel_grants_line, by = "funder_ein9") |>
+  left_join(listed |> select(ein9, row_id, name, ein, pf_grants_paid, pf_grants_paid_ty2022),
+            by = c("funder_ein9" = "ein9")) |>
+  left_join(panel_grants_line, by = c("funder_ein9", "tax_year")) |>
   mutate(
     davidson_share = round(grants_davidson_recipients / grants_all_recipients, 3),
-    return_grants_line = if_else(source_table == "990-PF grants paid",
-                                 as.numeric(pf_grants_paid), part_ix_grants_paid),
+    pf_line_for_year = if_else(tax_year == 2023L, as.numeric(pf_grants_paid), as.numeric(pf_grants_paid_ty2022)),
+    return_grants_line = if_else(source_table == "990-PF grants paid", pf_line_for_year, part_ix_grants_paid),
     check = case_when(
       source_table == "990-PF grants paid" & is.na(return_grants_line) ~
-        "Itemized grants could not be checked: no 2023 990-PF in CORE carries the grants-paid line",
+        paste0("Itemized grants could not be checked: no ", tax_year, " 990-PF in CORE carries the grants-paid line"),
       source_table == "990-PF grants paid" & abs(grants_all_recipients - return_grants_line) < 1 ~
         "Itemized grants equal the return's grants-paid line (990-PF Part I line 25)",
       source_table == "990-PF grants paid" ~
@@ -199,9 +211,9 @@ print(per_funder |>
                   return_line = round(return_grants_line)) |>
         as.data.frame())
 
-cat("\n== Listed funders, tax year 2023: grants to all recipients and to Davidson County recipients ==\n")
+cat("\n== Listed funders: grants to all recipients and to Davidson County recipients, by the tax year used ==\n")
 print(per_funder |>
-        transmute(row_id, source = substr(source_table, 1, 10), grant_rows,
+        transmute(row_id, tax_year, source = substr(source_table, 1, 10), grant_rows,
                   all = round(grants_all_recipients), davidson = round(grants_davidson_recipients),
                   share = davidson_share, check = substr(check, 1, 40)) |>
         as.data.frame())
@@ -217,20 +229,26 @@ stopifnot(nrow(boedecker_2023) == 1, nrow(boedecker_here) == 1,
 cat("\nBoedecker 2023 Davidson figure agrees with profile-boedecker.R:",
     dollars(boedecker_here$grants_davidson_recipients), "\n")
 
-write.csv(per_funder |> select(-pf_grants_paid, -part_ix_grants_paid),
-          file.path(output_dir, "listed_funders_davidson_grants_2023.csv"), row.names = FALSE)
+write.csv(per_funder |> select(-pf_grants_paid, -pf_grants_paid_ty2022, -pf_line_for_year, -part_ix_grants_paid),
+          file.path(output_dir, "listed_funders_davidson_grants.csv"), row.names = FALSE)
 
 
 # --- 5. Add the columns to the requester's sheet (idempotent) ---------------
 
 grant_columns <- c(
-  "Grants paid, tax year 2023, all recipients",
-  "Grants paid, tax year 2023, to recipients in Davidson County",
+  "Grants paid, all recipients",
+  "Grants paid, to recipients in Davidson County",
+  "Grants paid: tax year",
   "Grants paid: check against the return"
+)
+# Names from an earlier version of this script, dropped if still present.
+old_grant_columns <- c(
+  "Grants paid, tax year 2023, all recipients",
+  "Grants paid, tax year 2023, to recipients in Davidson County"
 )
 
 sheet <- readxl::read_excel(file.path(data_dir, "list_filled.xlsx"), sheet = "List with expenses") |>
-  select(-any_of(grant_columns)) |>
+  select(-any_of(c(grant_columns, old_grant_columns))) |>
   mutate(.row = row_number())
 
 row_order <- read.csv(file.path(data_dir, "list_matched.csv"), colClasses = "character") |>
@@ -239,11 +257,14 @@ stopifnot(nrow(row_order) == nrow(sheet))
 
 sheet_out <- sheet |>
   left_join(row_order, by = ".row") |>
-  left_join(per_funder |> select(row_id, grants_all_recipients, grants_davidson_recipients, check), by = "row_id") |>
+  left_join(per_funder |> select(row_id, grants_all_recipients, grants_davidson_recipients, tax_year, check),
+            by = "row_id") |>
+  mutate(tax_year = as.character(tax_year)) |>
   select(-.row, -row_id)
 names(sheet_out)[names(sheet_out) == "grants_all_recipients"] <- grant_columns[1]
 names(sheet_out)[names(sheet_out) == "grants_davidson_recipients"] <- grant_columns[2]
-names(sheet_out)[names(sheet_out) == "check"] <- grant_columns[3]
+names(sheet_out)[names(sheet_out) == "tax_year"] <- grant_columns[3]
+names(sheet_out)[names(sheet_out) == "check"] <- grant_columns[4]
 
 writexl::write_xlsx(list(`List with expenses` = sheet_out), file.path(data_dir, "list_filled.xlsx"))
 cat("\nsheet rows:", nrow(sheet_out), "; rows with grant columns filled:",

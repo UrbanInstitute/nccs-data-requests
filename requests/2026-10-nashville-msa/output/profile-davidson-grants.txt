@@ -1,60 +1,71 @@
 listed private foundations: 12 
 pinned: efilepf-v2_3-grants-paid-listed-foundations [PF-P15-T01-SUPPLEMENTARY-INFO-GRANT-PAID-2023.parquet] (1894 rows)
 pinned: efilepf-v2_3-grants-paid-listed-foundations [PF-P15-T01-SUPPLEMENTARY-INFO-GRANT-PAID-2024.parquet] (0 rows)
-foundations with 2023 grant rows in the release: 12 of 12 
-listed foundations with no 2023 grants-paid rows in the release (rows):  
-listed funders with itemized 2023 grants: 34 ; grant rows: 3267 
+foundations with grant rows in the release: 12 of 12 
+listed foundations with no 2022 or 2023 grants-paid rows in the release (rows):  
+listed funders with itemized grants: 38 ; grant rows: 3277 
+funders by the tax year used:
+  tax_year  n
+1     2022  4
+2     2023 34
+
 == How recipients were located ==
           located_by in_davidson   n
 1     EIN on the BMF       FALSE 412
-2     EIN on the BMF        TRUE 834
+2     EIN on the BMF        TRUE 840
 3 Tennessee ZIP code       FALSE 480
-4 Tennessee ZIP code        TRUE 996
+4 Tennessee ZIP code        TRUE 998
 5          city name       FALSE   3
 6          city name        TRUE   4
-7  outside Tennessee       FALSE 538
+7  outside Tennessee       FALSE 540
+
 == Funders whose itemized grants do not reconcile to the return (or cannot be checked) ==
   row_id       source_table itemized return_line
 1     41 990-PF grants paid 21832616    18941403
 2     34 990-PF grants paid 18211653    18115653
 3     48 990-PF grants paid  7090000          NA
 4    107 990-PF grants paid  6827225          NA
-== Listed funders, tax year 2023: grants to all recipients and to Davidson County recipients ==
-   row_id     source grant_rows      all davidson share
-1      38 Schedule I          3 75408898 75403898 1.000
-2     103 Schedule I        281 66541674 12737377 0.191
-3      19 Schedule I       1263 59735389 27065181 0.453
-4     128 Schedule I        313 26933228 18810820 0.698
-5      41 990-PF gra        294 21832616  5935598 0.272
-6      34 990-PF gra        171 18211653 17432653 0.957
-7      93 Schedule I          1  9388257  9388257 1.000
-8      26 990-PF gra         76  8573833  7954833 0.928
-9      12 Schedule I         11  7121101  3164260 0.444
-10     48 990-PF gra        107  7090000  4252500 0.600
-11    107 990-PF gra         59  6827225  2887030 0.423
-12     59 990-PF gra        194  5330020  4625500 0.868
-13     31 Schedule I          9  5249564  4678253 0.891
-14    123 990-PF gra         81  4382218   925368 0.211
-15    132 Schedule I         19  3967211  2493007 0.628
-16    144 Schedule I          4  3509342  3000000 0.855
-17     11 990-PF gra        147  3021200  1650000 0.546
-18     79 Schedule I          1  1965118  1965118 1.000
-19     15 990-PF gra         47  1800500   615500 0.342
-20    159 990-PF gra         73  1751413  1544553 0.882
-21      8 990-PF gra         46  1504668   978357 0.650
-22     47 Schedule I         23  1036859   801188 0.773
-23    139 Schedule I          8   488675   196000 0.401
-24     22 Schedule I          1   215579   215579 1.000
-25     27 Schedule I          1   209657   209657 1.000
-26    118 Schedule I          9   195997   190997 0.974
-27     39 Schedule I          1    99761        0 0.000
-28     85 Schedule I          6    76174        0 0.000
-29     91 Schedule I          2    25000        0 0.000
-30    111 Schedule I          1    19589    19589 1.000
-31     53 Schedule I          1    10000    10000 1.000
-32    112 Schedule I         12     8000        0 0.000
-33    155 Schedule I          1     5000     5000 1.000
-34    119 990-PF gra          1     1000     1000 1.000
+
+== Listed funders: grants to all recipients and to Davidson County recipients, by the tax year used ==
+   row_id tax_year     source grant_rows      all davidson share
+1      38     2023 Schedule I          3 75408898 75403898 1.000
+2     103     2023 Schedule I        281 66541674 12737377 0.191
+3      19     2023 Schedule I       1263 59735389 27065181 0.453
+4     128     2023 Schedule I        313 26933228 18810820 0.698
+5      41     2023 990-PF gra        294 21832616  5935598 0.272
+6      34     2023 990-PF gra        171 18211653 17432653 0.957
+7      93     2023 Schedule I          1  9388257  9388257 1.000
+8      26     2023 990-PF gra         76  8573833  7954833 0.928
+9      12     2023 Schedule I         11  7121101  3164260 0.444
+10     48     2023 990-PF gra        107  7090000  4252500 0.600
+11    107     2023 990-PF gra         59  6827225  2887030 0.423
+12     59     2023 990-PF gra        194  5330020  4625500 0.868
+13     31     2023 Schedule I          9  5249564  4678253 0.891
+14    123     2023 990-PF gra         81  4382218   925368 0.211
+15    132     2023 Schedule I         19  3967211  2493007 0.628
+16    144     2023 Schedule I          4  3509342  3000000 0.855
+17     11     2023 990-PF gra        147  3021200  1650000 0.546
+18     79     2023 Schedule I          1  1965118  1965118 1.000
+19     15     2023 990-PF gra         47  1800500   615500 0.342
+20    159     2023 990-PF gra         73  1751413  1544553 0.882
+21      8     2023 990-PF gra         46  1504668   978357 0.650
+22     70     2022 Schedule I          4  1241362  1241362 1.000
+23     47     2023 Schedule I         23  1036859   801188 0.773
+24    139     2023 Schedule I          8   488675   196000 0.401
+25     22     2023 Schedule I          1   215579   215579 1.000
+26     27     2023 Schedule I          1   209657   209657 1.000
+27    118     2023 Schedule I          9   195997   190997 0.974
+28     39     2023 Schedule I          1    99761        0 0.000
+29     85     2023 Schedule I          6    76174        0 0.000
+30     32     2022 Schedule I          2    62758    62758 1.000
+31     91     2023 Schedule I          2    25000        0 0.000
+32     67     2022 Schedule I          3    23000    15500 0.674
+33    111     2023 Schedule I          1    19589    19589 1.000
+34     99     2022 Schedule I          1    15000        0 0.000
+35     53     2023 Schedule I          1    10000    10000 1.000
+36    112     2023 Schedule I         12     8000        0 0.000
+37    155     2023 Schedule I          1     5000     5000 1.000
+38    119     2023 990-PF gra          1     1000     1000 1.000
                                       check
 1  Itemized Schedule I grants are within th
 2  Itemized Schedule I grants are within th
@@ -89,6 +100,13 @@ listed funders with itemized 2023 grants: 34 ; grant rows: 3267
 31 Itemized Schedule I grants are within th
 32 Itemized Schedule I grants are within th
 33 Itemized Schedule I grants are within th
-34 Itemized grants equal the return's grant
+34 Itemized Schedule I grants are within th
+35 Itemized Schedule I grants are within th
+36 Itemized Schedule I grants are within th
+37 Itemized Schedule I grants are within th
+38 Itemized grants equal the return's grant
+
 Boedecker 2023 Davidson figure agrees with profile-boedecker.R: $978,357 
-sheet rows: 159 ; rows with grant columns filled: 34 
+
+sheet rows: 159 ; rows with grant columns filled: 38 
+exit 0

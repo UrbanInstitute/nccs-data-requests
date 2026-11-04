@@ -113,22 +113,21 @@ cat("matched EINs not in the TN extract:", length(missing_from_tn),
     "; found nationally:", nrow(registry_extra), "\n")
 
 
-# --- 3. Tax year 2023 returns: e-file panel and CORE ------------------------
+# --- 3. Returns by form year: e-file panel and CORE --------------------------
 #
-# "Tax year 2023" here is the IRS form year: the Form 990 whose accounting
-# period begins in 2023 (calendar 2023, or a fiscal year ending in 2024).
-# That is how the e-file panel labels returns, and how every round 1 figure
-# was built. The CORE merged tier instead labels a return by the year its
-# period ENDS, so a June 2023 fiscal year sits under CORE tax year 2023 but is
-# the 2022 form. CORE 2023 and 2024 are read together and relabeled.
+# "Tax year" here is the IRS form year: the Form 990 whose accounting
+# period begins in that year (calendar year, or a fiscal year ending in the
+# next). That is how the e-file panel labels returns, and how every round 1
+# figure was built. The CORE merged tier instead labels a return by the year
+# its period ENDS, so a June 2023 fiscal year sits under CORE tax year 2023
+# but is the 2022 form. CORE 2022 to 2024 are read together and relabeled.
+#
+# Tax year 2023 is the figure asked for. Where an organization has no 2023
+# return in the releases, the requester asked (2026-11-04) for its tax year
+# 2022 figure, flagged as such.
 
 efile_all <- arrow::read_parquet(file.path(data_dir, "panel_990_national.parquet")) |>
   filter(ein9 %in% matched$ein9)
-
-efile_2023 <- efile_all |>
-  filter(tax_year == 2023) |>
-  transmute(ein9, efile_name = org_name, efile_total_expenses = exp_total,
-            efile_employees = employees)
 
 latest_full_990 <- efile_all |>
   group_by(ein9) |>
@@ -136,7 +135,9 @@ latest_full_990 <- efile_all |>
   ungroup() |>
   transmute(ein9, latest_full_990_year = tax_year, latest_full_990_expenses = exp_total)
 
-core_raw <- bind_rows(lapply(2023:2024, function(core_year) {
+core_years <- 2022:2024
+
+core_combined_raw <- bind_rows(lapply(core_years, function(core_year) {
   read_core(
     request_dir, tier = "merged", tax_year = core_year, form = "990combined",
     columns = c("ein", "tax_year", "source_form", "tax_period", "total_expenses"),
@@ -144,87 +145,114 @@ core_raw <- bind_rows(lapply(2023:2024, function(core_year) {
   )
 }))
 
-core_2023 <- core_raw |>
-  mutate(
-    ein9 = gsub("-", "", ein),
-    period_end_year = as.integer(substr(tax_period, 1, 4)),
-    period_end_month = as.integer(substr(tax_period, 5, 6)),
-    form_year = if_else(period_end_month == 12L, period_end_year, period_end_year - 1L)
-  ) |>
-  filter(ein9 %in% matched$ein9, form_year == 2023L) |>
-  arrange(ein9, desc(tax_period)) |>
-  distinct(ein9, .keep_all = TRUE) |>
-  transmute(ein9, core_form = source_form, core_tax_period = tax_period,
-            core_total_expenses = total_expenses)
-
-core_pf_2023 <- bind_rows(lapply(2023:2024, function(core_year) {
+core_pf_raw <- bind_rows(lapply(core_years, function(core_year) {
   read_core(
     request_dir, tier = "merged", tax_year = core_year, form = "990pf",
     columns = c("ein", "tax_year", "tax_period", "total_expenses_col_a",
                 "total_operating_admin_expenses_col_a", "contributions_paid"),
     note = "990-PF total expenses, operating expenses and grants paid for listed foundations; relabeled to form year"
   )
-})) |>
-  mutate(
-    ein9 = gsub("-", "", ein),
-    period_end_year = as.integer(substr(tax_period, 1, 4)),
-    period_end_month = as.integer(substr(tax_period, 5, 6)),
-    form_year = if_else(period_end_month == 12L, period_end_year, period_end_year - 1L)
-  ) |>
-  filter(ein9 %in% matched$ein9, form_year == 2023L) |>
-  arrange(ein9, desc(tax_period)) |>
-  distinct(ein9, .keep_all = TRUE) |>
-  transmute(ein9, pf_tax_period = tax_period, pf_total_expenses = total_expenses_col_a,
-            pf_operating_admin_expenses = total_operating_admin_expenses_col_a,
-            pf_grants_paid = contributions_paid)
+}))
 
-stopifnot(!any(duplicated(efile_2023$ein9)))
+#' Keep one CORE return per listed organization for a form year
+#'
+#' @param core_rows CORE rows with `ein` and `tax_period` (YYYYMM).
+#' @param year The form year wanted.
+#' @return The rows for listed organizations whose form year is `year`, one
+#'   per EIN (the latest period), with an `ein9` column added.
+core_for_form_year <- function(core_rows, year) {
+  core_rows |>
+    mutate(
+      ein9 = gsub("-", "", ein),
+      period_end_year = as.integer(substr(tax_period, 1, 4)),
+      period_end_month = as.integer(substr(tax_period, 5, 6)),
+      form_year = if_else(period_end_month == 12L, period_end_year, period_end_year - 1L)
+    ) |>
+    filter(ein9 %in% matched$ein9, form_year == year) |>
+    arrange(ein9, desc(tax_period)) |>
+    distinct(ein9, .keep_all = TRUE)
+}
+
+#' Build the expense figure for every listed organization for one form year
+#'
+#' @param year The form year.
+#' @return One row per listed EIN that has any return for the year: the
+#'   source pieces (e-file, CORE 990/990-EZ, CORE 990-PF), the figure
+#'   chosen, the form and line it comes from, and the fiscal year end.
+#' @details CORE first: it carries the accounting period, so amount and
+#'   period come from the same return. The e-file panel fills in where CORE
+#'   has no 990. When both hold a full 990 for the year and disagree, the
+#'   organization filed two returns labelled with that year (a fiscal-year
+#'   change produces a twelve-month return and a short one); CORE's
+#'   twelve-month return is used and `sources_disagree` is TRUE.
+figures_for_form_year <- function(year) {
+  efile_year <- efile_all |>
+    filter(tax_year == year) |>
+    transmute(ein9, efile_name = org_name, efile_total_expenses = exp_total,
+              efile_employees = employees)
+  stopifnot(!any(duplicated(efile_year$ein9)))
+
+  core_year <- core_for_form_year(core_combined_raw, year) |>
+    transmute(ein9, core_form = source_form, core_tax_period = tax_period,
+              core_total_expenses = total_expenses)
+
+  pf_year <- core_for_form_year(core_pf_raw, year) |>
+    transmute(ein9, pf_tax_period = tax_period, pf_total_expenses = total_expenses_col_a,
+              pf_operating_admin_expenses = total_operating_admin_expenses_col_a,
+              pf_grants_paid = contributions_paid)
+
+  tibble(ein9 = union(union(efile_year$ein9, core_year$ein9), pf_year$ein9)) |>
+    left_join(efile_year, by = "ein9") |>
+    left_join(core_year, by = "ein9") |>
+    left_join(pf_year, by = "ein9") |>
+    mutate(
+      full_990_expenses = coalesce(
+        if_else(core_form %in% "990", core_total_expenses, NA_real_),
+        efile_total_expenses
+      ),
+      expenses_source = case_when(
+        core_form %in% "990" & !is.na(efile_total_expenses) ~ "e-file and CORE (SOI) both hold the full 990",
+        !is.na(efile_total_expenses) ~ "e-file full 990 (not in the CORE release)",
+        core_form %in% "990" ~ "CORE (SOI) full 990 (not in the e-file release)",
+        TRUE ~ NA_character_
+      ),
+      sources_disagree = core_form %in% "990" & !is.na(efile_total_expenses) &
+        abs(core_total_expenses - efile_total_expenses) > 1,
+      ez_total_expenses = if_else(core_form %in% "990ez", core_total_expenses, NA_real_),
+      operating_expenses = coalesce(full_990_expenses, ez_total_expenses, pf_total_expenses),
+      source_form_line = case_when(
+        !is.na(full_990_expenses) ~ "Form 990, Part I line 18, total expenses",
+        !is.na(ez_total_expenses) ~ "Form 990-EZ, line 17, total expenses",
+        !is.na(pf_total_expenses) ~ "Form 990-PF, Part I line 26, total expenses and disbursements (includes grants paid)",
+        TRUE ~ NA_character_
+      ),
+      period_for_figure = coalesce(core_tax_period, pf_tax_period),
+      fiscal_year_end = if_else(
+        !is.na(period_for_figure),
+        format(as.Date(paste0(period_for_figure, "01"), "%Y%m%d"), "%B %Y"),
+        NA_character_
+      )
+    ) |>
+    filter(!is.na(operating_expenses))
+}
+
+figures_2023 <- figures_for_form_year(2023L) |>
+  rename(operating_expenses_ty2023 = operating_expenses)
+figures_2022 <- figures_for_form_year(2022L) |>
+  rename_with(function(column) paste0(column, "_ty2022"), -ein9)
 
 
-# --- 4. Assemble: expenses where a full 990 exists, otherwise a reason -------
+# --- 4. Assemble: expenses where a return exists, otherwise a reason ---------
 
 private_foundation_codes <- c("2", "3", "4")
 church_codes <- c("10")
 
 filled <- matched |>
   left_join(registry, by = "ein") |>
-  left_join(efile_2023, by = "ein9") |>
-  left_join(core_2023, by = "ein9") |>
+  left_join(figures_2023, by = "ein9") |>
   left_join(latest_full_990, by = "ein9") |>
-  left_join(core_pf_2023, by = "ein9") |>
+  left_join(figures_2022, by = "ein9") |>
   mutate(
-    # CORE first: it carries the accounting period, so amount and period come
-    # from the same return. The e-file panel fills in where CORE has no 990.
-    # When both hold a full 990 for the year and disagree, the organization
-    # filed two returns labelled 2023 (a fiscal-year change produces a
-    # twelve-month return and a short one); CORE's twelve-month return is used
-    # and the status column says so.
-    full_990_expenses = coalesce(
-      if_else(core_form %in% "990", core_total_expenses, NA_real_),
-      efile_total_expenses
-    ),
-    expenses_source = case_when(
-      core_form %in% "990" & !is.na(efile_total_expenses) ~ "e-file and CORE (SOI) both hold the full 990",
-      !is.na(efile_total_expenses) ~ "e-file full 990 (not in the CORE release)",
-      core_form %in% "990" ~ "CORE (SOI) full 990 (not in the e-file release)",
-      TRUE ~ NA_character_
-    ),
-    sources_disagree = core_form %in% "990" & !is.na(efile_total_expenses) &
-      abs(core_total_expenses - efile_total_expenses) > 1,
-    ez_total_expenses = if_else(core_form %in% "990ez", core_total_expenses, NA_real_),
-    operating_expenses_ty2023 = coalesce(full_990_expenses, ez_total_expenses, pf_total_expenses),
-    source_form_line = case_when(
-      !is.na(full_990_expenses) ~ "Form 990, Part I line 18, total expenses",
-      !is.na(ez_total_expenses) ~ "Form 990-EZ, line 17, total expenses",
-      !is.na(pf_total_expenses) ~ "Form 990-PF, Part I line 26, total expenses and disbursements (includes grants paid)",
-      TRUE ~ NA_character_
-    ),
-    period_for_figure = coalesce(core_tax_period, pf_tax_period),
-    fiscal_year_end = if_else(
-      !is.na(period_for_figure),
-      format(as.Date(paste0(period_for_figure, "01"), "%Y%m%d"), "%B %Y"),
-      NA_character_
-    ),
     status_ty2023 = case_when(
       decision == "removed" ~ "Removed from the list at the requester's request (see match note)",
       decision == "none" ~ "Not matched to the IRS registry",
@@ -243,6 +271,28 @@ filled <- matched |>
         paste0("No tax year 2023 full 990 in the IRS releases yet; last full 990 seen is tax year ",
                latest_full_990_year, " ($", trimws(format(latest_full_990_expenses, big.mark = ",")), ")"),
       TRUE ~ "No tax year 2023 full 990 or 990-EZ in the IRS releases (a 990-N postcard filer, a late filer, or not filing; the releases do not say which)"
+    ),
+    # The figure on the sheet: tax year 2023, else tax year 2022 flagged.
+    # Removed rows get no figure at all.
+    use_2022 = decision != "removed" & is.na(operating_expenses_ty2023) & !is.na(operating_expenses_ty2022),
+    figure_tax_year = case_when(
+      decision == "removed" ~ NA_character_,
+      !is.na(operating_expenses_ty2023) ~ "2023",
+      use_2022 ~ "2022",
+      TRUE ~ NA_character_
+    ),
+    operating_expenses_on_sheet = case_when(
+      figure_tax_year == "2023" ~ operating_expenses_ty2023,
+      figure_tax_year == "2022" ~ operating_expenses_ty2022,
+      TRUE ~ NA_real_
+    ),
+    source_form_line_on_sheet = if_else(use_2022, source_form_line_ty2022, source_form_line),
+    fiscal_year_end_on_sheet = if_else(use_2022, fiscal_year_end_ty2022, fiscal_year_end),
+    pf_operating_admin_on_sheet = if_else(use_2022, pf_operating_admin_expenses_ty2022, pf_operating_admin_expenses),
+    pf_grants_paid_on_sheet = if_else(use_2022, pf_grants_paid_ty2022, pf_grants_paid),
+    figure_note = case_when(
+      use_2022 ~ "Tax year 2022 figure: no tax year 2023 return in the IRS releases (see the IRS status column)",
+      TRUE ~ NA_character_
     )
   )
 
@@ -254,12 +304,13 @@ sheet_out <- filled |>
     Name = name,
     `Organization Type` = list_raw$`Organization Type`,
     Address = address,
-    `Operating Expenses` = operating_expenses_ty2023,
-    `Source form and line` = source_form_line,
-    `Tax year` = if_else(!is.na(operating_expenses_ty2023), "2023", NA_character_),
-    `Fiscal year end` = if_else(!is.na(operating_expenses_ty2023), fiscal_year_end, NA_character_),
-    `990-PF only: operating and administrative expenses (line 24)` = pf_operating_admin_expenses,
-    `990-PF only: grants paid (line 25)` = pf_grants_paid,
+    `Operating Expenses` = operating_expenses_on_sheet,
+    `Source form and line` = if_else(!is.na(figure_tax_year), source_form_line_on_sheet, NA_character_),
+    `Tax year` = figure_tax_year,
+    `Figure note` = figure_note,
+    `Fiscal year end` = if_else(!is.na(figure_tax_year), fiscal_year_end_on_sheet, NA_character_),
+    `990-PF only: operating and administrative expenses (line 24)` = pf_operating_admin_on_sheet,
+    `990-PF only: grants paid (line 25)` = pf_grants_paid_on_sheet,
     `IRS status for tax year 2023` = status_ty2023,
     `EIN` = ein,
     `Name on IRS registry` = org_name_display,
@@ -296,6 +347,11 @@ cat("\n== Full-990 rows: release coverage ==\n")
 print(filled |> filter(!is.na(full_990_expenses)) |> count(expenses_source) |> as.data.frame())
 cat("rows where CORE and e-file totals differ by more than $1:", sum(filled$sources_disagree), "\n")
 cat("filled rows with a fiscal year end from CORE:", sum(!is.na(filled$fiscal_year_end) & !is.na(filled$operating_expenses_ty2023)), "\n")
+
+cat("\n== Rows carrying a tax year 2022 figure because 2023 is not in the releases ==\n")
+print(filled |> filter(use_2022) |> count(source_form_line_ty2022) |> as.data.frame())
+cat("rows with a figure on the sheet:", sum(!is.na(filled$figure_tax_year)),
+    "(2023:", sum(filled$figure_tax_year %in% "2023"), "; 2022:", sum(filled$use_2022), ")\n")
 
 cat("\n== Total expenses, tax year 2023, all filled rows ==\n")
 print(summary(filled$operating_expenses_ty2023))
