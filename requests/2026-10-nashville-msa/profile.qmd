@@ -74,7 +74,7 @@ Human services organizations are not larger than the rest of the nonprofits in o
 
 The IRS recognized 130 to 200 Davidson organizations a year from 2014 to 2021. The number then rose to 248 in 2022, 266 in 2023, 324 in 2024 and 347 in 2025. Human services charities followed the same path.
 
-One caveat applies. Recognition is the year the IRS approved the organization, which can be later than the year it began work.
+Two caveats apply. Recognition is the year the IRS approved the organization, which can be later than the year it began work. And the chart counts only organizations still in the IRS list today, so earlier years look smaller than they were and the true rise is less steep.
 
 ![Davidson County organizations recognized by the IRS, by year](output/chart_b_starts.png)
 

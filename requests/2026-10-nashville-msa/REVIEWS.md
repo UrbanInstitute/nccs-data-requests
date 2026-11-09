@@ -325,3 +325,13 @@ Four findings, all fixed in the next commit.
 
 The stakeholder version of the profile is `profile.qmd`. It adds a check of the listed organizations against the November 2026 IRS revocation list: eight of 147 appear on it, seven are exempt again, one is not. Organization names are kept out of the public file.
 
+## 2026-11-09, second-analyst review of PR 18 (the stakeholder profile)
+
+Three findings on `profile.qmd` at 221bb3c, all accepted.
+
+1. The summary said "our sample is stable", inferred from the exit rate alone. Removed; the bullet now states only the measured rate. Organizations also skip years, and only 625 filed in both 2019 and 2023 against 757 and 881 filers in each year.
+2. The recognitions section had lost its survival caveat. Restored in one plain sentence: the chart counts only organizations still in the BMF today, so earlier years look smaller than they were.
+3. The sources note said hospitals and universities are found by classification code alone. It now says two universities with a blank code are added by hand.
+
+The Word file sent to the requester earlier the same day predates these three changes.
+
