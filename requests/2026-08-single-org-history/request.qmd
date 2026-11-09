@@ -1,0 +1,182 @@
+---
+title: "One private foundation, 35 years of filings: reading a 990-PF history in plain language"
+date: 2026-08-28
+description: "What NCCS holds on a single private foundation from 1989 to the present, and how to read it without a data dictionary."
+draft: true
+format: gfm
+knitr:
+  opts_chunk:
+    dev: png
+type: methods
+categories:
+  - core
+  - private-foundations
+author:
+  - id: thiya
+citation:
+  container-title: National Center for Charitable Statistics
+  volume: 1
+  issue: 1
+---
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(knitr)
+source(here::here("R", "request_read.R"))
+req <- here::here("requests", "2026-08-single-org-history")
+EIN <- "54-6032840"
+```
+
+## The ask
+
+> Everything NCCS holds on one organization (a single EIN) from 1989 to the
+> present, delivered so that a reader with no data background can follow it.
+
+The EIN resolves in the Unified BMF to a Virginia 501(c)(3) **private
+non-operating foundation** (foundation code 4), so its annual return is
+**Form 990-PF**, not Form 990. That decides which CORE partitions to read:
+`990pf`, merged tier, 1989 through the latest published year (2024).
+
+## Data
+
+```{r read, message=FALSE, warning=FALSE}
+cols <- c("ein", "tax_period", "tax_year", "subsection_cd",
+          "contributions_received", "dividends_interest_excluded",
+          "interest_savings_excluded", "capital_gain", "other_income",
+          "total_revenue_col_a", "net_investment_income",
+          "compensation_officers", "total_operating_admin_expenses_col_a",
+          "contributions_paid", "total_expenses_col_a", "total_expenses_col_d",
+          "excess_revenue_over_expenses", "excise_tax_net_investment_income",
+          "total_assets_eoy", "fair_mkt_value_total_assets_eoy",
+          "total_liabilities_eoy", "total_fund_net_worth_eoy",
+          "total_investments_securities", "minimum_investment_return",
+          "distributable_amount", "qualifying_distributions_curr_yr",
+          "undistributed_income_current_yr", "source_pipeline")
+
+# Read year-by-year. Stacking all 36 partitions into one Arrow dataset fails
+# on this EIN with an int32 overflow (Arrow unifies a column to int32 across
+# partitions where some years hold values > 2^31); see the upstream note in
+# checklist.md. Per-year reads sidestep the unified schema.
+pf <- bind_rows(lapply(1989:2024, function(y) {
+  nccsdata::nccs_read_core(tier = "merged", tax_year = y, form = "990pf",
+                           columns = cols, collect = FALSE, confirm = FALSE) |>
+    filter(ein == EIN) |>
+    collect() |>
+    mutate(across(where(is.numeric), as.numeric))
+})) |> arrange(tax_period)
+
+record_pin(req, "core-merged", vintage = "merged",
+           source = nccsdata::nccs_core_url(tier = "merged", tax_year = 2024,
+                                            form = "990pf"),
+           n_rows = nrow(pf),
+           note = "990-PF partitions 1989-2024 read year-by-year, one EIN")
+
+bmf <- read_bmf_master(req, collect = FALSE,
+                       note = "identity check for one EIN") |>
+  filter(ein == EIN) |> collect()
+```
+
+`r nrow(pf)` filings came back. Years with no filing on file:
+`r paste(setdiff(1989:2024, pf$tax_year), collapse = ", ")`.
+
+## What each number means
+
+A 990-PF has three stories on it. Restated for a reader who has never seen
+one:
+
+| Plain-language label | 990-PF line | CORE column |
+|---|---|---|
+| Money the foundation received as gifts | Part I, line 1 | `contributions_received` |
+| Investment income (dividends and interest) | Part I, lines 3 + 4 | `dividends_interest_excluded` + `interest_savings_excluded` |
+| Gain or loss from selling investments | Part I, line 6a | `capital_gain` |
+| **Total income for the year** | Part I, line 12 | `total_revenue_col_a` |
+| Grants and gifts the foundation gave out | Part I, line 25 | `contributions_paid` |
+| Cost of running the foundation | Part I, line 24 | `total_operating_admin_expenses_col_a` |
+| **Total spending for the year** | Part I, line 26 | `total_expenses_col_a` |
+| **What the foundation was worth at year end** (book value) | Part II, line 16 | `total_assets_eoy` |
+| Same, at market value | Part II, line 16 (FMV) | `fair_mkt_value_total_assets_eoy` |
+| Minimum the IRS expects it to give each year (about 5% of assets) | Part X, line 6 | `minimum_investment_return` |
+| Required giving not yet paid out | Part XIII, line 6f | `undistributed_income_current_yr` |
+
+## The history, one row per year
+
+```{r table}
+tbl <- pf |>
+  transmute(
+    `Tax year`                     = as.character(tax_year),
+    `Gifts received`               = contributions_received,
+    `Investment income`            = coalesce(dividends_interest_excluded, 0) +
+                                     coalesce(interest_savings_excluded, 0),
+    `Gain/loss on sales`           = capital_gain,
+    `Total income`                 = total_revenue_col_a,
+    `Grants given out`             = contributions_paid,
+    `Total spending`               = total_expenses_col_a,
+    `Assets at year end (book)`    = total_assets_eoy,
+    `Assets at year end (market)`  = fair_mkt_value_total_assets_eoy,
+    `Required annual payout`       = minimum_investment_return,
+    `Source`                       = if_else(source_pipeline == "legacy",
+                                             "NCCS legacy core (1989-2011)",
+                                             "IRS SOI extract (2012+)")
+  )
+kable(tbl, format.args = list(big.mark = ",", scientific = FALSE))
+```
+
+```{r chart, fig.width=8, fig.height=4.5}
+par(mar = c(4, 5, 2, 1))
+plot(tbl$`Tax year`, tbl$`Assets at year end (book)` / 1e6, type = "b", pch = 16,
+     xlab = "Tax year", ylab = "Millions of dollars", ylim = c(0, 40),
+     main = "Assets at year end vs. grants given out, by year")
+lines(tbl$`Tax year`, tbl$`Grants given out` / 1e6, type = "h", lwd = 4,
+      col = "grey55")
+legend("topright", bty = "n", pch = c(16, NA), lty = c(1, 1), lwd = c(1, 4),
+       col = c("black", "grey55"),
+       legend = c("Assets at year end (book)", "Grants given out"))
+```
+
+## Findings
+
+- The record opens in tax year 1989 with a one-time gift of about $33.9
+  million, which is the foundation's founding endowment as seen by NCCS.
+  Assets stood at $35.6 million at the end of that year.
+- From 1990 on the foundation received essentially no new gifts. It lived on
+  investment income and spent down principal: grants paid out exceeded
+  income in almost every year, so assets fell steadily from \$35 million in 1991
+  to about \$3.7 million by 2015, and have held near \$3.6 to \$4.0
+  million since.
+- Cumulative grants over the 30 filings on record total about
+  `r format(round(sum(tbl[["Grants given out"]], na.rm = TRUE) / 1e6, 1), nsmall = 1)`
+  million dollars.
+- Grant-making peaked in the 1990s (over $5.6 million in 1994, $3.7 million
+  in 1998) and has been in the tens of thousands to low hundreds of thousands
+  since 2013.
+- Since 2021 the return shows a small "undistributed income" balance,
+  meaning the required annual payout was not fully met in the year; that is
+  a flag on the return, not a finding about wrongdoing.
+
+## Takeaways
+
+- **Coverage caveat.** Six years have no filing in NCCS: 1992, 1993, 2016,
+  2017, 2018, and 2024. The 2016 to 2018 gap is an IRS source problem: the
+  SOI 990-PF extracts for those years are nearly empty across all
+  foundations, not just this one. 2024 is not yet released. 1992 and 1993
+  are missing from the legacy NCCS files. None of these gaps implies the
+  foundation did not file. Verified against the ProPublica Nonprofit
+  Explorer API (`/api/v2/organizations/{ein}.json`): it holds scanned PDFs
+  for 2016-2018 (paper filings, no extracted data, hence their absence from
+  SOI) but nothing for 1992, 1993, or 2024. For the ten overlapping years
+  (2011-2015, 2019-2023) ProPublica's total revenue and end-of-year assets
+  match the CORE values exactly.
+- **Two eras, one table.** 1989 to 2011 comes from NCCS's legacy core files;
+  2012 onward from the IRS SOI extracts. The harmonized column names line up,
+  so a single per-year table is honest, but the 1989 to 1991 rows lack the
+  market-value and payout fields (they were not captured then).
+- **Method note for future single-EIN requests.** Reading one EIN across
+  36 partitions is a filter, not an ETL: the whole thing is
+  `nccs_read_core(..., collect = FALSE) |> filter(ein == x)` per year. If a
+  second single-organization request arrives, this is a candidate for an
+  `nccs_read_core_ein()` helper in `nccsdata`.
+
+---
+
+*Reproducibility: this story reads the vintages pinned in `_pins.csv`; rerun
+from those pins to reproduce. See ADR 0024 / 0025 in `nccs-contracts`.*

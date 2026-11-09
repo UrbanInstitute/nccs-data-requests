@@ -1,0 +1,3 @@
+"timestamp","dataset","vintage","source","n_rows","note"
+"2026-08-28T11:45:51-0400","core-merged","merged","https://nccsdata.s3.amazonaws.com/processed_merged/core/2024/990pf/core_2024_990pf.parquet",30,"990-PF partitions 1989-2024 read year-by-year, one EIN"
+"2026-08-28T11:46:52-0400","bmf-master-geocoded","rolling@2026-08-28","nccsdata::nccs_read (rolling geocoded master)",3698124,"identity check for one EIN"

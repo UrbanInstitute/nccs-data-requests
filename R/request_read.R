@@ -77,8 +77,9 @@ read_core <- function(request_dir, tier = c("merged", "soi", "legacy"), ..., not
              n_rows  = .n_rows(out), note = note, data = out)
 }
 
-#' E-file v2.1 Form 990 header table (`s3://nccs-efile/public/efile_v2_1/`),
-#' one file per tax year. Anonymous HTTPS read, no credentials. Each raw CSV
+#' E-file v2.1 Form 990 table (`s3://nccs-efile/public/efile_v2_1/`), one
+#' CSV per tax year, e.g. `table = "F9-P00-T00-HEADER"` or
+#' `"F9-P01-T00-SUMMARY"`. Anonymous HTTPS read, no credentials. Each raw CSV
 #' (~30-390 MB/year) is cached as a slim parquet of just `columns` in the
 #' request's gitignored `data/` dir, so only the first render downloads.
 #' Adds a `file_year` column so callers can verify the in-column `TAX_YEAR`
@@ -86,23 +87,23 @@ read_core <- function(request_dir, tier = c("merged", "soi", "legacy"), ..., not
 #' `RETURN_TYPE` columns, never trust the file-name year alone.
 #' NOTE: this reads the legacy NODC/`nccs-efile` researcher catalog, which is
 #' slated for supersession by `nccsdata/processed/efile/relational/` (ADR 0028
-#' in `nccs-contracts`). On a second use, promote this helper into `nccsdata`
-#' and re-point it at the contracted surface when that lands.
-read_efile_header <- function(request_dir, years, columns, note = "") {
+#' in `nccs-contracts`). Second use of the header read (2026-07 new-charities,
+#' 2026-09 new-vs-established): per ADR 0024 this helper is due for promotion
+#' into `nccsdata`, re-pointed at the contracted surface when that lands.
+read_efile_table <- function(request_dir, table, years, columns, note = "") {
   stopifnot(requireNamespace("arrow", quietly = TRUE))
   base  <- "https://nccs-efile.s3.amazonaws.com/public/efile_v2_1"
   cache <- file.path(request_dir, "data", "efile_v2_1-cache")
   dir.create(cache, recursive = TRUE, showWarnings = FALSE)
-  # The header CSVs run 30-390 MB; R's default 60s download timeout is too
-  # short for them on ordinary connections.
+  # The CSVs run 30-390 MB; R's default 60s download timeout is too short.
   old_timeout <- options(timeout = max(3600, getOption("timeout")))
   on.exit(options(old_timeout), add = TRUE)
   slims <- lapply(years, function(y) {
-    slim <- file.path(cache, sprintf("F9-P00-T00-HEADER-%s-slim.parquet", y))
+    slim <- file.path(cache, sprintf("%s-%s-slim.parquet", table, y))
     if (!file.exists(slim)) {
-      raw <- file.path(cache, sprintf("F9-P00-T00-HEADER-%s.CSV", y))
+      raw <- file.path(cache, sprintf("%s-%s.CSV", table, y))
       on.exit(unlink(raw), add = TRUE)
-      utils::download.file(sprintf("%s/F9-P00-T00-HEADER-%s.CSV", base, y),
+      utils::download.file(sprintf("%s/%s-%s.CSV", base, table, y),
                            raw, mode = "wb", quiet = TRUE)
       d <- arrow::read_csv_arrow(raw, col_select = dplyr::all_of(columns))
       d$file_year <- y
@@ -115,10 +116,15 @@ read_efile_header <- function(request_dir, years, columns, note = "") {
     d
   })
   out <- dplyr::bind_rows(slims)
-  record_pin(request_dir, "efile-v2_1-f9-header",
+  record_pin(request_dir, paste0("efile-v2_1-", tolower(table)),
              vintage = sprintf("efile_v2_1@%s-%s", min(years), max(years)),
-             source  = paste0(base, "/F9-P00-T00-HEADER-{year}.CSV"),
+             source  = sprintf("%s/%s-{year}.CSV", base, table),
              n_rows  = .n_rows(out), note = note, data = out)
+}
+
+#' Back-compatible wrapper: the Form 990 header table.
+read_efile_header <- function(request_dir, years, columns, note = "") {
+  read_efile_table(request_dir, "F9-P00-T00-HEADER", years, columns, note = note)
 }
 
 # Geography: read the crosswalks straight from the flat S3 prefix, then join

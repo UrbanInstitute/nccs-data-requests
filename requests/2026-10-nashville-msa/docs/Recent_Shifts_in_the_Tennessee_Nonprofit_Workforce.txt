@@ -1,0 +1,277 @@
+Recent Shifts in the Tennessee Nonprofit
+Workforce
+Findings from the Nonprofit Trends and Impacts Study
+Hannah Martin, Katie Fallon, Laura Tomasko, Lewis Faulk, Mirae Kim, and Elizabeth T. Boris
+February 2026
+
+The nonprofit workforce is a vital driver of the economy and community well-being. In 2022 (the most recent year
+for which data are available), Tennessee’s 38,266 nonprofits generated 209,998 jobs, which accounted for 7.7
+percent of the state’s private workforce, while delivering critical programs and services that supported
+communities across the state.1 Nonprofit employees face challenges such as low pay, inadequate benefits, and
+burnout, problems that can lead to staff vacancies and in turn create long waitlists for, and reductions in, services
+(Im et al. 2025; National Council of Nonprofits 2023).2
+    This brief examines recent shifts in the Tennessee nonprofit workforce, including employee vacancies and
+their impact, and recent and anticipated staffing changes. The data come from the National Survey of Nonprofit
+Trends and Impacts, a nationally representative survey of US 501(c)(3) public charities with annual expenses and
+revenues of $50,000 or more that engage in activities ranging from direct service provision to community building
+and advocacy, and primarily receive rather than provide funds. It excludes organizations that usually fund
+nonprofits, such as foundations, as well as hospitals, higher education institutions, schools (day cares, preschools,
+and K–12 schools), churches and other houses of worship, mutual benefit organizations, philanthropic support
+organizations, and other organizations with unique business models and contexts. The data have been weighted to
+account for the sample design and nonresponse to ensure national and state representativeness. 3 As a result, our
+findings can be generalized to the categories of public charities included in the study (henceforth referred to as
+nonprofits). This analysis focuses on nonprofits headquartered in Tennessee and compares these nonprofits with
+those across the US and in Tennessee’s peer states, as defined by the Tennessee Nonprofit Network: Alabama,
+Arkansas, Florida, Georgia, Indiana, Kentucky, Louisiana, Mississippi, Missouri, North Carolina, and Virginia.
+
+     Throughout the brief, we refer to two periods: (1) “late 2024” is the period from October 29, 2024, to January
+3, 2025, when respondents took the 2024 survey; and (2) “early 2025” is the period from January 1, 2025, to when
+respondents took the 2025 survey, sometime between April 16 and June 27, 2025. Quotations come from two
+open-ended questions: “What contributed to the shift in the outlook for your organization since last year?” And
+“All things considered, what are you most concerned about for your organization over the next year?”
+
+
+
+
+Urban Institute      500 L’Enfant Plaza SW        Washington, DC 20024           202.833.7200         www.urban.org
+What Percentage of Employee Positions Are Vacant, and How Do Those Vacancies Affect
+Nonprofits?
+Nearly half of staffed Tennessee nonprofits reported having employee vacancies: about 1 in 3 reported having 1 to
+24 percent of employee positions vacant, and 1 in 10 reported having 25 to 49 percent of employee positions
+vacant (figure 1).
+
+FIGURE 1
+Forty-Four Percent of Staffed Tennessee Nonprofits Reported Having Employee Vacancies in
+2025
+Shares of staffed Tennessee nonprofits that reported various ranges of employee positions vacant
+        50% or more        25% to 49%      1% to 24%        0%
+
+
+      Tennessee       10%                       34%                                                     56%
+                      1%
+     Peer states           14%                          35%                                                 49%
+                      1%
+             US        9%                         36%                                                    54%
+
+
+                                                                                                                            URBAN INSTITUTE
+
+Source: 2025 National Survey of Nonprofit Trends and Impacts.
+Notes: Data have been weighted to account for the sample design and nonresponse to ensure the estimates are representative at the national,
+regional, and state levels. We calculated the percentage of employee positions vacant by dividing an organization's open staff positions by the
+sum of its open staff positions, estimated full-time (35 or more hours/week) staff in 2025, and estimated part-time (less than 35 hours/week)
+staff in 2025. Respondents who expected to have 0 full-time and 0 part-time staff in 2025 are excluded from this figure.
+
+
+    Although many Tennessee nonprofits reported that employee vacancies negatively affected their ability to
+pursue their missions, they were less likely than those in peer states and across the country to report this (figure 2).
+
+FIGURE 2
+Employee Vacancies Had a Negative Effect on Many Tennessee Nonprofits in 2025
+Reported impact of employee vacancies on staffed Tennessee nonprofits’ ability to successfully pursue their missions
+       Negative impact       No impact      Positive impact       Unsure
+                                                                                                                                           2%
+    Tennessee                                       64%                                                        34%
+                                                                                                                                           3%
+    Peer states                                           74%                                                      21%            3%
+
+
+            US                                            72%                                                     22%             3%        3%
+
+
+                                                                                                                            URBAN INSTITUTE
+
+Source: 2025 National Survey of Nonprofit Trends and Impacts.
+Notes: Data have been weighted to account for the sample design and nonresponse to ensure the estimates are representative at the national,
+regional, and state levels. Respondents who expected to have 0 full-time (35 or more hours/week) and 0 part-time (less than 35 hours/week)
+staff in 2025 are excluded from this figure. Responses of “N/A” are also excluded. Some respondents with no current employee vacancies
+selected options besides "N/A" (i.e., they indicated that having all employee positions filled has a negative, a positive, or no impact on their
+ability to pursue their mission).
+
+
+
+
+2
+     In their open-ended responses, Tennessee nonprofit leaders highlighted staffing issues—in addition to themes
+related to finances and programs. For example, one Tennessee nonprofit leader said their primary concern for their
+organization over the next year was “being understaffed.” Another responded, “Not burning out because we don’t
+have enough staff.” And another said the outlook for their organization’s ability to pursue its mission had worsened
+considerably since the previous year owing in part to “open staff positions.” This suggests that although Tennessee
+nonprofits may be faring better than those in peer states and nationwide when it comes to the impact of employee
+vacancies, they still face challenges from them.
+
+How Is Staffing Changing?
+Tennessee nonprofits were more likely than nonprofits nationwide to increase their workforces in early 2025
+(figure 3).
+
+FIGURE 3
+Compared with Nonprofits in Peer States and Nationwide, Tennessee Nonprofits Were More
+Likely to Increase Their Workforces in Early 2025
+Shares of Tennessee nonprofits that reported decreasing, making no changes to, or increasing their total number of
+employees in early 2025
+     Decreased      No changes       Increased     Unsure      N/A
+                                                                                                                            1%
+
+  Tennessee          13%                                      55%                                            22%                 9%
+
+
+ Peer states         14%                                      52%                                       18%                  15%
+
+
+          US          15%                                         57%                                         16%              12%
+
+
+                                                                                                                        URBAN INSTITUTE
+
+Source: 2025 National Survey of Nonprofit Trends and Impacts.
+Notes: Data have been weighted to account for the sample design and nonresponse to ensure the estimates are representative at the national,
+regional, and state levels. Most of the respondents who selected “N/A” expected to have 0 full-time (35 or more hours/week) and 0 part-time
+(less than 35 hours/week) staff in 2025.
+
+
+     The staffing outlook for nonprofits in Tennessee, peer states, and the country as a whole worsened between
+late 2024 and early 2025, but Tennessee nonprofits were more optimistic about hiring new staff than those in
+peer states and nationwide. Across all three geographies, nonprofits were more likely in late 2024 than early 2025
+to anticipate hiring new staff in the coming year; conversely, they were more likely in early 2025 than in late 2024
+to anticipate laying off staff (figure 4). Compared with nonprofits in peer states and nationwide, however, those in
+Tennessee were more likely to anticipate hiring new staff in early 2025.
+
+
+
+
+                                                                                                                                          3
+FIGURE 4
+As of Early 2025, Tennessee Nonprofits Were More Likely Than Those in Peer States and
+Nationwide to Anticipate Hiring New Staff
+Shares of Tennessee nonprofits reporting plans to change their staffing in the next 12 months
+
+           As of late 2024
+
+           As of early 2025
+
+
+                                                        Hire new staff                                     56%
+                                                                                                   43%
+                                                                          3%
+
+
+                      Tennessee
+           Tennessee                                      Lay off staff
+                                                                            7%
+
+                                            Lose staff from retirement      8%
+                                                                          4%
+                                    Lose staff from voluntary turnover       10%
+                                                  other than retirement     9%
+
+                                                        Hire new staff                                   49%
+                                                                                             36%
+                                                                          4%
+
+
+                      Peer states
+                                                          Lay off staff
+                                                                            7%
+           Peer states
+                                            Lose staff from retirement     7%
+                                                                           6%
+                                            Lose staff from voluntary        11%
+                                       turnover other than retirement        11%
+
+                                                        Hire new staff                                    53%
+                                                                                              38%
+
+                                                          Lay off staff   3%
+                                                                            7%
+               US     US
+                                            Lose staff from retirement     7%
+                                                                           7%
+                                    Lose staff from voluntary turnover           12%
+                                                  other than retirement          12%
+
+                                                                                                                        URBAN INSTITUTE
+
+Source: 2024 and 2025 National Surveys of Nonprofit Trends and Impacts.
+Notes: Data have been weighted to account for the sample design and nonresponse to ensure the estimates are representative at the national,
+regional, and state levels.
+
+
+Conclusion
+Key findings on the Tennessee nonprofit workforce include the following:
+     ◼    Forty-four percent of staffed Tennessee nonprofits reported employee vacancies in 2025.
+     ◼    Many Tennessee nonprofits reported that employee vacancies negatively affected their ability to pursue
+          their missions, but they were less likely than those in peer states and across the country to report this (64
+          percent versus 74 percent and 72 percent, respectively).
+     ◼    Tennessee nonprofits were more likely than nonprofits nationwide to increase their total number of
+          employees in early 2025 (22 percent versus 16 percent).
+     ◼    As of early 2025, Tennessee nonprofits were more likely than those in peer states and across the country
+          to anticipate hiring new staff in the next 12 months (43 percent versus 36 percent and 38 percent,
+          respectively).
+
+
+
+
+4
+    Overall, these data indicate that despite facing challenges from employee vacancies, the Tennessee nonprofit
+workforce is positioned for growth, with many organizations planning new hires that could strengthen their
+capacity to achieve their missions.
+
+Notes
+1   “Nonprofit Sector State Profiles,” Independent Sector, accessed December 17, 2025,
+    https://independentsector.org/nonprofit-state-profiles/.
+2   Jim Rendon, “The Nonprofit Hiring Crisis,” The Chronicle of Philanthropy, June 7, 2022,
+    https://www.philanthropy.com/article/the-nonprofit-hiring-crisis; “Nonprofit Sector State Profiles,” Independent Sector,
+    accessed December 17, 2025, https://independentsector.org/nonprofit-state-profiles/.
+3   For more information on our data weighting and the survey’s national and state representativeness, see our survey
+    methodology, available at https://www.urban.org/research/publication/national-surveys-nonprofit-trends-and-impacts-
+    2024-and-2025-methodology.
+
+References
+Im, Christina, Seara Grundhoefer, and Elisha Smith Arrillaga. 2024. State of Nonprofits 2024: What Funders Need To Know.
+     Cambridge, MA: The Center for Effective Philanthropy.
+National Council of Nonprofits. 2023. 2023 Nonprofit Workforce Survey Results: Communities Suffer as Nonprofit Workforce
+    Shortage Crisis Continues. Washington, DC: National Council of Nonprofits.
+
+About the Authors
+Hannah Martin is a policy associate in the Center on Nonprofits and Philanthropy in the Research to Action Lab
+Division at the Urban Institute. She has a Master of Public Affairs from Indiana University.
+
+Katie Fallon is a principal policy associate in the Research to Action Lab Division. She has a doctorate in sociology
+from the University of Wisconsin—Madison.
+
+Laura Tomasko is a senior policy program manager at the Urban Institute, where she leads the Center on
+Nonprofits and Philanthropy. She has a Master of Public Administration from Syracuse University.
+
+Lewis Faulk is an associate professor of public administration and policy in the School of Public Affairs at American
+University and a nonresident fellow at the Urban Institute. He is also a faculty fellow of American University’s
+Metropolitan Policy Center. He has a joint PhD in public policy from Georgia State University and the Georgia
+Institute of Technology.
+
+Mirae Kim is an associate professor of nonprofit studies at the Schar School of Policy and Government at George
+Mason University and a nonresident fellow at the Urban Institute. She is also a faculty affiliate of the Center on
+Nonprofits, Philanthropy, and Social Enterprise at George Mason University. She has a PhD in public management
+from Rutgers University.
+
+Elizabeth T. Boris is an Institute fellow at the Urban Institute. She was the founding director of the Center on
+Nonprofits and Philanthropy in 1996 and led it for 20 years. She has a PhD in political science from Rutgers
+University.
+
+
+
+
+                                                                                                                               5
+Acknowledgments
+This brief was funded by Fidelity Charitable® Catalyst Fund. Funders that have supported the Nonprofit Trends
+and Impacts panel study since its launch in 2020 are listed at https://www.urban.org/nptrends/support. We are
+grateful to them and to all our funders, who make it possible for Urban to advance its mission. The views
+expressed are those of the authors and should not be attributed to the Urban Institute, its trustees, or its funders.
+Funders do not determine research findings or the insights and recommendations of Urban experts. Further
+information on the Urban Institute’s funding principles is available at urban.org/fundingprinciples. Copyright ©
+February 2026. Urban Institute. Permission is granted for reproduction of this file, with attribution to the Urban
+Institute.
+
+
+
+
+6
+

@@ -1,0 +1,5 @@
+"timestamp","dataset","vintage","source","n_rows","note"
+"2026-09-03T15:34:06-0400","bmf-master-geocoded","rolling@2026-09-03","nccsdata::nccs_read (rolling geocoded master)",3698124,"full registry; ruling_date, NTEE, subsection"
+"2026-09-03T15:34:18-0400","core-merged","merged","core:merged",14116749,"990 + 990-EZ, all subsections, 1989-2023"
+"2026-09-03T15:40:07-0400","efile-v2_1-f9-p00-t00-header","efile_v2_1@2012-2023","https://nccs-efile.s3.amazonaws.com/public/efile_v2_1/F9-P00-T00-HEADER-{year}.CSV",5039524,"formation year, 990/990-EZ"
+"2026-09-03T15:45:00-0400","efile-v2_1-f9-p01-t00-summary","efile_v2_1@2012-2023","https://nccs-efile.s3.amazonaws.com/public/efile_v2_1/F9-P01-T00-SUMMARY-{year}.CSV",5028523,"total expenses, current year"

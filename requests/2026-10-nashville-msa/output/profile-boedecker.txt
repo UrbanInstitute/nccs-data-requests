@@ -1,0 +1,45 @@
+pinned: efilepf-v2_3-grants-paid-boedecker [PF-P15-T01-SUPPLEMENTARY-INFO-GRANT-PAID-2020.parquet] (41 rows)
+pinned: efilepf-v2_3-grants-paid-boedecker [PF-P15-T01-SUPPLEMENTARY-INFO-GRANT-PAID-2021.parquet] (40 rows)
+pinned: efilepf-v2_3-grants-paid-boedecker [PF-P15-T01-SUPPLEMENTARY-INFO-GRANT-PAID-2022.parquet] (48 rows)
+pinned: efilepf-v2_3-grants-paid-boedecker [PF-P15-T01-SUPPLEMENTARY-INFO-GRANT-PAID-2023.parquet] (46 rows)
+pinned: efilepf-v2_3-grants-paid-boedecker [PF-P15-T01-SUPPLEMENTARY-INFO-GRANT-PAID-2024.parquet] (60 rows)
+grant rows kept: 235 across tax years 2020, 2021, 2022, 2023, 2024 
+pinned: core-merged [merged] (111765 rows)
+pinned: core-merged [merged] (113804 rows)
+pinned: core-merged [merged] (116138 rows)
+pinned: core-merged [merged] (114199 rows)
+pinned: core-merged [merged] (10391 rows)
+10: Potentially unsafe or invalid elements have been discarded from R metadata.
+== Itemized grants against the return's grants-paid line (CORE) ==
+  tax_year itemized_total tax_period core_grants_paid difference
+1     2020        2423353     202012          2423353          0
+2     2021        1577667     202112          1577667          0
+3     2022        1683083     202212          1683083          0
+4     2023        1504668     202312          1504668          0
+5     2024        1462970         NA               NA         NA
+years checked against the return: 2020, 2021, 2022, 2023 ; not in CORE yet: 2024 
+== Boedecker Foundation grants paid by tax year and recipient region ==
+   tax_year                             region grants dollars share_of_dollars
+1      2020 Middle Tennessee (Nashville metro)     21  655864            0.271
+2      2020                  Outside Tennessee     20 1767489            0.729
+3      2021 Middle Tennessee (Nashville metro)     26  672690            0.426
+4      2021                  Outside Tennessee     14  904977            0.574
+5      2022 Middle Tennessee (Nashville metro)     29  934100            0.555
+6      2022                  Outside Tennessee     19  748983            0.445
+7      2023 Middle Tennessee (Nashville metro)     28  988694            0.657
+8      2023                  Outside Tennessee     18  515974            0.343
+9      2024 Middle Tennessee (Nashville metro)     31  751000            0.513
+10     2024                  Outside Tennessee     29  711970            0.487
+== Boedecker Foundation grants paid to Davidson County recipients, by tax year ==
+  tax_year grants_all dollars_all grants_davidson dollars_davidson
+1     2020         41     2423353              17           630864
+2     2021         40     1577667              23           650000
+3     2022         48     1683083              27           889100
+4     2023         46     1504668              25           978357
+5     2024         60     1462970              30           701000
+  davidson_share_of_dollars
+1                     0.260
+2                     0.412
+3                     0.528
+4                     0.650
+5                     0.479

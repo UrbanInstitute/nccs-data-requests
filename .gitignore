@@ -29,3 +29,11 @@ requests/**/data/
 # GitHub Pages site (published HTML guides)
 !docs/**/*.html
 !docs/*.html
+
+# Requester-shared review documents carry names; never commit them.
+requests/**/docs/*.docx
+requests/**/docs/*.xlsx
+.metrics/
+
+# Publisher copies of journal articles shared by reviewers; never commit them.
+requests/**/docs/Nonprofit Mgmnt Ldrshp*.pdf

@@ -1,0 +1,698 @@
+---
+title: "Nashville nonprofits in the IRS data: location, funding, workforce, and volunteers"
+date: 2026-10-12
+description: "An exploratory read of IRS data for Metro Nashville (Davidson County) and the 14-county metro: where organizations are, how they are funded, what the paid workforce and volunteer base look like, benchmarked against 19 peer metros."
+draft: true
+format: gfm
+type: analysis
+categories:
+  - geography
+  - workforce
+author:
+  - id: thiya
+citation:
+  container-title: National Center for Charitable Statistics
+  volume: 1
+  issue: 1
+---
+
+Revised 2026-10-12 after the second-analyst review in `reviews/REVIEW.md` and its
+follow-up `REVIEWS.md`; the point-by-point response is in
+`REVIEWS.md`.
+
+## Task
+
+The Research to Action Lab, working with Metro Nashville and the Community
+Foundation of Middle Tennessee, asked what the IRS data show about
+nonprofit locations, finances and workforce in Nashville, as a companion
+to a recent survey of the Tennessee nonprofit workforce. Round 1 (October
+12) was a first look, exploratory and uncommitted. Round 2 answers the
+follow-up: a health profile of the Davidson County nonprofit and
+philanthropic sector, and a spreadsheet of tax year 2023 operating
+expenses for the 159 organizations on the team's Ecosystem Map.
+
+## Geography
+
+Two units are reported throughout.
+
+- **Davidson County** is Metro Nashville. Nashville has a consolidated
+  city-county government, so the county is the city. Six small satellite
+  cities inside the county (Goodlettsville, Belle Meade, Berry Hill, Forest
+  Hills, Oak Hill, Ridgetop) are included.
+- **The metro** is OMB CBSA 34980, Nashville-Davidson--Murfreesboro--Franklin,
+  TN: Davidson plus 13 collar counties (Williamson, Rutherford, Sumner,
+  Wilson, Maury, Robertson, Dickson, Cheatham, Hickman, Macon, Smith, Cannon,
+  Trousdale), 2023 delineation, held fixed across years.
+
+Geography is composed by joining two published crosswalks onto
+September's geocoded Unified BMF: the [county FIPS crosswalk](https://nccsdata.s3.amazonaws.com/crosswalks/county-fips/county_fips_crosswalk.parquet)
+(county name to FIPS code, TIGER 2023) and the [CBSA crosswalk](https://nccsdata.s3.amazonaws.com/crosswalks/cbsa/cbsa_crosswalk.parquet)
+(county to metro area, OMB 2023 delineation), both described on the
+[BMF catalog page](https://nccs.urban.org/nccs/catalogs/catalog-bmf.html). Location is the organization's
+**current** filing address as carried in the BMF, applied to every year of
+its history. Organizations headquartered in Davidson (Second Harvest, United
+Way, the community action agencies) serve the region, so any per-resident
+figure by county overstates how concentrated services are, and nothing in
+these data constrains how far a Davidson organization's services reach.
+
+**Benchmarks.** Nineteen peer metros chosen by the analyst (Memphis,
+Knoxville, Austin, Charlotte, Raleigh, Indianapolis, Louisville, Columbus,
+Kansas City, Jacksonville, Oklahoma City, Atlanta, Denver, St. Louis,
+Cincinnati, Richmond, Birmingham, San Antonio, Phoenix). They are not the
+Tennessee Nonprofit Network peer states used in the survey brief. The metro
+is compared with whole peer metros. Davidson is compared with one county per
+peer metro, the county with the most registered organizations. That is a
+convenience, not a definition of the central city: it picks St. Louis County
+rather than St. Louis city and Henrico rather than Richmond city. Rankings
+"of 20" are rankings among these 20 counties or 20 metros. "Peer metros" means all 19 others
+combined, including Memphis and Knoxville; "Rest of Tennessee" means
+Tennessee outside the 20 metros; "Rest of US" means everything else. The
+four groups partition every filer.
+
+## Data
+
+| Source | What it gives | Years | Currency |
+|---|---|---|---|
+| Geocoded Unified BMF (vintage 2026_09, sha256 in `_pins.csv`) | Every registered organization: current address and classification, ruling date, first and last vintage observed, latest reported revenue and assets | 1989-2026 | Monthly; current |
+| E-file v2.1 Form 990 Part I and Part IX (legacy NODC release, slated for supersession) | Employees, volunteers, revenue, expenses, net assets, compensation lines | TY2012-2023 | Lags two to three years |
+| NCCS e-file Phase 0 `government_grants` (v2026.06, sha256 verified) | Form 990 Part VIII line 1e | TY2020-2023 | Lags two to three years |
+| CORE merged tier, `990combined` (IRS COREs plus legacy; full 990 and 990-EZ) | Filing presence and form type per EIN and year, for the exit trace and the coverage check | TY2019-2024 | Lags two to three years |
+| Census county population estimates (vintages 2019, 2023) | Denominators | 2010-2023 | |
+| BLS QCEW annual county files | Private-sector average annual pay per job, Davidson | 2019, 2023 | |
+
+**Main population for the financial and workforce tables:** organizations
+with current BMF subsection 501(c)(3) that filed the full Form 990,
+excluding hospitals and universities (NTEE v2 subsectors HOS and UNI).
+Private foundations, which file the Form 990-PF, are outside this
+population; the 990-PF is read in round 2 for the coverage table, for the
+listed foundations' expenses, and for the grants they paid. Two
+Nashville filers carry a private-foundation code in the current BMF
+(Gibson Foundation, Dr Lynn Hicks Foundation); they are kept and noted.
+Rows without a BMF match (about 1% of full-990 returns) are dropped.
+
+**Filing selection.** One filing per EIN and tax year, chosen on Part I by
+latest return timestamp with the filing identifier as tie-break; Part IX is
+joined on the filing identifier, so both parts always come from the same
+return. Uniqueness and identity are asserted at build time.
+
+**Definitions.**
+
+- *Employees* is Part I line 5, a calendar-year headcount with no hours.
+  *Volunteers* is Part I line 6, the filer's own estimate.
+- *Pay per employee* is Part IX lines 5-10 (officer and key-employee
+  compensation, compensation of disqualified persons, other salaries and
+  wages, pension contributions, other benefits, payroll taxes) divided by
+  employees, kept when between $5,000 and $400,000 nominal. It is total
+  people cost per head, not a wage rate; many part-time staff read as low
+  pay. Medians are over organizations with a valid value; the valid counts
+  are in `output/`.
+- *Reported line 1e government grants share* is Part VIII line 1e over
+  total revenue. Line 1e is grants only; government payments booked as
+  program-service revenue (contracts, Medicaid and other reimbursements, on
+  line 2) are not included. No figure here measures total government
+  revenue. A blank line 1e is treated as zero (see caveat 8).
+- *Expenses exceed revenue* is Part I total expenses greater than total
+  revenue in the year, including non-operating items.
+- *Net assets in months of expenses* is year-end total net assets divided by
+  annual expenses, times twelve. Net assets include restricted funds and
+  fixed assets such as buildings, so this is an accounting ratio, not months
+  of cash or operating reserve, and is not comparable with the survey
+  figures on cash on hand.
+- Dollars are CPI-U adjusted to 2023 unless stated.
+
+### Limitations and caveats
+
+1. **Filing lag.** The financial and workforce series end at tax year 2023,
+   filed during 2024 and 2025. They describe the sector going into 2024 and
+   say nothing after that. The survey work in `docs/` covers late 2024 and
+   2025. Only the BMF-based counts (density, formation, attrition,
+   foundations, zip codes) are current to 2026; the spending and employee
+   rows in finding 1 are TY2023.
+2. **TY2023 coverage differs between sources.** The two sources date
+   returns differently. The e-file release and this memo use the IRS form
+   year, the year the accounting period begins. The CORE files a
+   return under the year its accounting period ends, so a fiscal year
+   running July 2022 to June 2023 is a 2022 return in one and a 2023
+   return in the other. Dated the same way, the two hold about the same
+   Davidson filings for 2020 to 2022. For 2023 the e-file release holds
+   231 more Davidson full-990 filings than CORE, because most
+   of those are fiscal-year returns that fall in CORE's file for 2024,
+   which is still incomplete. The e-file release is itself not complete
+   for TY2023, so every 2019-2023 ranking is shown with its 2019-2022
+   version.
+   (`output/analysis-round1.txt (pass 12)`)
+3. **Full Form 990 only.** The 990-EZ (gross receipts under $200,000 and
+   assets under $500,000) has no employee count, no compensation breakdown
+   and no line 1e, and the 990-N has no financials. The financial tables
+   cover a minority of organizations but most of the money. Pre-2021 years
+   cover only organizations that e-filed voluntarily.
+4. **Leaving the full-990 returns is not closure.** An organization that
+   stops appearing may have merged, shrunk enough to file the shorter form,
+   filed late, or filed a return the IRS has not released yet. Every
+   organization that dropped out was checked against the shorter 990-EZ
+   returns and the BMF through 2024 (finding 5). Most simply have not
+   filed since 2022. Whether the ones with no return closed or merged is
+   not known.
+5. **Current address and classification applied to history.** The BMF
+   carries one address, subsection and NTEE code per organization. Movers
+   and reclassifications are not recoverable. Ruling date is the date of
+   exemption recognition, not founding.
+6. **BMF first-observed year steps at vintage years** (none in 2017 or
+   2021; 14,461 Tennessee organizations first observed in 1989). It is not
+   a formation series. Where formation is discussed, ruling year is used.
+7. **BMF asset sums by zip code** come from each organization's latest
+   return, are missing for 990-N filers, and are dominated by whichever large
+   institutions have a mailing address in the zip. They locate large balance
+   sheets, not neighborhood resources or need.
+8. **Blank line 1e treated as zero.** Line 1e is blank for 63% of Davidson
+   full-990 filers in 2023 and 63% outside the 20 metros. The Phase 0
+   extraction leaves the amount empty when the XML element is absent, which
+   is how a filer with nothing on the line files, but this has not been
+   verified against source filings. Blank shares are similar across the
+   comparison groups, but equal blank rates do not establish equal missing
+   amounts or the same reporting behavior, so comparisons carry the same
+   assumption as levels.
+9. **Volunteer counts** are self-reported estimates, blank for about one in
+   five Davidson filers, and swing with a few organizations (Second Harvest
+   reports 25,000; two organizations account for half of Davidson's
+   2019-2023 decline).
+10. **QCEW is not on the same basis.** QCEW reports wages per annual-average
+    job for an industry in a county; the nonprofit measure is compensation
+    including benefits per calendar-year head for an NTEE subsector. The
+    two are shown side by side, not equated.
+
+## Findings
+
+### 1. Population moved to the collar counties; nonprofit capacity did not
+
+Davidson's share of the metro's registered nonprofits has fallen from 47% in
+2000 to 42% in 2026 as the collar grew, but spending and jobs remain in
+Davidson and, to a lesser degree, Williamson.
+
+Registered 501(c)(3) organizations (including private foundations) per
+10,000 residents, from the current BMF with activity windows applied:
+
+| County | Pop. 2023 | Pop. growth 2010-23 | Orgs/10k 2010 | Orgs/10k 2023 |
+|---|---|---|---|---|
+| Davidson | 712,334 | 13% | 49.4 | 58.2 |
+| Williamson | 264,460 | 44% | 56.5 | 62.6 |
+| Rutherford | 367,101 | 39% | 24.1 | 29.2 |
+| Sumner | 207,994 | 29% | 26.9 | 34.5 |
+| Wilson | 163,674 | 43% | 28.6 | 34.6 |
+| Maury | 110,760 | 36% | 33.0 | 38.4 |
+
+Full-990 charity spending and jobs per resident, TY2023 (caveats 1, 3, 5):
+
+| County | Charity filers | Expenses per resident | Charity employees per 1,000 | Human services expenses per resident | Human services employees per 1,000 |
+|---|---|---|---|---|---|
+| Davidson | 883 | $6,546 | 67.1 | $1,564 | 21.0 |
+| Williamson | 331 | $2,994 | 25.7 | $992 | 9.1 |
+| Rutherford | 145 | $1,008 | 17.1 | $272 | 2.6 |
+| Wilson | 74 | $840 | 7.6 | $104 | 1.3 |
+| Sumner | 115 | $441 | 5.1 | $195 | 2.2 |
+| Maury | 57 | $1,070 | 12.5 | $176 | 2.9 |
+
+Rutherford is the metro's second most populous county and has grown 39%
+since 2010, yet hosts 37 human-services charities filing a full 990 with
+2.6 employees per 1,000 residents, against 21 in Davidson. Williamson is
+the exception. Every county's organization density rose between 2010 and
+2023, so the collar is catching up in counts, not in capacity. Whether that
+is a service gap depends on how far Davidson organizations reach, which
+these data cannot show.
+
+### 2. Inside Davidson, recently recognized charities cluster in a few zip codes
+
+Among charities active in 2026, ranked by the number recognized by the IRS
+since 2020 (current address; caveats 5 and 7):
+
+| Zip | Area | Charities | Recognized 2020+ | Of which human services | Organizations with assets over $10M |
+|---|---|---|---|---|---|
+| 37013 | Antioch | 273 | 130 | 40 | 2 |
+| 37211 | South Nashville | 282 | 115 | 34 | 8 |
+| 37203 | Midtown | 337 | 102 | 30 | 32 |
+| 37209 | West Nashville | 244 | 86 | 30 | 10 |
+| 37215 | Green Hills | 233 | 81 | 23 | 9 |
+| 37207 | North Nashville | 177 | 75 | 32 | 2 |
+
+Antioch and South Nashville lead on recent recognitions; Midtown is third
+and holds the most large institutions. So recent formation is not simply
+"away from the institutions". What the table does show is that Antioch and
+North Nashville have two organizations with assets over $10 million each,
+and South Nashville eight, compared with Midtown's 32. Full table in
+`output/analysis-round1.txt (pass 8)`.
+
+### 3. Formation, attrition, and foundations (BMF, current)
+
+- Nashville's stock of 501(c)(3)s grew 29% from 2019 to 2026, sixth of 20
+  metros (Austin 37%, Atlanta and Raleigh 33%). Attrition is close to
+  peers: 21% of organizations active in 2019 were gone by 2026 (peer
+  median 20%).
+- Among charities recognized since 2020, religion is 16% of Nashville's
+  against 13% in peers, arts 8.6% against 7.3%, human services 35% against
+  38%.
+- Private foundations are growing fastest in the collar. Williamson has 7.3
+  per 10,000 residents against Davidson's 5.7, and its count grew 48% since
+  2015 against Davidson's 23%. The largest remain in Davidson (Dettwiller
+  $251M, Scarlett $249M, Frist $196M, HCA Healthcare $193M, Living Legacy
+  $165M).
+- Most registered organizations are small: among those with a reported
+  revenue figure, 60% in Davidson and 58% to 84% in the collar counties
+  report under $50,000; roughly three in ten have no revenue figure at all
+  (990-N filers and non-filers).
+
+### 4. Funding: human services charities report less in government grants than elsewhere
+
+Reported line 1e government grants as a share of revenue, 2023, charities
+excluding hospitals and universities (caveats 1, 8; not total government
+revenue):
+
+| | Reporting any line 1e amount | Line 1e / revenue | Human services: line 1e / revenue |
+|---|---|---|---|
+| Davidson | 34% | 14.8% (15.5% excluding two universities with undefined codes; round 2) | 15.7% (13th of 20 peer counties) |
+| Nashville metro | 30% | 12.7% | 13.2% |
+| Peer metros combined | 29% | 18.5% | 21.6% |
+| Rest of Tennessee | 41% | 19.2% | |
+| Rest of US | 33% | 14.8% | 23.8% |
+
+Davidson's overall line 1e share matches the rest of the US. The difference
+is in human services, where Davidson's charities report 16 cents of revenue
+on line 1e against 22 cents in the peer metros and 24 cents nationally;
+among the 20 peer counties Davidson is 13th, in the lower half but not an
+outlier (Austin 49%, Richmond 3.5%). The collar pulls the metro figure down:
+human services charities in Williamson report 1.4% and in Rutherford 3.1%
+(all charities: 3.6% and 4.9%), and the 13 collar counties together report
+7.8%. Davidson's all-charity share has fallen each year since 2020 (17.7% to
+15.5% with the two universities excluded; round 2 table).
+
+The median Davidson charity draws 77% of revenue from contributions and
+grants of all kinds (Rest of US 69%). The largest line 1e amounts are
+charter school networks (KIPP, LEAD, Valor, RePublic, STEM Prep, each
+reporting 84 to 96% of revenue on line 1e), the Tennessee Performing Arts
+Center, the Mid-Cumberland community action and human resource agencies,
+and Second Harvest.
+
+### 5. Workforce: more organizations, more spending, no more jobs, higher pay per head
+
+Charities excluding hospitals and universities, real 2023 dollars (caveats
+1-4). The 2019-2022 column shows the sensitivity to the incomplete TY2023.
+
+| | Filers 2019-23 | Employees 2019-23 | Employees 2019-22 | Real expenses 2019-23 | Median real pay per head 2019-23 | Same, 2019-22 |
+|---|---|---|---|---|---|---|
+| Davidson | +16% | -5.9% | -1.0% | +5% | +6.9% (1st of 20 counties) | +3.6% (6th of 20) |
+| Nashville metro | +26% | -4.4% | -0.1% | +7% | +9.9% (1st of 20 metros) | +7.2% (1st of 20) |
+| Peer metros combined | +20% | +17.9% | +9.1% | -3% | +0.7% | -0.5% |
+| Rest of US | +16% | -1.9% | +9.1% | +2% | +0.4% | +0.3% |
+
+Employees in this release are lower in 2023 than in 2019 in both Davidson
+and the metro, but through 2022 they were flat. Among the Davidson
+organizations present in both 2019 and 2023, employees fell 0.6%, so
+about nine tenths of the observed decline comes from changing membership
+of the filer population rather than from staffing changes at continuing
+organizations (round 2, Filers, spending and employees). The metro's pay-per-head rise leads the 20
+metros under either endpoint. Davidson's leads the 20 counties through 2023
+but is sixth through 2022 (Cincinnati leads at +5.5%), so the county
+ranking is not robust. Davidson's median pay per head in 2023 was $46,848,
+fifth highest among the 20 counties (Atlanta $54,453, Denver $53,436,
+Austin $52,809, Indianapolis $47,636).
+
+Human services pay per head in the metro rose from $36,400 to $41,700
+(+14.7%). For context only (caveat 10): BLS private social-assistance pay
+per job in Davidson rose from $36,900 to $41,500 in 2023 dollars (+12.5%),
+and all private pay rose 6.3%. The two measures are not the same thing and
+this does not show that nonprofits kept pace with the private market.
+
+The cross-sectional rise exceeds the within-organization change: among
+organizations present in both 2019 and 2023, the metro's median real pay
+change was +4.1% (peer metros +3.2%, Rest of US +3.5%). Composition is one
+possible explanation. Organizations with staff in 2019
+that have no full 990 for 2023 in the e-file release had paid less per head
+in 2019 than those that stayed: a median gap of $9,900 in the metro (113
+leavers with a valid value against 734 stayers; bootstrap 95% interval
+-$15,600 to -$4,800) and $4,600 in Davidson (70 against 429; interval
+-$15,700 to +$4,200, not distinguishable from zero).
+
+Tracing the 128 metro leavers through CORE and the BMF
+(`analysis-round1.R` (pass 11)) shows what "leaving" meant:
+
+| Where the 128 went | n | Median 2019 pay per head |
+|---|---|---|
+| Last return TY2022 (late or stopped) | 76 | $33,900 |
+| Last return TY2021 | 17 | $27,100 |
+| Filed a 990-EZ for TY2023 (fell below the full-990 threshold) | 13 | $18,600 |
+| No return since TY2020, dropped from the BMF | 17 | $18,200 |
+| No return since TY2020, still registered | 5 | $24,900 |
+
+Correction (2026-10-29). An earlier version of this table said 58 of the
+128 had filed a full 990 for TY2023 that was in CORE but not
+the e-file release, and called nearly half the exits a coverage artifact.
+That was wrong: CORE labels a return by the year its accounting
+period ends, so those 58 June-year returns were the TY2022 form, not
+TY2023. No leaver is in one release and missing from the other. Most
+leavers simply last filed for TY2022; whether they are late or have
+stopped cannot be read yet.
+
+Among the 115 with no TY2023 or TY2024 return anywhere, the 102 with a
+valid 2019 pay value had a median of about $32,000 against $41,600 for
+stayers, a gap of $9,600 (interval -$14,000 to -$3,800). The same
+construct in the peer metros gives no gap (2,193 organizations; interval
+-$2,000 to +$1,600) and in the rest of the US a gap of about +$500. So
+the organizations that stopped filing in Nashville had been paying less
+per head, relative to survivors, than their counterparts elsewhere.
+Whether they closed, merged, or are simply delinquent is not known; 17
+have been dropped from the BMF.
+
+Human services charities present in both years went from 34% to 43% with
+expenses exceeding revenue (peer metros 39% to 45%, Rest of US 40% to 44%),
+while their median net assets rose from 9.6 to 10.8 months of expenses.
+Across all Davidson charities in 2023, 40% had expenses exceeding revenue
+and 20% held net assets under three months of expenses, both at the
+national level.
+
+### 6. Volunteers: more volunteers per paid employee than the national norm, and a declining reported total
+
+2023, charities excluding hospitals and universities (caveat 9):
+
+| | Reporting a positive volunteer count | Reporting any value (including zero) | Median volunteers, positive reporters with staff | Median volunteers per employee | Human services: volunteers per employee |
+|---|---|---|---|---|---|
+| Davidson | 66% | 81% | 50 | 4.0 | 5.1 |
+| Nashville collar | 55% | 67% | 38 | 5.0 | |
+| Peer metros combined | 62% | 75% | 50 | 4.1 | |
+| Rest of US | 59% | 73% | 34 | 2.6 | 2.5 |
+
+Davidson's human services charities report twice the volunteers per paid
+employee of their national counterparts; among the 20 peer counties
+Davidson's 4.0 overall sits in the middle (Charlotte 5.9, St. Louis 2.8).
+The reported Davidson total fell from 226,840 in 2019 to 173,719 in 2023
+(-23%); Hands On Nashville and the Tennessee Environmental Council account
+for 26,000 of the 53,000 decline. Among the 377 organizations with a
+positive count in both years, the total fell 22% but the median change was
+zero: 46% reported fewer, 37% more. In human services 52% reported fewer,
+median -7%. Nationally 43% reported fewer. These are estimates from the
+retained returns, not a measured change in distinct volunteers or hours.
+
+## Round 2: sector health profile and the listed organizations (draft for review, 2026-10-30)
+
+This section answers the requester's second ask: a profile of the
+Davidson County (Metro Nashville) nonprofit and philanthropic sector, and
+a filled spreadsheet for the 159 organizations on the team's Ecosystem
+Map. It also carries the changes the senior researcher asked for on round
+1. Every table names its filing population, because the BMF, the full
+Form 990, the Form 990-EZ, the Form 990-PF and the 990-N postcard describe
+different sets of organizations. "Tax year" means the IRS form year, the
+year the accounting period begins; CORE labels returns by the
+year the period ends and has been relabeled throughout (see Corrections).
+
+### Corrections to round 1
+
+Three statements in the round 1 findings are withdrawn or changed.
+
+1. **Exit artifact.** Round 1 said nearly half of the organizations that
+   appeared to stop filing a full 990 after 2019 had filed for 2023 and
+   were missing from the e-file release. That rested on reading CORE's
+   period-end year as the IRS tax year. Converted, those returns are
+   for 2022. No metro leaver is in one release and missing from the other.
+   Of the 128 metro leavers, 76 last filed for 2022, 17 for 2021, 13 moved
+   to the 990-EZ and 22 have no return in either release since 2020. The
+   pay gap between leavers with no TY2023 or TY2024 return in either
+   release and stayers is about $9,600 per head on 102 organizations
+   (interval -$14,000 to -$3,800), not $17,200 on 42, and the peer metros
+   show no gap (finding 5).
+2. **Release coverage.** Round 1 said the e-file release and CORE each miss
+   5 to 6 percent of the other's 2023 filings. Relabeled, every Davidson
+   CORE filing for 2023 is also in the e-file release; for Davidson the gap
+   is one way, and it is CORE's 2024 file being partial for fiscal-year
+   filers. A small number of returns with short accounting periods can
+   still be assigned to the wrong year where only CORE holds
+   them, because that extract does not carry the period start.
+3. **Hospitals and universities.** They are identified by the NTEE-V2
+   subsector code, not by name. Two Davidson universities carry an
+   undefined code and were inside the charity totals in round 1; they are
+   now excluded by EIN, and the all-charity government grant share for
+   2023 is 15.5 percent, not 14.8. The justification for excluding them:
+   13 institutions account for $10.7 billion of the $15.0 billion that
+   Davidson 501(c)(3) full-990 filers spent in 2023, so including them
+   turns every aggregate into a statement about those institutions. The
+   coverage table shows both populations.
+
+### Who is actually observed: the BMF against returns filed
+
+The BMF (IRS Business Master File) lists every organization currently
+recognized. Most of them file no return with financial information. For
+tax year 2023, counting the full 990 from the e-file release and the 990
+and 990-EZ from CORE together:
+
+| Davidson County, in the 2026 BMF | Registered | Full 990 | 990-EZ | 990-PF | No return seen |
+|---|---|---|---|---|---|
+| All registered organizations | 5,146 | 1,151 (22%) | 382 (7%) | 307 (6%) | 3,306 (64%) |
+| 501(c)(3), all | 4,472 | 887 (20%) | 311 (7%) | 304 (7%) | 2,970 (66%) |
+| 501(c)(3) public charities | 4,067 | 885 (22%) | 311 (8%) | 2 | 2,869 (71%) |
+| Public charities excl. hospitals and universities | 4,046 | 872 (22%) | 311 (8%) | 2 | 2,861 (71%) |
+| Human services charities | 1,041 | 247 (24%) | 71 (7%) | 0 | 723 (69%) |
+
+"No return seen" covers 990-N postcard filers (receipts under $50,000),
+late filers and organizations that have stopped; the releases do not
+separate them. About one Davidson charity in five files a full 990. Each
+table below says which filers it counts.
+
+The group also holds organizations recognized after 2023, which could not have been expected to file for that year: 806 of the 3,306 across all organizations, and 722 of the 2,869 public charities (about one in four). Recognition is not founding, so some of these existed earlier. The table is therefore the 2026 BMF set against 2023 returns, and the 71 percent is not a rate of non-filing or inactivity.
+
+### Age, starts and filing gaps
+
+**Recognitions by year** (BMF ruling year, organizations still on the
+BMF in 2026; recognition, not founding).
+
+![Davidson County recognitions by ruling year](output/chart_b_starts.png)
+
+Davidson recognitions ran at 130 to 200 a year from 2014 to 2021, then
+rose to 248 in 2022, 266 in 2023, 324 in 2024 and 347 in 2025. Human
+services charities followed the same path (45 a year to 2021, 79 to 95 a
+year since). Private foundations peaked at 26 in 2023. The recent rise is
+partly real and partly survival: older cohorts have had time to lapse.
+
+**Filing gaps.** The BMF does
+not record when an organization leaves, so two series are kept separate
+and never summed. (1) Stopped filing, described below. (2) Left the BMF: for each year, the share of
+Davidson organizations in the BMF the year before that are absent
+from that year on. It ran at 3 to 6 percent a year with two spikes (7.9
+percent in 2017, 5.9 percent in 2021) and two zero years (2018, 2022),
+because the BMF is updated in batches and reflects revocation lists
+as much as closures.
+
+**Stopped filing.** An organization is counted as stopped when it filed a 990 or 990-EZ for one year, filed neither for the next three years, and has not filed since. This is the rule in Harrison and Oxley (2025, Nonprofit Management and Leadership), who show that shorter gaps overstate exits because many organizations skip years and file again. On this rule, between 3.3 and 5.5 percent of Davidson filers stopped each year from 2016 to 2021.
+
+| First year without a return | Filers the year before | No return for two years | No return for three years | Stopped: three years and none since |
+|---|---|---|---|---|
+| 2016 | 1,559 | 6.0% | 5.8% | 5.5% |
+| 2017 | 1,555 | 4.2% | 4.1% | 3.7% |
+| 2018 | 1,575 | 4.3% | 4.0% | 3.9% |
+| 2019 | 1,608 | 3.5% | 3.4% | 3.3% |
+| 2020 | 1,626 | 4.1% | 3.7% | 3.4% |
+| 2021 | 1,614 | 5.8% | 5.3% | 5.3% (no later year to check yet) |
+
+The shorter gap does overstate. Of the 441 organizations with a two-year gap in the table, 43 (10 percent) had filed again by 2023.
+
+Three limits apply. First, the returns end at 2023, so the 2021 figure has no later year to check and can only fall, and nothing after 2021 can be judged yet. Second, the postcard return (990-N) is not in the data, so an organization that fell under $50,000 in receipts looks the same as one that stopped. Harrison and Oxley find national exit rates of 2 to 5 percent a year without postcard filers and 1 to 3 percent with them, so the Davidson figures are an upper bound. Third, stopping is not closing: the organization may have merged or shrunk.
+
+![Share of Davidson 990 and 990-EZ filers that stopped filing](output/chart_c_stopped_filing.png)
+
+
+### How small most organizations are
+
+Total expenses for tax year 2023, Davidson public charities excluding
+hospitals and universities, full 990 and 990-EZ filers together (1,184
+organizations; 990-N filers, under $50,000 in receipts, are not in any
+row):
+
+| Population (tax year 2023) | Filers | 25th pct | Median | 75th pct | 90th pct | Under $250k | Under $1M |
+|---|---|---|---|---|---|---|---|
+| All charities, full 990 and 990-EZ | 1,184 | $98k | $332k | $1.27M | $5.6M | 43% | 72% |
+| Human services, full 990 and 990-EZ | 319 | $103k | $347k | $1.20M | $5.9M | 42% | 73% |
+| All charities excl. hospitals and universities, full 990 only | 875 | $262k | $632k | $2.26M | $7.9M | 24% | 62% |
+| Human services, full 990 only | 248 | $247k | $509k | $1.85M | $8.0M | 25% | 65% |
+
+Among organizations large enough to file either form, half spend under
+$332,000 a year and seven in ten under $1 million. Human services
+organizations are no larger than the rest. The 309 organizations on the 990-EZ are 26 percent of these filers and 0.5 percent of the money: $24 million of $4.41 billion in expenses, and the same share of revenue. Their median is $67,000, against $632,000 for full-990 filers.
+
+![Total expenses, tax year 2023, Davidson charities](output/chart_d_expense_distribution.png)
+
+
+### Government grants, 2020 to 2023
+
+Reported government grants (Form 990 Part VIII line 1e) as a share of total
+revenue, full-990 public charities excluding hospitals and universities,
+dollar-weighted. Line 1e is grants
+only; contracts and reimbursements are on line 2 and cannot be separated.
+A blank line is treated as zero. Many filers report nothing on it: 53
+percent of Davidson charities in 2020, rising to 66 percent in 2023. The
+median organization's share is zero in every group and year shown except
+Davidson human services in 2020, where exactly half reported a grant and
+the median was 0.25 percent.
+
+| Share of revenue on line 1e | 2020 | 2021 | 2022 | 2023 |
+|---|---|---|---|---|
+| All charities, Davidson | 17.7% | 16.9% | 16.4% | 15.5% |
+| All charities, peer metros | 18.2% | 16.5% | 17.8% | 18.5% |
+| All charities, rest of US | 16.4% | 16.5% | 16.4% | 14.8% |
+| Human services, Davidson | 17.9% | 14.5% | 14.2% | 15.7% |
+| Human services, peer metros | 28.0% | 20.3% | 21.1% | 21.6% |
+| Human services, rest of US | 26.2% | 26.0% | 26.5% | 23.8% |
+
+Davidson's human services charities reported a smaller share than the
+peer metros and the rest of the US in every year shown. The series starts
+in 2020, so it cannot say when the gap began. Three of the six series
+peak in 2020 and three later; the 990 cannot say how much of any peak
+was federal pandemic relief.
+
+![Line 1e government grants as a share of revenue, 2020 to 2023](output/chart_e_govt_grant_share.png)
+
+### Filers, spending and employees, 2019 to 2023
+
+Full-990 public charities excluding hospitals and universities, e-file
+release. Employee counts on the 990 are noisy and are shown two ways.
+
+| Davidson County | 2019 | 2023 | Change | Same organizations in both years | Change |
+|---|---|---|---|---|---|
+| Filers | 757 | 881 | +16% | 625 in both years | |
+| Spending, 2023 dollars | $4.15bn | $4.39bn | +6% | | +9% |
+| Reported employees | 47,861 | 44,948 | -6% | | -0.6% |
+
+Among the 625 organizations present in both years, employees fell 0.6
+percent and real spending rose 9 percent; about nine tenths of the 6
+percent decline in the full population comes from the organizations that
+left or joined it. Through 2022 the same comparison gives -2.8 percent
+and +4.5 percent. No part of
+the employee decline comes from returns missing from the e-file release.
+The figure for the same organizations in both years is the one to cite.
+
+![Davidson full-990 charities: filers, spending and employees, index 2019 = 100](output/chart_f_filers_spending_employees.png)
+
+
+### The listed organizations
+
+The team's list names 159 organizations with addresses and no
+identifiers: 141 sent in October and 18 added on 3 November. Each was
+matched by hand to the BMF (147 matched after the team's answers of 3
+November, all 18 additions among them; 4 removed at the team's request as
+national organizations, a foundation initiative, or a membership body
+with no IRS record; the 8 unmatched are companies, church-run bodies,
+units covered by a national group exemption, and organizations with no
+BMF record under their names; the detail is in the private deliverable). The
+spreadsheet returned to the team carries, for each matched organization,
+tax year 2023 total expenses from the return it filed, with the form and
+line named: 104 from the full 990 (line 18), 6 from the 990-EZ (line 17)
+and 10 from the 990-PF (line 26, total expenses and disbursements, with
+operating expenses and grants paid beside it). Twelve organizations show
+only a 2022 full 990 so far; their 2022 figure is given in the status
+column. Two matches are flagged low confidence and are with the team.
+
+Against all Davidson public charities, the listed organizations are
+older, larger, more often staffed, and more often government funded. The
+list is a selection made by the requester, so this describes the list,
+not the sector.
+
+| Measure | Listed, registered in Davidson | All Davidson public charities excl. hospitals and universities |
+|---|---|---|
+| Organizations in the BMF | 123 | 4,046 |
+| Median age (years since recognition) | 23 | 11 |
+| Recognized 2020 or later | 14% | 36% |
+| Full-990 filers, tax year 2023 | 96 | 872 |
+| Median total expenses (full 990) | $1.77M | $627k |
+| Median reported employees (full 990) | 20 | 4 |
+| Reporting any line 1e grants (full 990) | 62% | 35% |
+| Line 1e share of revenue, dollar-weighted (full 990) | 17.2% | 15.6% |
+
+### Who funded whom, 2019 to 2023
+
+Source: grants reported by funders whose BMF address is in Davidson
+County, on their own returns: Schedule I of the full 990 (recipients over
+$5,000 in aggregate, with the recipient EIN) and the 990-PF grants paid
+schedule (recipient name and city only, matched by cleaned name and
+hand-checked). Recipients are the 136 listed organizations registered in
+Davidson; the 11 registered elsewhere are out of scope. Grants to
+individuals are excluded. Funders based outside Davidson are absent by
+construction, so an organization with no matched grant is not unfunded.
+
+| Tax year | Grant rows | Funders | Listed recipients reached | Total ($M) | of which Schedule I cash | Schedule I noncash | 990-PF |
+|---|---|---|---|---|---|---|---|
+| 2019 | 1,539 | 130 | 96 | 34.6 | 21.4 | 0.7 | 12.6 |
+| 2020 | 2,312 | 170 | 103 | 60.3 | 37.1 | 2.7 | 20.5 |
+| 2021 | 1,170 | 172 | 103 | 47.8 | 25.1 | 1.7 | 21.0 |
+| 2022 | 1,124 | 170 | 104 | 56.7 | 34.3 | 1.4 | 21.1 |
+| 2023 | 1,074 | 167 | 118 | 63.4 | 34.4 | 5.7 | 23.2 |
+
+Over the five years, 122 of the 136 listed organizations received at least
+one matched grant from one of 247 Davidson-based funders. Among those
+reached, the median recipient had 9 distinct Davidson funders; 54 had more than ten
+and 14 had one. Funding is concentrated: the largest funder supplied 25
+percent of matched dollars, the top three 46 percent and the top ten 67
+percent. Twenty-four of the funders are themselves on the list, and
+grants between listed organizations ran from $21 million in 2019 to
+$42 million in 2023; where a listed intermediary regrants, the same
+dollar can appear twice. Funder and recipient names are in the private
+deliverable only.
+
+### Grants that stay in Davidson County
+
+The team asked that funders which give beyond Nashville show only their Davidson grants. A funder's operating expenses cannot be split by place, so the expense column stays as filed. Instead the sheet carries four further columns for every listed organization that itemizes grants on its return: grants paid to all recipients, the part paid to recipients based in Davidson County, the tax year of the return, and a check of the itemized total against the return's own grants-paid line. The year is 2023, or 2022 where the funder has no 2023 return in the releases at all (one organization); a funder that filed for 2023 but itemized no grants is not carried back. A recipient is placed in Davidson by its EIN on the BMF where the return gives one (the full 990's grants schedule), otherwise by its Tennessee ZIP code where the BMF knows that ZIP, otherwise by its city; this says where the recipient is based, not where its work reaches. Thirty-five listed organizations have the columns: all twelve listed private foundations with a 2023 990-PF in the e-file release, wherever registered, and the 23 Davidson-based full-990 filers with grants on Schedule I. Listed full-990 filers registered outside Davidson are not in that extract and are not covered; only one of them reports any grants (Legacy Mission Village, Williamson County, $53,000 on Part IX). Examples: the Community Foundation of Middle Tennessee paid $59.7 million in itemized grants, $27.1 million (45 percent) to Davidson recipients; United Way of Middle Tennessee $26.9 million, $18.8 million (70 percent). For two foundations the itemized list adds to more than the grants-paid line on the return (HCA Healthcare Foundation by $2.9 million, the Frist Foundation by $96,000), and one (Joe C. Davis, year ending September 2024) has no return in CORE yet to check against; the check column on the sheet says so for each.
+
+The sheet also carries, at the team's request, a size band for every organization: Small under $1 million, Medium $1 million to under $10 million, Large $10 million and over, the three-way grouping of the NCCS Sector in Brief expense bands. A philanthropic organization is banded by its grants to Davidson County recipients, every other organization by its total expenses, and a column beside the band says which figure and which tax year it used. Where an organization has no tax year 2023 return in the source used for expenses, its tax year 2022 figure is used and flagged; fourteen organizations carry a 2022 expense figure, two of them private foundations whose 2023 grants list is nonetheless in the e-file release and feeds the grant columns. One of the fourteen has two different 2022 totals in CORE and the e-file release, and the note on the sheet gives both. Of the 134 organizations with a figure, 50 are Small, 56 Medium and 28 Large; 25 have no figure (removed, unmatched, church, newly recognized, or no return in the releases).
+
+The Boedecker Foundation is registered in Colorado, so its expense figure is foundation-wide. From its own grants list:
+
+| Tax year | Grants paid | To the Nashville metro | To Davidson County |
+|---|---|---|---|
+| 2020 | $2.42M | 27% | 26% |
+| 2021 | $1.58M | 43% | 41% |
+| 2022 | $1.68M | 55% | 53% |
+| 2023 | $1.50M | 66% | 65% |
+| 2024 | $1.46M | 51% | 48% |
+
+The 2023 Davidson figure, $978,000 across 25 grants, is what the sheet shows. The yearly totals equal the grants-paid line on the foundation's own returns for 2020 to 2023; 2024 is not yet in CORE.
+
+On "duplication" and "gaps": a shared funder is a shared funder, not
+duplication, and no matched grant is not a gap, because the table sees
+only Davidson-based funders, only itemized Schedule I recipients, and
+only names the match caught. The 2020 Schedule I spike is one large
+funder's itemized COVID-19 relief grants.
+
+### Reviewer's answers (2026-11-09)
+
+1. Exits: a two-year gap is too short. The main series now uses three
+   years with no return and none since (Harrison and Oxley 2025).
+2. Comparator for the list: depends on whether the team wants large
+   organizations or the full range; the question is with the team.
+3. 990-EZ filers: agreed, with their small share of the money stated.
+
+## What this could become
+
+- A county capacity map for Metro and the Community Foundation (finding 1,
+  with the service-area caveat explicit; the density layer is current, the
+  spending layer is TY2023), and a zip-level view of recent recognitions
+  (finding 2).
+- A funding-mix note on human services (finding 4), new relative to the
+  survey work, with line 1e named for what it is. The TY2024 Phase 0 file
+  (partial, early filers) could extend it by a year; no TY2024 result exists
+  yet.
+- The pay and exit pattern (finding 5) rests on 102 organizations with no
+  2023 or 2024 return in either source. Before it is cited, a sample should
+  be checked by name to see whether they closed, merged, or are simply
+  behind on filing (the list is in `output/exit_cohort_trace.csv`).
+
+## Reproducibility
+
+`run-all.R` rebuilds everything: `build.R` (section build-panel) (BMF universe and the
+national panel, with the 24 raw e-file CSVs verified byte-for-byte against
+their recorded sha256), `build.R` (section build-external) (Census, QCEW and Phase 0
+downloads with sha256 checks), `build.R` (section build-peers), then `analysis-round1.R` (pass 1) through
+`analysis-round1.R` (pass 12), then `validate-build.R`, which re-derives the filing selection
+from the raw Part I files and asserts it matches the panel exactly. Console
+output goes to `output/`. Every read is pinned in `_pins.csv` with a
+vintage and, for files, a sha256; every BMF read carries the master's
+manifest vintage and sha256, and nothing is served from a cache. The BMF is read from a rolling
+URL; its manifest vintage and sha256 are recorded so the build can be
+identified but not re-fetched once the master rolls. The e-file CSVs
+(about 6 GB, 24 files) are those synced for
+`requests/2026-06-milwaukee-msa`, identified by sha256 in that folder's
+`_efile_inputs.csv`. The folder is therefore reproducible from its inputs
+as identified, not from the folder alone.
