@@ -28,6 +28,7 @@ library(dplyr)
 request_dir <- here::here("requests", "2026-10-nashville-msa")
 source(here::here("R", "request_read.R"))
 source(file.path(request_dir, "list-rows.R"))
+source(file.path(request_dir, "tax-year-rule.R"))
 data_dir <- file.path(request_dir, "data")
 
 
@@ -154,20 +155,26 @@ core_pf_raw <- bind_rows(lapply(core_years, function(core_year) {
   )
 }))
 
+# The tax year stated on the e-filed return, used where a CORE return
+# matches one (see tax-year-rule.R). 990-PF returns are not in that table.
+header_tax_years <- read_header_tax_years(request_dir, 2020:2023)
+
 #' Keep one CORE return per listed organization for a form year
 #'
-#' @param core_rows CORE rows with `ein` and `tax_period` (YYYYMM).
+#' @param core_rows CORE rows with `ein` and `tax_period` (YYYYMM), and
+#'   `source_form` when `header_tax_years` is given.
 #' @param year The form year wanted.
+#' @param header_tax_years Tax years stated on e-filed returns, from
+#'   `read_header_tax_years()`; NULL for 990-PF rows.
 #' @return The rows for listed organizations whose form year is `year`, one
-#'   per EIN (the latest period), with an `ein9` column added.
-core_for_form_year <- function(core_rows, year) {
+#'   per EIN (the latest period), with `ein9` and `form_year` columns added.
+#' @details The form year comes from `add_irs_tax_year()`: the year stated
+#'   on the return where it is e-filed, else worked out from the month the
+#'   period ends.
+core_for_form_year <- function(core_rows, year, header_tax_years = NULL) {
   core_rows |>
-    mutate(
-      ein9 = gsub("-", "", ein),
-      period_end_year = as.integer(substr(tax_period, 1, 4)),
-      period_end_month = as.integer(substr(tax_period, 5, 6)),
-      form_year = if_else(period_end_month == 12L, period_end_year, period_end_year - 1L)
-    ) |>
+    add_irs_tax_year(header_tax_years) |>
+    mutate(form_year = irs_tax_year) |>
     filter(ein9 %in% matched$ein9, form_year == year) |>
     arrange(ein9, desc(tax_period)) |>
     distinct(ein9, .keep_all = TRUE)
@@ -192,7 +199,7 @@ figures_for_form_year <- function(year) {
               efile_employees = employees)
   stopifnot(!any(duplicated(efile_year$ein9)))
 
-  core_year <- core_for_form_year(core_combined_raw, year) |>
+  core_year <- core_for_form_year(core_combined_raw, year, header_tax_years) |>
     transmute(ein9, core_form = source_form, core_tax_period = tax_period,
               core_total_expenses = total_expenses)
 

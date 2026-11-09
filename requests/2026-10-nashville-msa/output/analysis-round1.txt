@@ -676,7 +676,7 @@ The following objects are masked from ‘package:base’:
 [1] focus          n              deficit_19     deficit_23     med_reserve_19
 [6] med_reserve_23
 <0 rows> (or 0-length row.names)
-pinned: bmf-master-geocoded [rolling@2026-10-29] (3698197 rows)
+pinned: bmf-master-geocoded [rolling@2026-11-09] (3698197 rows)
 == Full-990 rows with no BMF match (dropped by the subsection filter) ==
   tax_year   rows no_bmf_match
 1     2019 280177         2016
@@ -1996,6 +1996,8 @@ Warning messages:
 ℹ Type: "externalptr"
 → If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
 CORE EIN sample: 01-0018930 01-0024455  source_form values: 990, 990ez 
+pinned: efile-v2_1-f9-p00-t00-header [efile_v2_1@2018-2023] (2994264 rows)
+CORE returns whose tax year the e-file header changed: 1893 of 1632392 
 
 == Exit cohort status, metro and Davidson ==
                                            status  n
@@ -2020,7 +2022,7 @@ CORE EIN sample: 01-0018930 01-0024455  source_form values: 990, 990ez
 5                switched to 990-EZ (CORE TY2023)  13    11        18600
 6 no return since TY2020, still registered in BMF   5     5        24907
   med_employees_2019 med_rev_2019_k med_rev_2023_core_k
-1                 10            894                 912
+1                 10            894                 913
 2                 16           1260                  NA
 3                  9            376                  NA
 4                  6            161                  NA
@@ -2042,9 +2044,9 @@ Exiters with no TY2023 or TY2024 return anywhere: n=102, median 2019 pay 32007 v
 2  full 990 TY2023 in CORE    7     0        40785 Peer metros
 3 no TY2023 return in CORE 2319    94        41291 Peer metros
                     status     n share med_pay_2019      group
-1            990-EZ TY2023  1102     6        32390 Rest of US
+1            990-EZ TY2023  1103     6        32438 Rest of US
 2  full 990 TY2023 in CORE    24     0        36582 Rest of US
-3 no TY2023 return in CORE 17276    94        37794 Rest of US
+3 no TY2023 return in CORE 17275    94        37793 Rest of US
 pinned: core-merged-990combined [2019] (528576 rows)
 pinned: core-merged-990combined [2020] (523095 rows)
 pinned: core-merged-990combined [2021] (516871 rows)
@@ -2054,67 +2056,67 @@ pinned: core-merged-990combined [2024] (74678 rows)
 There were 12 warnings (use warnings() to see them)
 == Full Form 990 filings per year: e-file v2.1 panel vs CORE (SOI), same EIN population ==
            grp tax_year efile_full_990 core_full_990 in_both core_990ez
-1    Nashville     2018             NA           629     544        336
+1    Nashville     2018             NA           629     544        335
 2    Nashville     2019           1342          1489    1329       1068
-3    Nashville     2020           1475          1469    1457       1084
-4    Nashville     2021           1617          1597    1596       1014
-5    Nashville     2022           1718          1688    1683       1022
-6    Nashville     2023           1686          1292    1292        914
-7  Peer metros     2018             NA         12052   10087       5908
-8  Peer metros     2019          24581         27930   24318      19020
-9  Peer metros     2020          28002         27919   27617      18710
-10 Peer metros     2021          29716         29447   29277      17852
-11 Peer metros     2022          31029         30498   30385      18005
-12 Peer metros     2023          29587         21386   21359      15547
+3    Nashville     2020           1475          1469    1457       1083
+4    Nashville     2021           1617          1598    1597       1012
+5    Nashville     2022           1718          1685    1683       1020
+6    Nashville     2023           1686          1298    1298        917
+7  Peer metros     2018             NA         12044   10085       5897
+8  Peer metros     2019          24581         27924   24318      19013
+9  Peer metros     2020          28002         27913   27618      18699
+10 Peer metros     2021          29716         29448   29285      17846
+11 Peer metros     2022          31029         30496   30391      17994
+12 Peer metros     2023          29587         21421   21394      15579
 13 Peer metros     2024             NA             4      NA         NA
-14  Rest of TN     2018             NA           664     556        352
+14  Rest of TN     2018             NA           664     556        351
 15  Rest of TN     2019           1270          1444    1259       1116
-16  Rest of TN     2020           1467          1472    1461       1114
-17  Rest of TN     2021           1579          1574    1566       1036
-18  Rest of TN     2022           1661          1643    1636       1037
-19  Rest of TN     2023           1620          1243    1243        929
-20  Rest of US     2018             NA         91624   79252      45820
-21  Rest of US     2019         181321        201788  179407     139451
-22  Rest of US     2020         202020        201647  199538     136952
-23  Rest of US     2021         213104        211411  210407     129249
-24  Rest of US     2022         221361        217825  217094     130061
-25  Rest of US     2023         210125        150059  149859     110147
+16  Rest of TN     2020           1467          1472    1461       1113
+17  Rest of TN     2021           1579          1573    1566       1036
+18  Rest of TN     2022           1661          1643    1637       1038
+19  Rest of TN     2023           1620          1245    1245        931
+20  Rest of US     2018             NA         91590   79241      45764
+21  Rest of US     2019         181321        201756  179418     139424
+22  Rest of US     2020         202020        201637  199568     136869
+23  Rest of US     2021         213104        211419  210472     129219
+24  Rest of US     2022         221361        217818  217135     130043
+25  Rest of US     2023         210125        150291  150091     110297
 26  Rest of US     2024             NA             5      NA          8
    core_not_in_efile efile_not_in_core efile_share_of_core
 1                 85                NA                  NA
 2                160                13                  90
 3                 12                18                 100
-4                  1                21                 101
-5                  5                35                 102
-6                  0               394                 130
-7               1965                NA                  NA
-8               3612               263                  88
-9                302               385                 100
-10               170               439                 101
-11               113               644                 102
-12                27              8228                 138
+4                  1                20                 101
+5                  2                35                 102
+6                  0               388                 130
+7               1959                NA                  NA
+8               3606               263                  88
+9                295               384                 100
+10               163               431                 101
+11               105               638                 102
+12                27              8193                 138
 13                NA                NA                  NA
 14               108                NA                  NA
 15               185                11                  88
 16                11                 6                 100
-17                 8                13                 100
-18                 7                25                 101
-19                 0               377                 130
-20             12372                NA                  NA
-21             22381              1914                  90
-22              2109              2482                 100
-23              1004              2697                 101
-24               731              4267                 102
-25               200             60266                 140
+17                 7                13                 100
+18                 6                24                 101
+19                 0               375                 130
+20             12349                NA                  NA
+21             22338              1903                  90
+22              2069              2452                 100
+23               947              2632                 101
+24               683              4226                 102
+25               200             60034                 140
 26                NA                NA                  NA
 
 == Davidson only ==
   tax_year efile_full_990 core_full_990 efile_share_of_core
 1     2019            759           820                  93
 2     2020            812           806                 101
-3     2021            873           858                 102
-4     2022            913           898                 102
-5     2023            883           649                 136
+3     2021            873           859                 102
+4     2022            913           895                 102
+5     2023            883           652                 135
 6     2018             NA           370                  NA
 
 == Bootstrap on the pay gap: exiters with no TY2023/TY2024 return vs stayers (metro) ==
@@ -2122,4 +2124,4 @@ n_gone=102 n_stay=734 median gap=-9552  95% interval -14045 to -3823
 
 == Same for peer metros and rest of US, 'no TY2023 return in CORE' exiters vs stayers ==
 Peer metros  n_gone= 2193 n_stay= 11614 median gap=-41  95% interval -1953 to 1600
-Rest of US   n_gone=16295 n_stay= 87063 median gap=509  95% interval 16 to 1027
+Rest of US   n_gone=16294 n_stay= 87063 median gap=507  95% interval -7 to 1049

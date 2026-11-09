@@ -9,7 +9,7 @@ The following objects are masked from ‘package:base’:
 
     intersect, setdiff, setequal, union
 
-pinned: bmf-master-geocoded [rolling@2026-11-04] (3698197 rows)
+pinned: bmf-master-geocoded [rolling@2026-11-09] (3698197 rows)
 matched EINs not in the TN extract: 1 ; found nationally: 1 
 pinned: core-merged [merged] (525074 rows)
 pinned: core-merged [merged] (515769 rows)
@@ -55,6 +55,7 @@ Warning messages:
 6: Potentially unsafe or invalid elements have been discarded from R metadata.
 ℹ Type: "externalptr"
 → If you trust the source, you can set `options(arrow.unsafe_metadata = TRUE)` to preserve them. 
+pinned: efile-v2_1-f9-p00-t00-header [efile_v2_1@2020-2023] (2136235 rows)
 
 == Match outcome (159 listed organizations) ==
   decision confidence  n

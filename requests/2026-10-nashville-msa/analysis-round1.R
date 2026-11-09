@@ -771,10 +771,15 @@ cat("CORE EIN sample:", head(core$ein, 2), " source_form values:", paste(names(t
 # that "TY2023" means the same thing in both sources (second-analyst
 # review, 2026-10-29; before this, 58 June-year form-2022 returns were
 # read as 2023 returns missing from the e-file release).
+# The year stated on the e-filed return is used where the CORE return
+# matches one; otherwise the month the period ends decides (see
+# tax-year-rule.R; second-analyst review, 2026-11-09).
+source(file.path(req, "tax-year-rule.R"))
+header_tax_years <- read_header_tax_years(req, 2018:2023)
 core <- core |>
-  mutate(period_end_year = as.integer(substr(tax_period, 1, 4)),
-         period_end_month = as.integer(substr(tax_period, 5, 6)),
-         tax_year = if_else(period_end_month == 12L, period_end_year, period_end_year - 1L))
+  add_irs_tax_year(header_tax_years) |>
+  mutate(tax_year = irs_tax_year)
+cat("CORE returns whose tax year the e-file header changed:", sum(core$irs_tax_year != core$inferred_tax_year), "of", nrow(core), "\n")
 
 core_c <- core |> filter(ein9 %in% cohort$ein9) |> arrange(ein9, tax_year, desc(tax_period)) |> distinct(ein9, tax_year, .keep_all = TRUE)
 core_wide <- core_c |> select(ein9, tax_year, source_form) |> tidyr::pivot_wider(names_from = tax_year, values_from = source_form, names_prefix = "core_")
@@ -851,10 +856,10 @@ core <- bind_rows(lapply(2019:2024, function(y) {
              n_rows = nrow(x), note = "TY2023 coverage comparison")
   x
 })) |> mutate(ein9 = gsub("-", "", ein)) |>
-  # Relabel CORE's period-end year to the IRS form year (see pass 11).
-  mutate(period_end_year = as.integer(substr(tax_period, 1, 4)),
-         period_end_month = as.integer(substr(tax_period, 5, 6)),
-         tax_year = if_else(period_end_month == 12L, period_end_year, period_end_year - 1L)) |>
+  # Convert CORE's period-end year to the IRS form year (see pass 11 and
+  # tax-year-rule.R).
+  add_irs_tax_year(header_tax_years) |>
+  mutate(tax_year = irs_tax_year) |>
   arrange(ein9, tax_year, desc(tax_period)) |> distinct(ein9, tax_year, .keep_all = TRUE)
 
 # Same population definition as the panel: 501(c)(3), excl HOS/UNI (current BMF).
