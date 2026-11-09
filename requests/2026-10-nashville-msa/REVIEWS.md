@@ -301,3 +301,27 @@ Four findings, all fixed in the next commit.
 2. Figure note said "no 2023 return" for Joe C. Davis and Speer, whose 2023 990-PF grants list is in the e-file release. The IRS status now says CORE lacks the 2023 990-PF, and the grants script appends to the note that the 2023 grants list feeds the grant columns.
 3. Moves and Grooves: CORE $547,120 and the e-file release $568,604 for the same 2022 year. The Figure note now gives both; the CORE figure stays (same rule as 2023). Which filing version is the later one could not be told from the local records.
 4. Removed rows' Size basis now says removed, not "no return".
+
+## 2026-11-09, senior reviewer's answers and second-analyst review of the round 2 profile
+
+**Senior reviewer.** Three answers to the round 2 questions.
+
+1. Exits: a two-year filing gap is too short, because organizations often skip several years and file again (Harrison and Oxley 2025). The main series now counts an exit as three years with no return and none since (`exit-rule.R`, tested). Checked on Davidson: 43 of 441 two-year gaps had filed again by 2023; rates are 3.3 to 5.5 percent a year for 2016 to 2021, the last of which has no later year to check.
+2. Comparator for the list: depends on whether the team wants large organizations or the full range. The question is with the team; no change made.
+3. 990-EZ filers: agreed, with their weight stated. They are 26 percent of 2023 filers and 0.5 percent of expenses and revenue.
+
+**Second analyst** (`reviews/REVIEW-round2-2026-11-09.md`), eight findings plus two follow-ups, all accepted.
+
+| # | Finding | Checked | Disposition |
+|---|---|---|---|
+| 1 | "No return seen" includes organizations recognized after 2023 | Confirmed: 806 of 3,306, and 722 of 2,869 public charities | Counts now printed by `profile-charts.R`; the coverage text names the group and says the 71 percent is not a non-filing rate. |
+| 2 | The period-month rule misdates short-period CORE returns | Confirmed | New `tax-year-rule.R` (tested): the tax year stated on the e-filed return is used where the CORE return matches one on EIN, form and period end; the month rule is the fallback and is all a 990-PF gets. Used by `profile-charts.R`, `profile-list.R` and `analysis-round1.R`. Effect: 54 Tennessee returns redated in the charts; two exit denominators move by one (1,575 and 1,614), no rate changes; every spreadsheet value identical; the round 1 exit trace identical; the e-file release holds 231, not 234, more Davidson 2023 full-990 filings than CORE. |
+| 3 | Grant totals labelled as 2023 dollars are nominal | Confirmed | Text now says spending comparisons are in 2023 dollars and grant amounts are as reported. |
+| 4 | Location described as the address on the return | Confirmed: it is the current BMF address applied to every year | Reworded; unsupported claims about regional organizations and metro-first ordering removed. |
+| 5 | Counts of 872, 875 and 881 filers, and 123 and 136 listed organizations, unexplained | Confirmed; bridge printed by `profile-charts.R` | Each table says what it counts; 136 = 123 public charities + 7 private foundations + 3 other exempt types + 2 hospitals or universities + 1 charity no longer in the BMF. |
+| 6 | "Median grant share is zero in every year" has an exception | Confirmed: Davidson human services 2020, 0.252 percent | Text gives the exception and the real share reporting nothing (53 percent in 2020, 66 percent in 2023). |
+| 7 | A table row split across two pages in the Word file | Confirmed | `fix_docx_tables.py` (tested) sets rows not to split, keeps each table and its lead-in paragraph together; column widths set in the source. Checked on a PDF exported from Word. |
+| 8 | Unfinished workforce sentence in `request.qmd` | Confirmed | Rewritten. |
+
+The stakeholder version of the profile is `profile.qmd`. It adds a check of the listed organizations against the November 2026 IRS revocation list: eight of 147 appear on it, seven are exempt again, one is not. Organization names are kept out of the public file.
+
