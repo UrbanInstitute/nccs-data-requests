@@ -15,7 +15,7 @@ This profile describes the nonprofit and philanthropic sector in Davidson County
 - **Only about one charity in five files a full return.** Davidson has 4,046 public charities outside hospitals and universities. For 2023, 872 filed the full Form 990, the only form that reports employees and government grants.
 - **Thirteen hospitals and universities account for most of the dollars.** They spent $10.7 billion of the $15.0 billion that all Davidson charities spent in 2023. This profile sets them aside so the figures describe the rest of the sector to prevent them from dominating the analysis.
 - **More organizations are being recognized each year by the IRS.** IRS recognitions of nonprofit tax-exempt status in Davidsom ran at 130 to 200 a year from 2014 to 2021 and reached 347 in 2025.
-- **Most organizations consistently filed tax returns.** Between 3 and 6 percent of filers stop each year, and that rate has been steady. So our sample is stable.
+- **Few organizations stop filing for good.** Between 3 and 6 percent of filers stop each year, and that rate has been steady.
 - **Human services charities in Davidson report less government grant money than their peers.** Grants were 15.7 percent of their revenue in 2023, against 21.6 percent in similar metros and 23.8 percent in the rest of the country.
 - **Spending grew and reported employment held steady.** Among the same organizations in 2019 and 2023, spending rose 9 percent after inflation and reported employees were flat.
 - **The organizations on the Ecosystem Map are older and larger than the typical Davidson charity.** Their median spending is $1.77 million a year, against $627,000.
@@ -217,7 +217,7 @@ The 2023 Davidson figure, $978,000 across 25 grants, is the one on the spreadshe
 
 - **IRS Business Master File**, September 2026, as published by the National Center for Charitable Statistics (NCCS) at the Urban Institute.
 - **IRS Form 990, 990-EZ and 990-PF returns**, tax years 2015 to 2023, from the public e-filed returns and from the NCCS CORE files, which are built from IRS extracts of the same returns.
-- **Hospitals and universities** are identified by the classification code the BMF carries for each organization.
+- **Hospitals and universities** are identified by the classification code the BMF carries for each organization. Two universities whose code is blank in the BMF are added by hand.
 - **Stopped filing** follows the rule in Harrison, T. D., and Oxley, J. (2025), "Nonprofit Entry, Exit, and Implications for Sector Growth," *Nonprofit Management and Leadership* 36: 57-69.
 - **Tax year.** Where a return's stated tax year is available it is used. Otherwise it is worked out from the month the accounting period ends, which is exact for 12-month years and approximate for the few returns that cover a shorter period.
 - **Inflation adjustment** uses the Consumer Price Index.
