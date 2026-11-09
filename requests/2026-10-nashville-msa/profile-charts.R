@@ -28,6 +28,8 @@ library(ggplot2)
 
 request_dir <- here::here("requests", "2026-10-nashville-msa")
 source(here::here("R", "request_read.R"))
+source(file.path(request_dir, "tax-year-rule.R"))
+source(file.path(request_dir, "exit-rule.R"))
 data_dir <- file.path(request_dir, "data")
 output_dir <- file.path(request_dir, "output")
 
@@ -65,14 +67,22 @@ save_chart <- function(plot, file_name, width = 8, height = 5) {
 
 # --- CORE returns for Tennessee EINs, relabeled to form year ----------------
 
-relabel_form_year <- function(core_table) {
+# The conversion is in tax-year-rule.R: the tax year stated on the e-filed
+# return where the CORE return matches one, else worked out from the month
+# the period ends (exact for 12-month years, approximate for short ones).
+header_tax_years <- read_header_tax_years(request_dir, 2015:2023)
+
+#' Date CORE returns by IRS form year
+#'
+#' @param core_table CORE rows with `ein` and `tax_period`.
+#' @param header_tax_years Output of `read_header_tax_years()`, or NULL for
+#'   990-PF rows.
+#' @return `core_table` with `ein9`, `form_year` and the columns added by
+#'   `add_irs_tax_year()`.
+relabel_form_year <- function(core_table, header_tax_years = NULL) {
   core_table |>
-    mutate(
-      ein9 = gsub("-", "", ein),
-      period_end_year = as.integer(substr(tax_period, 1, 4)),
-      period_end_month = as.integer(substr(tax_period, 5, 6)),
-      form_year = if_else(period_end_month == 12L, period_end_year, period_end_year - 1L)
-    )
+    add_irs_tax_year(header_tax_years) |>
+    dplyr::mutate(form_year = irs_tax_year)
 }
 
 tn_ein9 <- unique(registry_tn$ein9)
@@ -82,8 +92,15 @@ core_990_ez <- bind_rows(lapply(2015:2024, function(core_year) {
             columns = c("ein", "tax_year", "source_form", "tax_period", "total_expenses", "total_revenue"),
             note = "Davidson coverage, exits and expense percentiles; relabeled to form year")
 })) |>
-  relabel_form_year() |>
+  relabel_form_year(header_tax_years) |>
   filter(ein9 %in% tn_ein9)
+
+cat("== CORE 990 and 990-EZ returns for Tennessee: tax year from the e-file header against the inferred year ==\n")
+print(core_990_ez |>
+        dplyr::summarise(core_returns = dplyr::n(),
+                         matched_to_header = sum(!is.na(header_tax_year)),
+                         year_changed = sum(!is.na(header_tax_year) & header_tax_year != inferred_tax_year)) |>
+        as.data.frame())
 
 core_pf <- bind_rows(lapply(c(2015, 2016, 2020:2024), function(core_year) {
   read_core(request_dir, tier = "merged", tax_year = core_year, form = "990pf",
@@ -156,6 +173,26 @@ cat("== A. Davidson County registry (on the 2026 registry) against tax year 2023
 print(coverage_table |> select(population, registry_count, filing_2023, n, share) |> as.data.frame())
 write.csv(coverage_table, file.path(output_dir, "chart_a_coverage_ty2023.csv"), row.names = FALSE)
 
+# "No return seen" also holds organizations recognized after the filing
+# year being measured (second-analyst review, 2026-11-09). Recognition is
+# not founding, so these are a timing group, not a non-filing group.
+coverage_recognized_later <- dplyr::bind_rows(
+  coverage |> dplyr::mutate(population = "All registered organizations"),
+  coverage |> dplyr::filter(is_charity) |> dplyr::mutate(population = "501(c)(3) public charities"),
+  coverage |> dplyr::filter(is_charity, !is_hos_uni) |> dplyr::mutate(population = "501(c)(3) public charities excl. hospitals and universities"),
+  coverage |> dplyr::filter(is_charity, is_human_services) |> dplyr::mutate(population = "501(c)(3) human services charities")
+) |>
+  dplyr::filter(is.na(source_form_2023)) |>
+  dplyr::group_by(population) |>
+  dplyr::summarise(no_return_seen = dplyr::n(),
+                   recognized_after_2023 = sum(ruling_year > 2023L, na.rm = TRUE),
+                   ruling_year_missing = sum(is.na(ruling_year)),
+                   .groups = "drop")
+
+cat("\n== A1b. No 2023 return seen: how many were recognized after 2023 ==\n")
+print(as.data.frame(coverage_recognized_later))
+write.csv(coverage_recognized_later, file.path(output_dir, "chart_a1b_recognized_after_2023.csv"), row.names = FALSE)
+
 cat("\n== A2. Hospitals and universities on the Davidson registry (NTEE-V2 subsector HOS or UNI) ==\n")
 print(coverage |> filter(is_501c3, is_hos_uni) |> count(nteev2_subsector, filing_2023) |> as.data.frame())
 hos_uni_expenses <- coverage |> filter(is_501c3, source_form_2023 == "990") |>
@@ -181,7 +218,7 @@ write.csv(starts, file.path(output_dir, "chart_b_starts_by_ruling_year.csv"), ro
 chart_b <- ggplot(starts |> filter(ruling_year <= 2025), aes(ruling_year, n, fill = group)) +
   geom_col() +
   labs(title = "Davidson County: organizations recognized by the IRS, by year",
-       subtitle = "Registry (BMF) ruling year; organizations still on the registry in 2026. Recognition, not founding.",
+       subtitle = "Year of IRS recognition, for organizations still in the BMF in 2026. Recognition is not founding.",
        x = NULL, y = "Organizations", fill = NULL) +
   theme_minimal(base_size = 11) + theme(legend.position = "bottom")
 save_chart(chart_b, "chart_b_starts.png")
@@ -212,6 +249,62 @@ cat("\n== C1. Stopped filing: Davidson 990/990-EZ filers (not private foundation
 print(as.data.frame(stopped))
 write.csv(stopped, file.path(output_dir, "chart_c1_stopped_filing.csv"), row.names = FALSE)
 
+# (1b) How often a filing gap ends. The reviewer's point (2026-11-09): gaps
+# of several years followed by a new return are common, so a two-year gap
+# overstates exits. Measured here on the same filers: for each last form
+# year, the share with no return for the next 2, 3, 4 and 5 form years, and
+# of those with a two-year gap, the share that filed again by form year
+# 2023. Form year 2024 is left out because that release is partial.
+
+last_complete_form_year <- 2023L
+
+gap_grid <- tidyr::expand_grid(last_year = 2015:2021, gap_years = 2:5) |>
+  dplyr::filter(last_year + gap_years <= last_complete_form_year)
+
+filing_gaps <- purrr::map2(gap_grid$last_year, gap_grid$gap_years, count_filing_gap,
+                           filed_years = filed_years, final_year = last_complete_form_year) |>
+  dplyr::bind_rows() |>
+  dplyr::mutate(gap_share_pct = round(100 * with_gap / filers, 1),
+                filed_again_pct = round(100 * filed_again / with_gap))
+
+cat("\n== C1b. Filing gaps of 2 to 5 years, and how many file again by form year 2023 ==\n")
+print(as.data.frame(filing_gaps))
+write.csv(filing_gaps, file.path(output_dir, "chart_c1b_filing_gaps.csv"), row.names = FALSE)
+
+# (1c) The main exit series, on the rule in Harrison and Oxley (2025,
+# Nonprofit Management and Leadership 36:57-69): an organization exits
+# after its last return if it files nothing for the next three form years
+# and does not file again in the data. The last three form years of the
+# data (2021 to 2023) carry no rate. For last returns for 2020 the three
+# years are observed but no later year is, so that rate can only fall.
+exits_three_year <- filing_gaps |>
+  dplyr::filter(gap_years == 3L) |>
+  dplyr::mutate(
+    later_year_observed = years_observed_after_gap > 0L,
+    exits = with_gap - dplyr::coalesce(filed_again, 0L),
+    exit_share_pct = round(100 * exits / filers, 1),
+    first_year_without_return = last_form_year + 1L,
+    status = dplyr::if_else(later_year_observed,
+                            "No return for three years or since",
+                            "No return for three years; no later year to check yet")
+  ) |>
+  dplyr::select(last_form_year, first_year_without_return, filers, exits, exit_share_pct, status)
+
+cat("\n== C1c. Exits: no return for three years and none since (main series) ==\n")
+print(as.data.frame(exits_three_year))
+write.csv(exits_three_year, file.path(output_dir, "chart_c1c_exits_three_year.csv"), row.names = FALSE)
+
+chart_c <- ggplot(exits_three_year, aes(first_year_without_return, exit_share_pct, fill = status)) +
+  geom_col() +
+  scale_x_continuous(breaks = 2016:2021) +
+  scale_fill_manual(values = c("No return for three years or since" = "#F8766D",
+                               "No return for three years; no later year to check yet" = "#FBC1BC")) +
+  labs(title = "Davidson County: 990 and 990-EZ filers that stopped filing",
+       subtitle = "Filed for the prior year, then no return of either type for three years and none since (through 2023).\nNot a confirmed closure; postcard (990-N) filers are not seen. Private foundations excluded.",
+       x = "First year without a return", y = "Percent of prior-year filers", fill = NULL) +
+  theme_minimal(base_size = 11) + theme(legend.position = "bottom")
+save_chart(chart_c, "chart_c_stopped_filing.png")
+
 # (2) Left the registry. For each year, every Davidson organization on the
 # registry the year before, and the share of them absent from that year on
 # (last registry year seen is the year before). All organizations, new ones
@@ -235,21 +328,28 @@ cat("\n== C2. Left the registry: Davidson organizations on the registry the year
 print(as.data.frame(left_registry))
 write.csv(left_registry, file.path(output_dir, "chart_c2_left_registry.csv"), row.names = FALSE)
 
-chart_c <- ggplot(stopped |> filter(status == "judged"), aes(exit_year, share_pct)) +
-  geom_col(fill = "#F8766D") +
-  scale_x_continuous(breaks = 2016:2022) +
-  labs(title = "Davidson County: share of 990 and 990-EZ filers with a two-year filing gap",
-       subtitle = "Filed for the prior form year, no return of either type in the next two years.\nA filing gap, not a confirmed closure. Private foundations excluded.",
-       x = "First year without a return", y = "Percent of prior-year filers") +
-  theme_minimal(base_size = 11) + theme(legend.position = "bottom")
-save_chart(chart_c, "chart_c_stopped_filing.png")
-
-
 # --- D. Operating expenses by percentile, tax year 2023 --------------------
 
 expenses_2023 <- returns |>
   filter(form_year == 2023L, source_form %in% c("990", "990ez"), !is.na(total_expenses), total_expenses > 0) |>
   inner_join(davidson_registry |> filter(is_charity) |> select(ein9, is_hos_uni, is_human_services), by = "ein9")
+
+# Why the expense table counts differ from the coverage table: this table
+# takes every 2023 filer whether or not it is still in the 2026 BMF, and
+# drops filers reporting zero or no expenses (second-analyst review).
+expense_population_bridge <- returns |>
+  dplyr::filter(form_year == 2023L, source_form %in% c("990", "990ez")) |>
+  dplyr::inner_join(davidson_registry |> dplyr::filter(is_charity, !is_hos_uni) |>
+                      dplyr::select(ein9, on_registry_2026), by = "ein9") |>
+  dplyr::group_by(source_form) |>
+  dplyr::summarise(filers_2023 = dplyr::n(),
+                   still_in_2026_bmf = sum(on_registry_2026),
+                   no_longer_in_bmf = sum(!on_registry_2026),
+                   zero_or_missing_expenses = sum(is.na(total_expenses) | total_expenses <= 0),
+                   in_expense_table = sum(!is.na(total_expenses) & total_expenses > 0),
+                   .groups = "drop")
+cat("\n== D0. From the coverage table to the expense table, Davidson charities excl. hospitals and universities ==\n")
+print(as.data.frame(expense_population_bridge))
 
 percentile_table <- function(values, label) {
   qs <- quantile(values, c(0.1, 0.25, 0.5, 0.75, 0.9, 0.95), na.rm = TRUE)
@@ -271,6 +371,23 @@ cat("\n== D. Total expenses by percentile, tax year 2023, Davidson 501(c)(3) pub
 print(percentiles |> mutate(across(p10:p95, ~ round(.x / 1e3))) |> as.data.frame())
 cat("(p10 to p95 in $ thousands; filers reporting zero expenses dropped; 990-N filers, under $50,000 in receipts, are not in any row)\n")
 write.csv(percentiles, file.path(output_dir, "chart_d_expense_percentiles_ty2023.csv"), row.names = FALSE)
+
+# How much of the money the 990-EZ filers account for (reviewer, 2026-11-09).
+ez_weight <- expenses_2023 |>
+  dplyr::filter(!is_hos_uni) |>
+  dplyr::group_by(source_form) |>
+  dplyr::summarise(filers = dplyr::n(),
+                   median_expenses = stats::median(total_expenses, na.rm = TRUE),
+                   sum_expenses = sum(total_expenses, na.rm = TRUE),
+                   sum_revenue = sum(total_revenue, na.rm = TRUE),
+                   .groups = "drop") |>
+  dplyr::mutate(share_of_filers_pct = round(100 * filers / sum(filers), 1),
+                share_of_expenses_pct = round(100 * sum_expenses / sum(sum_expenses), 1),
+                share_of_revenue_pct = round(100 * sum_revenue / sum(sum_revenue), 1))
+
+cat("\n== D2. Full 990 against 990-EZ filers, tax year 2023, Davidson charities excl. hospitals and universities ==\n")
+print(as.data.frame(ez_weight))
+write.csv(ez_weight, file.path(output_dir, "chart_d2_ez_weight_ty2023.csv"), row.names = FALSE)
 
 chart_d_data <- expenses_2023 |>
   filter(!is_hos_uni) |>
@@ -313,6 +430,8 @@ grant_share_table <- bind_rows(
 ) |>
   group_by(population, group, tax_year) |>
   summarise(filers = n(), share_reporting_1e = round(100 * mean(govt_grants > 0)),
+            filers_reporting_1e = sum(govt_grants > 0),
+            median_1e_share_of_revenue_pct = round(100 * stats::median((govt_grants / rev_total)[rev_total > 0], na.rm = TRUE), 3),
             aggregate_1e_share_of_revenue = round(100 * sum(govt_grants) / sum(rev_total, na.rm = TRUE), 1),
             .groups = "drop")
 
@@ -323,8 +442,8 @@ write.csv(grant_share_table, file.path(output_dir, "chart_e_govt_grant_share_202
 chart_e <- ggplot(grant_share_table, aes(tax_year, aggregate_1e_share_of_revenue, colour = group)) +
   geom_line(linewidth = 0.9) + geom_point() +
   facet_wrap(~ population) +
-  labs(title = "Reported government grants (Form 990 line 1e) as a share of total revenue",
-       subtitle = "Full-990 501(c)(3) charities excl. hospitals and universities.\nGrants only; contracts and reimbursements are not on this line.",
+  labs(title = "Reported government grants as a share of total revenue",
+       subtitle = "Public charities filing the full Form 990, excl. hospitals and universities.\nGrants only; contracts and reimbursements are reported elsewhere.",
        x = "Tax year", y = "Percent of revenue", colour = NULL) +
   theme_minimal(base_size = 11) + theme(legend.position = "bottom")
 save_chart(chart_e, "chart_e_govt_grant_share.png", width = 9)
@@ -371,7 +490,7 @@ chart_f <- workforce |>
   geom_line(linewidth = 0.9) + geom_point() +
   geom_hline(yintercept = 100, linetype = "dotted") +
   labs(title = "Davidson County full-990 charities: filers, spending and employees",
-       subtitle = "501(c)(3) excl. hospitals and universities; e-file release; index 2019 = 100.\nEmployee counts on the 990 are noisy.",
+       subtitle = "Public charities excl. hospitals and universities; e-filed returns; 2019 = 100.\nEmployee counts on the 990 are self-reported.",
        x = "Tax year", y = "Index (2019 = 100)", colour = NULL) +
   theme_minimal(base_size = 11) + theme(legend.position = "bottom")
 save_chart(chart_f, "chart_f_filers_spending_employees.png")

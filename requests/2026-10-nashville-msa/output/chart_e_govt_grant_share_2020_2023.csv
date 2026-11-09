@@ -1,25 +1,25 @@
-"population","group","tax_year","filers","share_reporting_1e","aggregate_1e_share_of_revenue"
-"All charities","Davidson County",2020,810,47,17.7
-"All charities","Davidson County",2021,871,44,16.9
-"All charities","Davidson County",2022,911,35,16.4
-"All charities","Davidson County",2023,881,34,15.5
-"All charities","Peer metros",2020,28002,40,18.2
-"All charities","Peer metros",2021,29716,39,16.5
-"All charities","Peer metros",2022,31029,31,17.8
-"All charities","Peer metros",2023,29587,29,18.5
-"All charities","Rest of US",2020,202020,44,16.4
-"All charities","Rest of US",2021,213104,43,16.5
-"All charities","Rest of US",2022,221361,36,16.4
-"All charities","Rest of US",2023,210125,33,14.8
-"Human services","Davidson County",2020,232,50,17.9
-"Human services","Davidson County",2021,253,44,14.5
-"Human services","Davidson County",2022,256,34,14.2
-"Human services","Davidson County",2023,249,36,15.7
-"Human services","Peer metros",2020,8562,45,28
-"Human services","Peer metros",2021,9082,43,20.3
-"Human services","Peer metros",2022,9553,35,21.1
-"Human services","Peer metros",2023,9214,34,21.6
-"Human services","Rest of US",2020,61530,49,26.2
-"Human services","Rest of US",2021,64967,48,26
-"Human services","Rest of US",2022,67612,42,26.5
-"Human services","Rest of US",2023,64906,39,23.8
+"population","group","tax_year","filers","share_reporting_1e","filers_reporting_1e","median_1e_share_of_revenue_pct","aggregate_1e_share_of_revenue"
+"All charities","Davidson County",2020,810,47,381,0,17.7
+"All charities","Davidson County",2021,871,44,387,0,16.9
+"All charities","Davidson County",2022,911,35,320,0,16.4
+"All charities","Davidson County",2023,881,34,302,0,15.5
+"All charities","Peer metros",2020,28002,40,11226,0,18.2
+"All charities","Peer metros",2021,29716,39,11461,0,16.5
+"All charities","Peer metros",2022,31029,31,9641,0,17.8
+"All charities","Peer metros",2023,29587,29,8567,0,18.5
+"All charities","Rest of US",2020,202020,44,88644,0,16.4
+"All charities","Rest of US",2021,213104,43,91580,0,16.5
+"All charities","Rest of US",2022,221361,36,79106,0,16.4
+"All charities","Rest of US",2023,210125,33,69394,0,14.8
+"Human services","Davidson County",2020,232,50,116,0.252,17.9
+"Human services","Davidson County",2021,253,44,111,0,14.5
+"Human services","Davidson County",2022,256,34,88,0,14.2
+"Human services","Davidson County",2023,249,36,90,0,15.7
+"Human services","Peer metros",2020,8562,45,3840,0,28
+"Human services","Peer metros",2021,9082,43,3919,0,20.3
+"Human services","Peer metros",2022,9553,35,3376,0,21.1
+"Human services","Peer metros",2023,9214,34,3125,0,21.6
+"Human services","Rest of US",2020,61530,49,30298,0,26.2
+"Human services","Rest of US",2021,64967,48,31416,0,26
+"Human services","Rest of US",2022,67612,42,28142,0,26.5
+"Human services","Rest of US",2023,64906,39,25279,0,23.8

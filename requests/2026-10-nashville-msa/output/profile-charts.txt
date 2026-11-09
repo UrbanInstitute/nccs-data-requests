@@ -1,3 +1,37 @@
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+pinned: efile-v2_1-f9-p00-t00-header [efile_v2_1@2015-2023] (4127820 rows)
+pinned: core-merged [merged] (522716 rows)
+pinned: core-merged [merged] (524386 rows)
+pinned: core-merged [merged] (526299 rows)
+pinned: core-merged [merged] (528444 rows)
+pinned: core-merged [merged] (528576 rows)
+pinned: core-merged [merged] (523095 rows)
+pinned: core-merged [merged] (516871 rows)
+pinned: core-merged [merged] (525074 rows)
+pinned: core-merged [merged] (515769 rows)
+pinned: core-merged [merged] (74678 rows)
+There were 20 warnings (use warnings() to see them)
+== CORE 990 and 990-EZ returns for Tennessee: tax year from the e-file header against the inferred year ==
+  core_returns matched_to_header year_changed
+1        85968             68086           54
+pinned: core-merged [merged] (101495 rows)
+pinned: core-merged [merged] (11951 rows)
+pinned: core-merged [merged] (111765 rows)
+pinned: core-merged [merged] (113804 rows)
+pinned: core-merged [merged] (116138 rows)
+pinned: core-merged [merged] (114199 rows)
+pinned: core-merged [merged] (10391 rows)
+There were 14 warnings (use warnings() to see them)
 == A. Davidson County registry (on the 2026 registry) against tax year 2023 returns observed ==
                                                     population registry_count
 1                           501(c)(3) human services charities           1041
@@ -39,6 +73,19 @@
 17                             Form 990-PF  307     6
 18                           Full Form 990 1151    22
 19 No return seen (990-N postcard or none) 3306    64
+
+== A1b. No 2023 return seen: how many were recognized after 2023 ==
+                                                   population no_return_seen
+1                          501(c)(3) human services charities            723
+2                                  501(c)(3) public charities           2869
+3 501(c)(3) public charities excl. hospitals and universities           2861
+4                                All registered organizations           3306
+  recognized_after_2023 ruling_year_missing
+1                   240                   0
+2                   722                   0
+3                   720                   0
+4                   806                   0
+
 == A2. Hospitals and universities on the Davidson registry (NTEE-V2 subsector HOS or UNI) ==
   nteev2_subsector                             filing_2023 n
 1              HOS                             Form 990-PF 1
@@ -50,6 +97,7 @@
   is_hos_uni filers expenses_bn
 1      FALSE    874        4.36
 2       TRUE     13       10.68
+
 == B. Davidson recognitions by ruling year, organizations still on the 2026 registry (2026 partial) ==
    ruling_year Human services charities Other exempt organizations
 1         2005                        8                          7
@@ -97,16 +145,17 @@
 20                    192                  21
 21                    214                  18
 22                     87                   8
+
 == C1. Stopped filing: Davidson 990/990-EZ filers (not private foundations) with no return in the next two form years ==
   last_form_year filers stopped_after exit_year share_pct
 1           2015   1559            93      2016       6.0
 2           2016   1555            65      2017       4.2
-3           2017   1576            67      2018       4.3
+3           2017   1575            67      2018       4.3
 4           2018   1608            56      2019       3.5
 5           2019   1626            67      2020       4.1
-6           2020   1615            93      2021       5.8
+6           2020   1614            93      2021       5.8
 7           2021   1628            67      2022       4.1
-8           2022   1652           204      2023      12.3
+8           2022   1649           204      2023      12.4
                              status
 1                            judged
 2                            judged
@@ -116,6 +165,71 @@
 6                            judged
 7                            judged
 8 provisional: 2024 release partial
+
+== C1b. Filing gaps of 2 to 5 years, and how many file again by form year 2023 ==
+   last_form_year gap_years filers with_gap years_observed_after_gap
+1            2015         2   1559       93                        6
+2            2015         3   1559       90                        5
+3            2015         4   1559       87                        4
+4            2015         5   1559       86                        3
+5            2016         2   1555       65                        5
+6            2016         3   1555       63                        4
+7            2016         4   1555       61                        3
+8            2016         5   1555       59                        2
+9            2017         2   1575       67                        4
+10           2017         3   1575       63                        3
+11           2017         4   1575       63                        2
+12           2017         5   1575       63                        1
+13           2018         2   1608       56                        3
+14           2018         3   1608       55                        2
+15           2018         4   1608       53                        1
+16           2018         5   1608       53                        0
+17           2019         2   1626       67                        2
+18           2019         3   1626       60                        1
+19           2019         4   1626       56                        0
+20           2020         2   1614       93                        1
+21           2020         3   1614       86                        0
+22           2021         2   1628       67                        0
+   filed_again gap_share_pct filed_again_pct
+1            8           6.0               9
+2            5           5.8               6
+3            2           5.6               2
+4            1           5.5               1
+5            8           4.2              12
+6            6           4.1              10
+7            4           3.9               7
+8            2           3.8               3
+9            6           4.3               9
+10           2           4.0               3
+11           2           4.0               3
+12           2           4.0               3
+13           3           3.5               5
+14           2           3.4               4
+15           0           3.3               0
+16          NA           3.3              NA
+17          11           4.1              16
+18           4           3.7               7
+19          NA           3.4              NA
+20           7           5.8               8
+21          NA           5.3              NA
+22          NA           4.1              NA
+
+== C1c. Exits: no return for three years and none since (main series) ==
+  last_form_year first_year_without_return filers exits exit_share_pct
+1           2015                      2016   1559    85            5.5
+2           2016                      2017   1555    57            3.7
+3           2017                      2018   1575    61            3.9
+4           2018                      2019   1608    53            3.3
+5           2019                      2020   1626    56            3.4
+6           2020                      2021   1614    86            5.3
+                                                 status
+1                    No return for three years or since
+2                    No return for three years or since
+3                    No return for three years or since
+4                    No return for three years or since
+5                    No return for three years or since
+6 No return for three years; no later year to check yet
+
 == C2. Left the registry: Davidson organizations on the registry the year before, share absent from that year on ==
    left_year on_registry_prior_year left charities_on_registry_prior_year
 1       2015                   3812  118                             2720
@@ -143,10 +257,19 @@
 10            135       3.5                 3.6
 11            161       4.2                 4.2
 12            153       3.8                 3.8
+
+== D0. From the coverage table to the expense table, Davidson charities excl. hospitals and universities ==
+  source_form filers_2023 still_in_2026_bmf no_longer_in_bmf
+1         990         879               872                7
+2       990ez         315               311                4
+  zero_or_missing_expenses in_expense_table
+1                        4              875
+2                        6              309
+
 == D. Total expenses by percentile, tax year 2023, Davidson 501(c)(3) public charities ==
                                        population filers p10 p25 median  p75
-1     All Davidson charities, full 990 and 990-EZ   1197  36 101    339 1356
-2                Excl. hospitals and universities   1184  36  99    332 1265
+1     All Davidson charities, full 990 and 990-EZ   1197  36 100    339 1356
+2                Excl. hospitals and universities   1184  36  98    332 1265
 3                                  Human services    319  33 103    347 1201
 4 Full 990 only, excl. hospitals and universities    875 106 262    632 2263
 5                   Full 990 only, human services    248 103 247    509 1854
@@ -157,6 +280,15 @@
 4 7890 17159               24             62
 5 8009 16088               25             65
 (p10 to p95 in $ thousands; filers reporting zero expenses dropped; 990-N filers, under $50,000 in receipts, are not in any row)
+
+== D2. Full 990 against 990-EZ filers, tax year 2023, Davidson charities excl. hospitals and universities ==
+  source_form filers median_expenses sum_expenses sum_revenue
+1         990    875          632254   4384581431  4914481515
+2       990ez    309           66663     23527888    23976004
+  share_of_filers_pct share_of_expenses_pct share_of_revenue_pct
+1                73.9                  99.5                 99.5
+2                26.1                   0.5                  0.5
+
 == E. Line 1e government grants as a share of total revenue, full-990 charities excl. hospitals and universities ==
        population           group tax_year filers share_reporting_1e
 1   All charities Davidson County     2020    810                 47
@@ -183,6 +315,31 @@
 22 Human services      Rest of US     2021  64967                 48
 23 Human services      Rest of US     2022  67612                 42
 24 Human services      Rest of US     2023  64906                 39
+   filers_reporting_1e median_1e_share_of_revenue_pct
+1                  381                          0.000
+2                  387                          0.000
+3                  320                          0.000
+4                  302                          0.000
+5                11226                          0.000
+6                11461                          0.000
+7                 9641                          0.000
+8                 8567                          0.000
+9                88644                          0.000
+10               91580                          0.000
+11               79106                          0.000
+12               69394                          0.000
+13                 116                          0.252
+14                 111                          0.000
+15                  88                          0.000
+16                  90                          0.000
+17                3840                          0.000
+18                3919                          0.000
+19                3376                          0.000
+20                3125                          0.000
+21               30298                          0.000
+22               31416                          0.000
+23               28142                          0.000
+24               25279                          0.000
    aggregate_1e_share_of_revenue
 1                           17.7
 2                           16.9
@@ -208,6 +365,7 @@
 22                          26.0
 23                          26.5
 24                          23.8
+
 == F. Davidson full-990 charities excl. hospitals and universities, 2019-2023 (index 2019 = 100) ==
   tax_year filers spending_2023_dollars employees filers_index
 1     2019    757            4148149896     47861        100.0
@@ -221,8 +379,10 @@
 3                       109.6            92.1
 4                       108.9            99.1
 5                       105.8            93.9
+
 == F2. Same organizations in both years (balanced): change from 2019 ==
   endpoint organizations employees_change_pct spending_change_pct
 1     2022           691                 -2.8                 4.5
 2     2023           625                 -0.6                 8.6
+
 charts written to output/: chart_b, chart_c, chart_d, chart_e, chart_f (PNG) with CSV tables
