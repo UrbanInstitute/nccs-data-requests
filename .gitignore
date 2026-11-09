@@ -34,3 +34,6 @@ requests/**/data/
 requests/**/docs/*.docx
 requests/**/docs/*.xlsx
 .metrics/
+
+# Publisher copies of journal articles shared by reviewers; never commit them.
+requests/**/docs/Nonprofit Mgmnt Ldrshp*.pdf
