@@ -1,5 +1,7 @@
 # nccs-data-requests
 
+Maintained by Thiyaghessan Poongundranar, National Center for Charitable Statistics, Urban Institute, since June 2026.
+
 A **thin consumer** in the NCCS data system: it fulfils ad-hoc data requests
 that combine `bmf` / `core` / `efile` data for specific geographies, one
 folder per request. It reads canonical S3 artifacts (via the
